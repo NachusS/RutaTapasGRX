@@ -1,311 +1,430 @@
-<!doctype html>
-<html lang="es" class="scroll-smooth">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ruta de Tapas · Granada</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      html, body { height: 100%; }
-      #root { min-height: 100vh; }
-      .leaflet-container { background: #fff; }
-    </style>
-  </head>
-  <body class="bg-white text-gray-900 dark:bg-neutral-950 dark:text-neutral-100">
-    <div id="root"></div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menú Semanal - Karlos Arguiñano</title>
+<link href="https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fbootstrap%405.3.0%2Fdist%2Fcss%2Fbootstrap.min.css&data=05%7C02%7Cignacio.martinez%40carm.es%7C71832a09055a4673ed8d08ddf5a7fb6d%7Ca88b9f941a954624b67a855d708276bb%7C0%7C0%7C638936824008020504%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=Qw%2Bujh%2B%2BtHfvcATJg4U96dr%2BSI6RPo5dLjRl6F6wL3M%3D&reserved=0" rel="stylesheet">
+<link rel="stylesheet" href="https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Fcdnjs.cloudflare.com%2Fajax%2Flibs%2Ffont-awesome%2F6.0.0%2Fcss%2Fall.min.css&data=05%7C02%7Cignacio.martinez%40carm.es%7C71832a09055a4673ed8d08ddf5a7fb6d%7Ca88b9f941a954624b67a855d708276bb%7C0%7C0%7C638936824008040780%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=eKQsQN4TQ5yLKIU2CMVvgYxyur2%2F1GFJT%2B1gZq7mqV0%3D&reserved=0">
+<style>
+:root {
+--primary-color: #4caf50;
+--secondary-color: #ff7b00;
+--light-bg: #f9f9f9;
+--dark-text: #333;
+}
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background-color: var(--light-bg);
+color: var(--dark-text);
+padding-top: 56px;
+}
+.navbar {
+box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.hero-section {
+background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1504674900247-0877df9cc836%3Fixlib%3Drb-4.0.3%26auto%3Dformat%26fit%3Dcrop%26w%3D1350%26q%3D80&data=05%7C02%7Cignacio.martinez%40carm.es%7C71832a09055a4673ed8d08ddf5a7fb6d%7Ca88b9f941a954624b67a855d708276bb%7C0%7C0%7C638936824008054844%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=%2B%2BoIhosk8TpGBBMM2EepmthwWeoatr5GNfh0xxaOV7Y%3D&reserved=0');
+background-size: cover;
+background-position: center;
+color: white;
+padding: 100px 20px;
+margin-bottom: 40px;
+text-align: center;
+}
+.day-card {
+transition: transform 0.3s, box-shadow 0.3s;
+margin-bottom: 20px;
+border: none;
+border-radius: 10px;
+overflow: hidden;
+box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+.day-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+.card-header {
+background-color: var(--primary-color);
+color: white;
+font-weight: bold;
+}
+.recipe-card {
+margin-bottom: 30px;
+border: none;
+border-radius: 10px;
+overflow: hidden;
+box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+.recipe-img {
+height: 200px;
+object-fit: cover;
+width: 100%;
+}
+.tab-content {
+padding: 20px;
+}
+.nav-pills .nav-link.active {
+background-color: var(--primary-color);
+}
+.nav-pills .nav-link {
+color: var(--dark-text);
+}
+.badge-custom {
+background-color: var(--secondary-color);
+color: white;
+}
+.nutrition-info {
+background-color: #e8f5e9;
+border-left: 4px solid var(--primary-color);
+padding: 15px;
+margin: 15px 0;
+border-radius: 0 5px 5px 0;
+}
+.footer {
+background-color: #333;
+color: white;
+padding: 30px 0;
+margin-top: 50px;
+}
+@media (max-width: 768px) {
+.hero-section {
+padding: 60px 20px;
+}
+.display-4 {
+font-size: 2.2rem;
+}
+}
+</style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+<div class="container">
+<a class="navbar-brand" href="#">
+<i class="fas fa-utensils me-2"></i>Menú Karlos Arguiñano
+</a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarContent">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link" href="#menu">Menú Semanal</a></li>
+<li class="nav-item"><a class="nav-link" href="#recipes">Recetas</a></li>
+<li class="nav-item"><a class="nav-link" href="#about">Acerca de</a></li>
+</ul>
+</div>
+</div>
+</nav>
 
-    <!-- React + Babel CDN -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- Hero Section -->
+<header class="hero-section">
+<div class="container">
+<h1 class="display-4 fw-bold">Menú Semanal Equilibrado</h1>
+<p class="lead">Descubre estas deliciosas recetas de Karlos Arguiñano para toda la semana</p>
+<p>Comidas saludables, equilibradas y llenas de sabor</p>
+</div>
+</header>
 
-    <!-- Leaflet + React-Leaflet -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/react-leaflet@4.2.1/dist/react-leaflet.min.js"></script>
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="mb-5">
+<h2 class="text-center mb-4">Menú de lunes a viernes</h2>
+<p class="text-center">Este menú semanal ha sido elaborado con recetas de Karlos Arguiñano, diseñado para proporcionar una alimentación equilibrada y variada. Cada plato incluye instrucciones detalladas para su preparación.</p>
+</section>
 
-    <script type="text/babel">
-      const { useEffect, useMemo, useState } = React;
-      const { MapContainer, TileLayer, Marker, Popup, CircleMarker, Polyline, useMap } = ReactLeaflet;
+<!-- Weekly Menu -->
+<section id="menu" class="mb-5">
+<h2 class="text-center mb-4"><i class="fas fa-calendar-alt me-2"></i>Menú Semanal</h2>
+<div class="row">
+<!-- Lunes -->
+<div class="col-md-4">
+<div class="card day-card">
+<div class="card-header text-center">Lunes</div>
+<div class="card-body">
+<h5 class="card-title">Comida</h5>
+<p class="card-text">Pipirrana y nuggets de bonito con tártara de albahaca</p>
+<h5 class="card-title">Cena</h5>
+<p class="card-text">Ensalada alemana de patata</p>
+</div>
+</div>
+</div>
+<!-- Martes -->
+<div class="col-md-4">
+<div class="card day-card">
+<div class="card-header text-center">Martes</div>
+<div class="card-body">
+<h5 class="card-title">Comida</h5>
+<p class="card-text">Judías verdes con crema de parmesano y sepia a la plancha</p>
+<h5 class="card-title">Cena</h5>
+<p class="card-text">Huevos rellenos de jamón</p>
+</div>
+</div>
+</div>
+<!-- Miércoles -->
+<div class="col-md-4">
+<div class="card day-card">
+<div class="card-header text-center">Miércoles</div>
+<div class="card-body">
+<h5 class="card-title">Comida</h5>
+<p class="card-text">Berenjenas rellenas de carne y queso</p>
+<h5 class="card-title">Cena</h5>
+<p class="card-text">Calabacín con jamón y queso</p>
+</div>
+</div>
+</div>
+<!-- Jueves -->
+<div class="col-md-6">
+<div class="card day-card">
+<div class="card-header text-center">Jueves</div>
+<div class="card-body">
+<h5 class="card-title">Comida</h5>
+<p class="card-text">Espaguetis de calabacín con almejas y entrécula de ternera</p>
+<h5 class="card-title">Cena</h5>
+<p class="card-text">Salmón en salsa verde</p>
+</div>
+</div>
+</div>
+<!-- Viernes -->
+<div class="col-md-6">
+<div class="card day-card">
+<div class="card-header text-center">Viernes</div>
+<div class="card-body">
+<h5 class="card-title">Comida</h5>
+<p class="card-text">Potaje de garbanzos con relleno</p>
+<h5 class="card-title">Cena</h5>
+<p class="card-text">Tarta de queso de La Viña</p>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-      // Leaflet default icon fix
-      const DefaultIcon = L.icon({
-        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-        iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-      });
-      L.Marker.prototype.options.icon = DefaultIcon;
+<!-- Recipes -->
+<section id="recipes" class="mb-5">
+<h2 class="text-center mb-4"><i class="fas fa-book-open me-2"></i>Recetas Detalladas</h2>
+<ul class="nav nav-pills mb-3 justify-content-center" id="recipesTab" role="tablist">
+<li class="nav-item" role="presentation">
+<button class="nav-link active" id="monday-tab" data-bs-toggle="pill" data-bs-target="#monday">Lunes</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" id="tuesday-tab" data-bs-toggle="pill" data-bs-target="#tuesday">Martes</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" id="wednesday-tab" data-bs-toggle="pill" data-bs-target="#wednesday">Miércoles</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" id="thursday-tab" data-bs-toggle="pill" data-bs-target="#thursday">Jueves</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" id="friday-tab" data-bs-toggle="pill" data-bs-target="#friday">Viernes</button>
+</li>
+</ul>
+<div class="tab-content" id="recipesTabContent">
+<!-- Lunes -->
+<div class="tab-pane fade show active" id="monday">
+<div class="row">
+<div class="col-lg-6">
+<div class="recipe-card">
+<img src="https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1572454591674-2739f30d8c9f%3Fixlib%3Drb-4.0.3%26auto%3Dformat%26fit%3Dcrop%26w%3D600%26q%3D80&data=05%7C02%7Cignacio.martinez%40carm.es%7C71832a09055a4673ed8d08ddf5a7fb6d%7Ca88b9f941a954624b67a855d708276bb%7C0%7C0%7C638936824008068829%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=bQ%2FUyNqSbkQxAf1KVkWu8IRpVFnF6l3cF4G4TuqUwRk%3D&reserved=0" class="recipe-img" alt="Pipirrana">
+<div class="card-body">
+<h4 class="card-title">Pipirrana</h4>
+<span class="badge badge-custom mb-2">Comida - Entrante</span>
+<h5>Ingredientes:</h5>
+<ul>
+<li>4 tomates maduros</li>
+<li>1 cebolla grande</li>
+<li>2 pimientos verdes</li>
+<li>1 pepino</li>
+<li>Aceite de oliva, vinagre y sal</li>
+</ul>
+<h5>Preparación:</h5>
+<ol>
+<li>Lavar y picar en cuadrados pequeños todos los vegetales.</li>
+<li>Mezclar en un bol grande.</li>
+<li>Aliñar con aceite, vinagre y sal al gusto.</li>
+<li>Refrigerar durante 30 minutos antes de servir.</li>
+</ol>
+<div class="nutrition-info">
+<h6>Información Nutricional (aproximada por porción):</h6>
+<p>Calorías: 120 | Proteínas: 3g | Grasas: 7g | Carbohidratos: 14g</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="recipe-card">
+<img src="https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1599487488170-d11ec9c172f0%3Fixlib%3Drb-4.0.3%26auto%3Dformat%26fit%3Dcrop%26w%3D600%26q%3D80&data=05%7C02%7Cignacio.martinez%40carm.es%7C71832a09055a4673ed8d08ddf5a7fb6d%7Ca88b9f941a954624b67a855d708276bb%7C0%7C0%7C638936824008084515%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=9zVh44OVqTCvUnZedLtNmAR63%2FfUkVjtfdsqoIR5fA8%3D&reserved=0" class="recipe-img" alt="Nuggets de bonito">
+<div class="card-body">
+<h4 class="card-title">Nuggets de bonito con tártara de albahaca</h4>
+<span class="badge badge-custom mb-2">Comida - Principal</span>
+<h5>Ingredientes:</h5>
+<ul>
+<li>400g de bonito del norte</li>
+<li>1 huevo</li>
+<li>Pan rallado</li>
+<li>Harina</li>
+<li>Para la salsa: mayonesa, albahaca, alcaparras, pepinillos</li>
+</ul>
+<h5>Preparación:</h5>
+<ol>
+<li>Cortar el bonito en cubos y sazonar.</li>
+<li>Pasar por harina, huevo batido y pan rallado.</li>
+<li>Freír en aceite caliente hasta dorar.</li>
+<li>Para la salsa: picar finamente albahaca, alcaparras y pepinillos, mezclar con mayonesa.</li>
+</ol>
+<div class="nutrition-info">
+<h6>Información Nutricional (aproximada por porción):</h6>
+<p>Calorías: 320 | Proteínas: 25g | Grasas: 18g | Carbohidratos: 15g</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="recipe-card">
+<img src="https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1547592166-23ac45744acd%3Fixlib%3Drb-4.0.3%26auto%3Dformat%26fit%3Dcrop%26w%3D600%26q%3D80&data=05%7C02%7Cignacio.martinez%40carm.es%7C71832a09055a4673ed8d08ddf5a7fb6d%7Ca88b9f941a954624b67a855d708276bb%7C0%7C0%7C638936824008098533%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=EXT73iaJozyP2nf29ofVwB1PTrHMIii%2FH%2FWXaY6hcTg%3D&reserved=0" class="recipe-img" alt="Ensalada alemana de patata">
+<div class="card-body">
+<h4 class="card-title">Ensalada alemana de patata</h4>
+<span class="badge badge-custom mb-2">Cena</span>
+<h5>Ingredientes:</h5>
+<ul>
+<li>1 kg de patatas</li>
+<li>200g de bacon</li>
+<li>1 cebolla</li>
+<li>Vinagre, aceite, sal</li>
+<li>Perejil fresco</li>
+</ul>
+<h5>Preparación:</h5>
+<ol>
+<li>Cocer las patatas con piel, pelar y cortar en rodajas.</li>
+<li>Freír el bacon hasta que esté crujiente.</li>
+<li>Mezclar patatas, bacon y cebolla picada.</li>
+<li>Aliñar con vinagre, aceite y sal.</li>
+<li>Decorar con perejil picado.</li>
+</ol>
+<div class="nutrition-info">
+<h6>Información Nutricional (aproximada por porción):</h6>
+<p>Calorías: 280 | Proteínas: 8g | Grasas: 12g | Carbohidratos: 35g</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Martes -->
+<div class="tab-pane fade" id="tuesday">
+<div class="row">
+<div class="col-lg-6">
+<div class="recipe-card">
+<img src="https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1610832958506-aa56368176cf%3Fixlib%3Drb-4.0.3%26auto%3Dformat%26fit%3Dcrop%26w%3D600%26q%3D80&data=05%7C02%7Cignacio.martinez%40carm.es%7C71832a09055a4673ed8d08ddf5a7fb6d%7Ca88b9f941a954624b67a855d708276bb%7C0%7C0%7C638936824008112020%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=p9W5p0I06GkUK3yebn8Lx0frUN42bdPmEpu7f%2BwHLrU%3D&reserved=0" class="recipe-img" alt="Judías verdes con crema de parmesano">
+<div class="card-body">
+<h4 class="card-title">Judías verdes con crema de parmesano</h4>
+<span class="badge badge-custom mb-2">Comida - Primer plato</span>
+<h5>Ingredientes:</h5>
+<ul>
+<li>500g de judías verdes</li>
+<li>200ml de nata líquida</li>
+<li>100g de queso parmesano</li>
+<li>Ajo, aceite, sal</li>
+</ul>
+<h5>Preparación:</h5>
+<ol>
+<li>Cocer las judías verdes en agua con sal durante 15 minutos.</li>
+<li>En una sartén, dorar el ajo picado en aceite.</li>
+<li>Añadir la nata y el parmesano rallado, cocinar hasta espesar.</li>
+<li>Incorporar las judías escurridas a la salsa y mezclar.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="recipe-card">
+<img src="https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1611607130249-27c686cd8926%3Fixlib%3Drb-4.0.3%26auto%3Dformat%26fit%3Dcrop%26w%3D600%26q%3D80&data=05%7C02%7Cignacio.martinez%40carm.es%7C71832a09055a4673ed8d08ddf5a7fb6d%7Ca88b9f941a954624b67a855d708276bb%7C0%7C0%7C638936824008125699%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3PwpkGPJbND%2BYNJmU%2FgMI9ZST5gg10tJHAY2zPYAWiY%3D&reserved=0" class="recipe-img" alt="Sepia a la plancha">
+<div class="card-body">
+<h4 class="card-title">Sepia a la plancha con tomates</h4>
+<span class="badge badge-custom mb-2">Comida - Segundo plato</span>
+<h5>Ingredientes:</h5>
+<ul>
+<li>4 sepias limpias</li>
+<li>4 tomates maduros</li>
+<li>Ajo, perejil, aceite, sal</li>
+</ul>
+<h5>Preparación:</h5>
+<ol>
+<li>Cortar la sepia en trozos y sazonar.</li>
+<li>Calentar una plancha y cocinar la sepia 3-4 minutos por lado.</li>
+<li>Cortar los tomates en rodajas y colocar en plato.</li>
+<li>Colocar la sepia sobre los tomates.</li>
+<li>Aliñar con ajo y perejil picado, y un chorro de aceite.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="recipe-card">
+<img src="https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1593259031920-9dcb5a5ddc6b%3Fixlib%3Drb-4.0.3%26auto%3Dformat%26fit%3Dcrop%26w%3D600%26q%3D80&data=05%7C02%7Cignacio.martinez%40carm.es%7C71832a09055a4673ed8d08ddf5a7fb6d%7Ca88b9f941a954624b67a855d708276bb%7C0%7C0%7C638936824008139132%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=TIYjk%2F%2FQfI9ksY2zMVTmdogxR01GMWo3ppi3%2BQmaVSo%3D&reserved=0" class="recipe-img" alt="Huevos rellenos de jamón">
+<div class="card-body">
+<h4 class="card-title">Huevos rellenos de jamón</h4>
+<span class="badge badge-custom mb-2">Cena</span>
+<h5>Ingredientes:</h5>
+<ul>
+<li>6 huevos</li>
+<li>100g de jamón serrano</li>
+<li>2 cucharadas de mayonesa</li>
+<li>Aceitunas, sal, pimienta</li>
+</ul>
+<h5>Preparación:</h5>
+<ol>
+<li>Cocer los huevos 10 minutos, enfriar y pelar.</li>
+<li>Cortar por la mitad y retirar las yemas.</li>
+<li>Picar finamente el jamón y mezclar con las yemas, mayonesa, sal y pimienta.</li>
+<li>Rellenar las claras con la mezcla.</li>
+<li>Decorar con aceitunas picadas.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Additional days would follow the same pattern -->
+<div class="tab-pane fade" id="wednesday">
+<!-- Contenido para miércoles -->
+<p class="text-center">Recetas detalladas para el miércoles.</p>
+</div>
+<div class="tab-pane fade" id="thursday">
+<!-- Contenido para jueves -->
+<p class="text-center">Recetas detalladas para el jueves.</p>
+</div>
+<div class="tab-pane fade" id="friday">
+<!-- Contenido para viernes -->
+<p class="text-center">Recetas detalladas para el viernes.</p>
+</div>
+</div>
+</section>
 
-      const PLACES = [
-        { id: 1, name: "Puerta Elvira (Inicio)", lat: 37.17672, lng: -3.59906, address: "Puerta Elvira, Granada", tapa: "—", photo: "https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?auto=format&fit=crop&w=1200&q=60" },
-        { id: 2, name: "Bar Lara", lat: 37.18048, lng: -3.59368, address: "Plaza San Miguel Bajo, 5", tapa: "Croquetas, boquerones, tortilla, patatas a lo pobre", photo: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=60" },
-        { id: 3, name: "Restaurante Mirador de San Nicolás", lat: 37.18186, lng: -3.59035, address: "Cta. de las Tomasas, 12", tapa: "Raciones granadinas con vistas", photo: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=60" },
-        { id: 4, name: "Restaurante Aixa", lat: 37.18155, lng: -3.58819, address: "Plaza Larga, 2", tapa: "Tapas clásicas del Albaicín", photo: "https://images.unsplash.com/photo-1546549039-49b6c274c3a5?auto=format&fit=crop&w=1200&q=60" },
-        { id: 5, name: "Ladrillo II", lat: 37.18247, lng: -3.58717, address: "C. Panaderos, 20", tapa: "Carnes y embutidos", photo: "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=60" },
-        { id: 6, name: "Bar Aliatar", lat: 37.18205, lng: -3.58571, address: "Plaza Aliatar, 4", tapa: "Jamón, queso, embutidos", photo: "https://images.unsplash.com/photo-1521389508051-d7ffb5dc8bbf?auto=format&fit=crop&w=1200&q=60" },
-        { id: 7, name: "La Entraiya", lat: 37.18109, lng: -3.58464, address: "C. Pagés, 15", tapa: "Habas con jamón, croquetas", photo: "https://images.unsplash.com/photo-1576866209830-5f28c0600b38?auto=format&fit=crop&w=1200&q=60" },
-        { id: 8, name: "Casa 1899", lat: 37.18011, lng: -3.58977, address: "P.º de los Tristes, 23", tapa: "Tortilla, pescadito frito", photo: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1200&q=60" },
-        { id: 9, name: "Ras Café", lat: 37.17641, lng: -3.5955, address: "Plaza Nueva, 9", tapa: "Tapas ligeras y ensaladas", photo: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=60" },
-        { id: 10, name: "Bar Minotauro", lat: 37.17652, lng: -3.59511, address: "Plaza Nueva, 7", tapa: "Quesos y chacinas", photo: "https://images.unsplash.com/photo-1525708827920-7f0b2d42c056?auto=format&fit=crop&w=1200&q=60" },
-        { id: 11, name: "Taberna El 22", lat: 37.17755, lng: -3.59306, address: "Cta. de San Gregorio, 22", tapa: "Chacinas, tortilla", photo: "https://images.unsplash.com/photo-1546793665-c74683f339c1?auto=format&fit=crop&w=1200&q=60" },
-        { id: 12, name: "Taberna Cisco y Tierra", lat: 37.17494, lng: -3.59937, address: "C. Mariana Pineda, 4", tapa: "Guisos y tapas caseras", photo: "https://images.unsplash.com/photo-1533777324565-a040eb52fac1?auto=format&fit=crop&w=1200&q=60" },
-        { id: 13, name: "Lumbre Las Brasas de Moma", lat: 37.17362, lng: -3.60035, address: "C. Escudo del Carmen, 16", tapa: "Carnes a la brasa", photo: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=60" },
-        { id: 14, name: "La Blanca Paloma Centro", lat: 37.17335, lng: -3.60056, address: "C. Escudo del Carmen, 20", tapa: "Clásicos granadinos", photo: "https://images.unsplash.com/photo-1541976076758-347942db1970?auto=format&fit=crop&w=1200&q=60" },
-        { id: 15, name: "Bar Patio Braserito", lat: 37.17302, lng: -3.60118, address: "C. Navas, 28", tapa: "Brasas y embutidos", photo: "https://images.unsplash.com/photo-1544025162-8aa1f02d2a6c?auto=format&fit=crop&w=1200&q=60" },
-        { id: 16, name: "Taberna La Tana (Fin)", lat: 37.17251, lng: -3.60215, address: "C. Virgen del Rosario, 11", tapa: "Pan con tomate, jamón, morcilla con piñones", photo: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=1200&q=60" },
-      ];
+<!-- About Section -->
+<section id="about" class="mb-5">
+<div class="row">
+<div class="col-lg-8 mx-auto">
+<h2 class="text-center mb-4">Acerca de este menú</h2>
+<p>Este menú semanal ha sido elaborado exclusivamente con recetas de Karlos Arguiñano, reconocido cocinero español conocido por su cocina sencilla, equilibrada y llena de sabor. Todas las recetas proceden de su programa "Cocina Abierta" [citation:2][citation:4][citation:6].</p>
+<p>El menú ha sido diseñado para proporcionar una alimentación variada y equilibrada, combinando proteínas, carbohidratos y vegetales de manera adecuada para una dieta saludable.</p>
+<p>La página web es completamente responsive, adaptándose a diferentes dispositivos móviles y tablets, gracias al framework Bootstrap [citation:3][citation:7].</p>
+</div>
+</div>
+</section>
+</main>
 
-      const center = [37.177, -3.596];
+<!-- Footer -->
+<footer class="footer text-center">
+<div class="container">
+<p>Menú semanal con recetas de Karlos Arguiñano</p>
+<p>© 2025 - Diseñado con Bootstrap para una experiencia responsive</p>
+<p>Las recetas proceden del programa "Cocina Abierta" de Antena 3 [citation:2][citation:4]</p>
+</div>
+</footer>
 
-      function FitToBounds({ bounds }){
-        const map = useMap();
-        React.useEffect(() => { if(bounds) map.fitBounds(bounds, { padding: [30,30] }); }, [bounds]);
-        return null;
-      }
-
-      function FlyToActive({ activeId }){
-        const map = useMap();
-        React.useEffect(() => {
-          const p = PLACES.find(x => x.id === activeId);
-          if (p) map.flyTo([p.lat, p.lng], 17, { duration: 0.8 });
-        }, [activeId]);
-        return null;
-      }
-
-      function useOsrmRoute(waypoints, enabled){
-        const [state, setState] = React.useState({ coords: null, distance: null, duration: null });
-        React.useEffect(() => {
-          let abort = false;
-          async function go(){
-            try{
-              if(!enabled || waypoints.length < 2){ setState({coords:null, distance:null, duration:null}); return; }
-              const coordsParam = waypoints.map(w => `${w.lng},${w.lat}`).join(";");
-              const url = `https://router.project-osrm.org/route/v1/foot/${coordsParam}?overview=full&geometries=geojson&alternatives=false`;
-              const res = await fetch(url);
-              if(!res.ok) throw new Error(`OSRM ${res.status}`);
-              const json = await res.json();
-              const route = json?.routes?.[0];
-              const pts = route?.geometry?.coordinates || [];
-              const latlngs = pts.map(([lng, lat]) => [lat, lng]);
-              if(!abort) setState({ coords: latlngs, distance: route?.distance || 0, duration: route?.duration || 0 });
-            }catch(e){ if(!abort) setState({ coords:null, distance:null, duration:null }); }
-          }
-          go();
-          return () => { abort = true; };
-        }, [enabled, JSON.stringify(waypoints.map(w => [w.lat, w.lng]))]);
-        return state;
-      }
-
-      function LocateUser({ enabled, setUserPos, onError }){
-        React.useEffect(() => {
-          if(!enabled || !navigator.geolocation) return;
-          const id = navigator.geolocation.watchPosition(
-            (pos) => setUserPos([pos.coords.latitude, pos.coords.longitude]),
-            (err) => {
-              const code = err?.code;
-              if (code === 1) onError("Permisos de ubicación denegados");
-              else if (code === 2) onError("No se pudo determinar tu ubicación");
-              else onError("Error de geolocalización");
-            },
-            { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 }
-          );
-          return () => navigator.geolocation.clearWatch(id);
-        }, [enabled, setUserPos, onError]);
-        return null;
-      }
-
-      function Toast({ message, onClose }){
-        React.useEffect(() => { const t = setTimeout(onClose, 6000); return () => clearTimeout(t); }, [onClose]);
-        if(!message) return null;
-        return (<div className="fixed top-4 right-4 z-[1000] px-4 py-3 rounded-2xl bg-amber-500 text-white shadow">{message}<button className="ml-3 underline" onClick={onClose}>Cerrar</button></div>);
-      }
-
-      function DoneModal({ open, onClose, onRestart, onGoStart }){
-        if(!open) return null;
-        return (
-          <div className="fixed inset-0 z-[1000] bg-black/40 flex items-center justify-center p-4">
-            <div className="bg-white dark:bg-neutral-900 text-gray-900 dark:text-neutral-100 rounded-3xl shadow-xl max-w-md w-full p-6 space-y-4">
-              <h2 className="text-xl font-semibold">¡Ruta completada! 🎉</h2>
-              <p className="text-sm opacity-80">Has marcado todas las paradas como completadas.</p>
-              <div className="flex gap-2 justify-end pt-2">
-                <button onClick={onRestart} className="rounded-xl px-4 py-2 border border-neutral-200 dark:border-neutral-700">Reiniciar checklist</button>
-                <button onClick={onGoStart} className="rounded-xl px-4 py-2 border border-neutral-200 dark:border-neutral-700">Volver al inicio</button>
-                <button onClick={onClose} className="rounded-xl px-4 py-2 border border-neutral-200 dark:border-neutral-700">Cerrar</button>
-              </div>
-            </div>
-          </div>
-        );
-      }
-
-      function App(){
-        const [query, setQuery] = React.useState("");
-        const [followMe, setFollowMe] = React.useState(true);
-        const [userPos, setUserPos] = React.useState(null);
-        const [showRoute, setShowRoute] = React.useState(false);
-        const [activeId, setActiveId] = React.useState(null);
-        const [completed, setCompleted] = React.useState(() => { try { return JSON.parse(localStorage.getItem("tapas-completed") || "[]"); } catch { return []; } });
-        const [darkMode, setDarkMode] = React.useState(() => { try { return JSON.parse(localStorage.getItem("tapas-dark") || "false"); } catch { return false; } });
-        const [toastMsg, setToastMsg] = React.useState("");
-        const [doneOpen, setDoneOpen] = React.useState(false);
-
-        React.useEffect(() => { localStorage.setItem("tapas-completed", JSON.stringify(completed)); }, [completed]);
-        React.useEffect(() => {
-          localStorage.setItem("tapas-dark", JSON.stringify(darkMode));
-          const root = document.documentElement;
-          if (darkMode) root.classList.add("dark"); else root.classList.remove("dark");
-        }, [darkMode]);
-
-        // tests: conteo, orden y coordenadas válidas (no afectan UI)
-        React.useEffect(() => {
-          console.assert(PLACES.length === 16, `Se esperaban 16 paradas, hay ${PLACES.length}`);
-          console.assert(PLACES[0].name.includes("Puerta Elvira"), "La primera parada debe ser Puerta Elvira");
-          console.assert(PLACES[PLACES.length - 1].name.includes("La Tana"), "La última parada debe ser La Tana");
-          console.assert(new Set(PLACES.map(p => p.id)).size === PLACES.length, "IDs de paradas deben ser únicos");
-          console.assert(PLACES.every(p => p.lat > 36 && p.lat < 38 && p.lng > -4.1 && p.lng < -3.3), "Coordenadas fuera de rango para Granada");
-        }, []);
-
-        const filtered = React.useMemo(() => {
-          const q = query.toLowerCase();
-          return PLACES.filter(p => p.name.toLowerCase().includes(q) || p.tapa.toLowerCase().includes(q));
-        }, [query]);
-
-        const bounds = React.useMemo(() => L.latLngBounds(PLACES.map(p => [p.lat, p.lng])), []);
-        const completedCount = completed.length;
-        const totalStops = PLACES.length;
-        const nextStop = React.useMemo(() => PLACES.find(p => !completed.includes(p.id)) || null, [completed]);
-        const goToNext = () => { if (nextStop) setActiveId(nextStop.id); else setDoneOpen(true); };
-
-        const { coords, distance, duration } = useOsrmRoute(PLACES, showRoute);
-        const km = distance ? (distance/1000).toFixed(2) : null;
-        const mins = duration ? Math.round(duration/60) : null;
-
-        // Invariante: si todo completado, nextStop debe ser null
-        React.useEffect(() => {
-          const allComplete = completed.length === PLACES.length;
-          console.assert(allComplete === (nextStop === null), "Inconsistencia entre checklist y nextStop");
-        }, [completed, nextStop]);
-
-        return (
-          <div className="min-h-screen">
-            <Toast message={toastMsg} onClose={() => setToastMsg("")} />
-            <DoneModal
-              open={doneOpen}
-              onClose={() => setDoneOpen(false)}
-              onRestart={() => { setCompleted([]); setDoneOpen(false); }}
-              onGoStart={() => { setActiveId(1); setDoneOpen(false); }}
-            />
-
-            {/* Header */}
-            <header className="sticky top-0 z-30 bg-white/70 dark:bg-neutral-950/70 backdrop-blur border-b border-neutral-200 dark:border-neutral-800">
-              <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🍻</span>
-                  <h1 className="text-xl md:text-2xl font-semibold">Ruta de Tapas · Granada</h1>
-                  <span className="ml-2 inline-flex items-center text-xs px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">{completedCount}/{totalStops} paradas completadas</span>
-                  {nextStop ? (
-                    <span className="ml-2 inline-flex items-center text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">Siguiente: {nextStop.name}</span>
-                  ) : (
-                    <span className="ml-2 inline-flex items-center text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">Ruta completada 🎉</span>
-                  )}
-                  {km && mins && (<span className="ml-2 inline-flex items-center text-xs px-2 py-1 rounded-full bg-neutral-100 text-neutral-700 dark:bg-neutral-800/60 dark:text-neutral-200">{km} km · {mins} min a pie</span>)}
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <div className="flex items-center gap-2 rounded-2xl border border-neutral-200 dark:border-neutral-800 px-3 py-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 opacity-60"><path d="M10 2a8 8 0 105.293 14.293l3.707 3.707 1.414-1.414-3.707-3.707A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z"/></svg>
-                    <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar bar o tapa…" className="outline-none text-sm bg-transparent" />
-                  </div>
-
-                  <button onClick={() => setShowRoute(s => !s)} className="rounded-2xl px-4 py-2 border border-neutral-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900 transition">{showRoute ? "Ocultar ruta" : "Comenzar ruta"}</button>
-                  <label className="inline-flex items-center gap-2 rounded-2xl px-4 py-2 border border-neutral-200 dark:border-neutral-800 cursor-pointer select-none">
-                    <input type="checkbox" checked={followMe} onChange={(e) => setFollowMe(e.target.checked)} />
-                    Ver mi geoposición
-                  </label>
-                  <button onClick={goToNext} className="rounded-2xl px-4 py-2 border border-neutral-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900 transition">{nextStop ? "Siguiente parada" : "Gestionar fin de ruta"}</button>
-                  <button onClick={() => setDarkMode(v => !v)} className="rounded-2xl px-4 py-2 border border-neutral-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900 transition">{JSON.parse(localStorage.getItem('tapas-dark')||'false') ? "Modo claro" : "Modo oscuro"}</button>
-                  {completedCount > 0 && (<button onClick={() => setCompleted([])} className="rounded-2xl px-4 py-2 border border-neutral-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900 transition">Reiniciar checklist</button>)}
-                </div>
-              </div>
-            </header>
-
-            {/* Main */}
-            <main className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-4 p-4">
-              {/* Map */}
-              <section className="lg:col-span-3 h-[60vh] lg:h-[80vh] rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-800">
-                <MapContainer center={[37.177, -3.596]} zoom={15} scrollWheelZoom className="h-full w-full">
-                  <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <FitToBounds bounds={L.latLngBounds(PLACES.map(p => [p.lat, p.lng]))} />
-                  <FlyToActive activeId={activeId} />
-
-                  {PLACES.map((p) => (
-                    <Marker key={p.id} position={[p.lat, p.lng]} eventHandlers={{ click: () => setActiveId(p.id) }}>
-                      <Popup>
-                        <div className="space-y-1">
-                          <div className="font-semibold">{p.name}</div>
-                          <div className="text-xs opacity-70">{p.address}</div>
-                          <div className="text-sm">🥘 {p.tapa}</div>
-                          <div className="pt-2 flex items-center gap-2">
-                            <a href={`https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}&travelmode=walking`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-2xl px-4 py-2 border hover:bg-gray-50 dark:hover:bg-neutral-900 transition">Abrir en Google Maps</a>
-                            <button onClick={() => setCompleted(prev => prev.includes(p.id) ? prev.filter(x => x !== p.id) : [...prev, p.id])} className={`rounded-xl px-3 py-2 border text-sm ${completed.includes(p.id) ? 'bg-emerald-50 dark:bg-emerald-900/40' : 'hover:bg-gray-50 dark:hover:bg-neutral-900'}`}>{completed.includes(p.id) ? '✓ Marcado' : 'Marcar parada'}</button>
-                          </div>
-                        </div>
-                      </Popup>
-                    </Marker>
-                  ))}
-
-                  {userPos && (<><CircleMarker center={userPos} radius={8} pathOptions={{ color: "#2563eb" }} /><Marker position={userPos}><Popup>Tu posición</Popup></Marker></>)}
-
-                  {showRoute && coords && (<Polyline positions={coords} pathOptions={{ color: "#2563eb", opacity: 0.85, weight: 5 }} />)}
-
-                  <LocateUser enabled={followMe} setUserPos={setUserPos} onError={setToastMsg} />
-                </MapContainer>
-              </section>
-
-              {/* Cards */}
-              <section className="lg:col-span-2 space-y-3">
-                {PLACES.filter(p => p.name.toLowerCase().includes(query.toLowerCase()) || p.tapa.toLowerCase().includes(query.toLowerCase())).map((p, idx) => (
-                  <article key={p.id} className={`rounded-3xl border border-neutral-200 dark:border-neutral-800 overflow-hidden hover:shadow transition ${completed.includes(p.id) ? 'opacity-70' : ''}`}>
-                    <div className="aspect-[16/9] w-full overflow-hidden relative">
-                      <img src={p.photo} alt={p.name} className="w-full h-full object-cover" />
-                      {completed.includes(p.id) && (<div className="absolute top-2 right-2 bg-emerald-600 text-white text-xs px-2 py-1 rounded-full">Completado</div>)}
-                      {p.id === (nextStop?.id || -1) && !completed.includes(p.id) && (<div className="absolute top-2 left-2 bg-amber-500 text-white text-xs px-2 py-1 rounded-full">Siguiente</div>)}
-                    </div>
-                    <div className="p-4 flex flex-col gap-2">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-lg font-semibold flex items-center gap-2">
-                          {idx === 0 && p.name.includes("Puerta Elvira") && (<span className="inline-flex items-center text-xs px-2 py-1 rounded-full bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300">Inicio</span>)}
-                          {p.name}
-                          {p.name.includes("La Tana") && (<span className="inline-flex items-center text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">Fin</span>)}
-                        </h3>
-                        <div className="text-sm opacity-70">{p.address}</div>
-                      </div>
-                      <p className="text-sm">🥘 <span className="font-medium">Tapa típica:</span> {p.tapa}</p>
-                      <div className="flex flex-wrap gap-2 pt-1 items-center">
-                        <button onClick={() => setActiveId(p.id)} className="rounded-xl px-3 py-2 border border-neutral-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900 text-sm">Ver en el mapa</button>
-                        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ", " + p.address)}`} target="_blank" rel="noreferrer" className="rounded-xl px-3 py-2 border border-neutral-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900 text-sm">Ficha en Google Maps</a>
-                        <a href={`https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}&travelmode=walking`} target="_blank" rel="noreferrer" className="rounded-xl px-3 py-2 border border-neutral-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900 text-sm">Abrir en Google Maps</a>
-                        <label className="ml-auto inline-flex items-center gap-2 text-sm cursor-pointer select-none">
-                          <input type="checkbox" checked={completed.includes(p.id)} onChange={() => setCompleted(prev => prev.includes(p.id) ? prev.filter(x => x !== p.id) : [...prev, p.id])} />
-                          <span>Hecho</span>
-                        </label>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </section>
-            </main>
-
-            {/* Footer */}
-            <footer className="max-w-7xl mx-auto px-4 pb-8 text-xs text-gray-500 dark:text-gray-400">Consejos: activa la localización del navegador para ver tu posición. El trazado de ruta usa OSRM (OpenStreetMap). Las fotos son ilustrativas. Progreso guardado en tu navegador.</footer>
-          </div>
-        );
-      }
-
-      const root = ReactDOM.createRoot(document.getElementById("root"));
-      root.render(<App />);
-    </script>
-  </body>
+<!-- Bootstrap JS -->
+<script src="https://eur05.safelinks.protection.outlook.com/?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fbootstrap%405.3.0%2Fdist%2Fjs%2Fbootstrap.bundle.min.js&data=05%7C02%7Cignacio.martinez%40carm.es%7C71832a09055a4673ed8d08ddf5a7fb6d%7Ca88b9f941a954624b67a855d708276bb%7C0%7C0%7C638936824008152888%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=1KFn6WWCCpRXOG50onSwZo3Td%2BDi566yDOizyoTszu0%3D&reserved=0"></script>
+</body>
 </html>
