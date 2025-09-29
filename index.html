@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ruta de Tapas por Granada</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Web‑app para seguir una ruta de tapas por Granada con Google Maps, checklist y modo oscuro.">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <span class="pill">🍻 Ruta de Tapas por Granada</span>
+        <span id="start-flag" class="flag">🏁 Inicio</span>
+        <span id="end-flag" class="flag">🏁 Fin</span>
+        <span class="progress" id="progress">0 / 0</span>
+      </div>
+      <div class="controls">
+        <button id="startRouteBtn">Comenzar Ruta</button>
+        <button id="nextBtn">Siguiente parada ▶</button>
+        <button id="resetBtn">Reiniciar checklist</button>
+        <button id="themeBtn">🌙 Modo oscuro</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div id="map" aria-label="Mapa con la ruta y tu posición"></div>
+    <section class="cards" id="cards"></section>
+  </main>
+
+  <footer>Hecho con ❤️ para perderse por el Albaicín sin perder la tapa.</footer>
+
+  <!-- Papa Parse para CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <!-- Google Maps JS API (reemplaza la API key) -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=init"></script>
+  <script src="app.js"></script>
+</body>
+</html>
