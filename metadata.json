@@ -1,0 +1,5 @@
+{
+  "name": "Ruta de Tapas Granada",
+  "description": "An interactive, modern, and minimalist web application to explore a tapas route in Granada. Features a dynamic map with real-time user tracking, a checklist for visited stops, and light/dark modes, all persisted in your browser.",
+  "requestFramePermissions": []
+}

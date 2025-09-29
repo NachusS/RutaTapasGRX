@@ -1,31 +1,20 @@
-# Ruta de Tapas por Granada (SPA estática)
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-Web-app minimalista con Google Maps para seguir una ruta de tapas a pie por Granada, con checklist y progreso persistido en LocalStorage.
+# Run and deploy your AI Studio app
 
-## Estructura
-```
-/
-├─ index.html
-├─ styles.css
-├─ app.js
-├─ data/stops.json
-└─ assets/ (imágenes)
-```
+This contains everything you need to run your app locally.
 
-## Configuración de Google Maps
-1. Crea una API key en Google Cloud Console.
-2. Habilita **Maps JavaScript API** y **Directions API**.
-3. Restringe la key por *HTTP referrers* a:
-   - `https://<tu-usuario>.github.io/*`
-   - `https://<tu-usuario>.github.io/granada-tapas-route/*`
-4. En `index.html`, sustituye `YOUR_API_KEY` por tu clave.
+View your app in AI Studio: https://ai.studio/apps/drive/1YlGxBU5tIeM6PIULD8tGP1GNE9sAbVM0
 
-## Publicación en GitHub Pages
-- **Repo**: crea `granada-tapas-route` y sube estos ficheros a la raíz.
-- En *Settings → Pages*: selecciona *Build and deployment → Deploy from a branch*, y *Branch: main /(root)*.
-- La app quedará disponible en: `https://<tu-usuario>.github.io/granada-tapas-route/`
+## Run Locally
 
-## Notas
-- Las fotos incluidas son *placeholders*.
-- Si no concedes permisos de geolocalización, la app sigue funcionando: usa el botón **Siguiente parada**.
-- Si la cuota de Directions falla, se dibuja una línea directa como fallback.
+**Prerequisites:**  Node.js
+
+
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

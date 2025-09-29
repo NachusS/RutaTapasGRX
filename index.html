@@ -1,51 +1,53 @@
+
 <!DOCTYPE html>
-<html lang="es" data-theme="light">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light dark" />
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ruta de Tapas por Granada</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header class="app-header">
-      <div class="brand">
-        <span class="logo">🍻</span>
-        <h1>Ruta de Tapas por Granada</h1>
-      </div>
-      <div class="controls">
-        <div class="progress-wrap" aria-live="polite">
-          <div id="progressText" class="progress-text">Progreso: 0 / 0</div>
-          <div class="progress-bar"><div id="progressBar"></div></div>
-        </div>
-        <div class="buttons">
-          <button id="startBtn" class="btn" title="Comenzar ruta">Comenzar ruta</button>
-          <button id="nextBtn" class="btn" title="Ir a la siguiente parada">Siguiente parada ➡️</button>
-          <button id="resetBtn" class="btn btn-ghost" title="Reiniciar checklist">Reiniciar checklist</button>
-          <button id="themeBtn" class="btn btn-ghost" title="Cambiar tema">🌓 Tema</button>
-        </div>
-      </div>
-    </header>
-
-    <main class="layout">
-      <section id="map" aria-label="Mapa de la ruta"></section>
-      <aside id="panel" aria-label="Listado de paradas" tabindex="0"></aside>
-    </main>
-
-    <footer class="app-footer">
-      <p>
-        📍 Esta web usa tu geolocalización (si lo permites) para mostrar tu posición en el mapa.
-        Tus datos no se envían a ningún servidor: el estado se guarda localmente en tu navegador.
-      </p>
-      <p class="legend">
-        Leyenda: <span class="chip start">Inicio</span> <span class="chip stop">Parada</span> <span class="chip end">Fin</span>
-      </p>
-      <p class="tiny">
-        Hecho con ❤ para disfrutar Granada. Fotos de muestra. Ajusta coordenadas si es necesario.
-      </p>
-    </footer>
-
-    <script src="app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuy6NyB1m3HcX5ISqdEH0iax_CkqUrrwo&callback=initMap" defer></script>
-  </body>
+    <meta name="description" content="Una ruta de tapas interactiva por Granada con mapa, tracking y checklist." />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Ctext%20y=%22.9em%22%20font-size=%2290%22%3E%F0%9F%8D%B4%3C/text%3E%3C/svg%3E">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <style>
+      :root {
+        --map-height-mobile: 55vh;
+        --map-height-desktop: 100vh;
+        --panel-width-desktop: 400px;
+      }
+      @media (min-width: 1024px) {
+        #map { height: var(--map-height-desktop); }
+      }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900">
+    <div id="root"></div>
+    <script>
+      // This global function is required by the Google Maps script.
+      function initMap() {
+        // We notify our React app that the Google Maps API is ready.
+        window.dispatchEvent(new Event('google-maps-ready'));
+      }
+    </script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuy6NyB1m3HcX5ISqdEH0iax_CkqUrrwo&callback=initMap"
+      defer
+    ></script>
+    <script type="module" src="/index.tsx"></script>
+</body>
 </html>
