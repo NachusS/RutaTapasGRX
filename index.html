@@ -11,13 +11,18 @@
     <header class="app-header">
       <div class="brand">
         <span class="logo">🍻</span>
-        <h1>Ruta de Tapas por Granada</h1>
+        <h1>Ruta de Tapas por Granada v.6.2.</h1>
       </div>
       <div class="controls">
         <div class="progress-wrap" aria-live="polite">
           <div id="etaBox" class="eta">Dist.: — | Tiempo: —</div>
           <div id="progressText" class="progress-text">Progreso: 0 / 0</div>
           <div class="progress-bar"><div id="progressBar"></div></div>
+        </div>
+        <div id="metricsPanel" class="metrics" aria-live="polite">
+          <span id="mStops">Paradas: 0/0</span> ·
+          <span id="mDistance">Dist. total: —</span> ·
+          <span id="mTime">Tiempo total: —</span>
         </div>
         <div class="buttons">
           <button id="startBtn" class="btn" title="Comenzar ruta">Comenzar ruta</button>
@@ -37,16 +42,32 @@
       <p>
         📍 Esta web usa tu geolocalización (si lo permites) para mostrar tu posición en el mapa.
         Tus datos no se envían a ningún servidor: el estado se guarda localmente en tu navegador.
+        creado por chatGPT by NachusS
       </p>
       <p class="legend">
         Leyenda: <span class="chip start">Inicio</span> <span class="chip stop">Parada</span> <span class="chip end">Fin</span>
       </p>
       <p class="tiny">
-        Hecho con ❤ para disfrutar Granada. Fotos de muestra. Ajusta coordenadas si es necesario.
+        Hecho con ❤ para disfrutar Granada. Fotos generadas con IA para evitar copyright.
       </p>
     </footer>
 
     <script src="app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuy6NyB1m3HcX5ISqdEH0iax_CkqUrrwo&callback=initMap" defer></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js").catch(()=>{});
+        });
+      }
+      // v6.2: precache remote photos if needed (empty by default)
+      fetch('./data/remote_photos.json').then(r=>r.json()).then(map=>{
+        const urls = Object.values(map).filter(Boolean);
+        if(navigator.serviceWorker && navigator.serviceWorker.controller && urls.length){
+          navigator.serviceWorker.controller.postMessage({type:'PRECACHE_REMOTE_PHOTOS', urls});
+        }
+      }).catch(()=>{});
+    </script>
+    <!-- Sustituye YOUR_API_KEY por tu clave de Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" defer></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-/* App principal de la Ruta de Tapas por Granada (SPA estática) */
+/* App principal de la Ruta de Tapas por Granada (v6.2) */
 const LS_KEYS = {
   PROGRESS: "tapas_progress",
   THEME: "tapas_theme",
@@ -9,6 +9,50 @@ let map, directionsService, directionsRenderer;
 let userMarker = null;
 let routePolyline = null;
 let markers = new Map(); // stopId -> google.maps.Marker
+let stops = [];
+let meta = null;
+
+/* ==== Toast API ==== */
+let toastContainer = null;
+function ensureToastContainer(){
+  if(!toastContainer){
+    toastContainer = document.createElement('div');
+    toastContainer.className = 'toast-container';
+    document.body.appendChild(toastContainer);
+  }
+}
+function showToast({title="", message="", actions=[] , timeout=6000}){
+  ensureToastContainer();
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = `
+    ${title ? `<div class="title">${title}</div>` : ""}
+    <div class="msg">${message}</div>
+    <div class="actions"></div>
+  `;
+  const actionsEl = el.querySelector('.actions');
+  actions.forEach(a=>{
+    const b = document.createElement('button');
+    b.className = a.ghost ? 'btn btn-ghost' : 'btn';
+    b.textContent = a.label || 'OK';
+    b.addEventListener('click', ()=>{
+      try{ a.onClick && a.onClick(); }finally{ el.remove(); }
+    });
+    actionsEl.appendChild(b);
+  });
+  toastContainer.appendChild(el);
+  if(timeout){
+    setTimeout(()=>{ el.remove(); }, timeout);
+  }
+}
+
+/* === v6.1: resolver de fotos (prioriza local) === */
+function resolvePhoto(stop){
+  if(stop.photo_local) return stop.photo_local;
+  if(stop.photo) return stop.photo;
+  return "assets/cover.jpg";
+}
+
 /* === V5: ETA + llegada automática === */
 let currentTargetId = null;
 let arrivalPromptShown = false;
@@ -37,8 +81,6 @@ function extractTotalsFromDirections(dirResult){
     return { distanceText: "—", durationText: "—" };
   }
 }
-
-// Haversine para distancia usuario -> objetivo en metros
 function haversineMeters(lat1, lon1, lat2, lon2){
   const R = 6371000;
   const toRad = d => d * Math.PI / 180;
@@ -49,8 +91,27 @@ function haversineMeters(lat1, lon1, lat2, lon2){
   return R * c;
 }
 
-let stops = [];
-let meta = null;
+/* ==== Metrics update ==== */
+function updateMetrics(){
+  try{
+    const p = getProgress();
+    const total = stops.length;
+    const done = stops.filter(s => p[s.id]).length;
+    const mStops = document.getElementById('mStops');
+    const mDistance = document.getElementById('mDistance');
+    const mTime = document.getElementById('mTime');
+    if(mStops) mStops.textContent = `Paradas: ${done}/${total}`;
+
+    if(lastDirections){
+      const t = extractTotalsFromDirections(lastDirections);
+      if(mDistance) mDistance.textContent = `Dist. total: ${t.distanceText}`;
+      if(mTime) mTime.textContent = `Tiempo total: ${t.durationText}`;
+    }else{
+      if(mDistance) mDistance.textContent = `Dist. total: —`;
+      if(mTime) mTime.textContent = `Tiempo total: —`;
+    }
+  }catch(e){ /* noop */ }
+}
 
 const els = {
   panel: null,
@@ -62,7 +123,7 @@ const els = {
   themeBtn: null
 };
 
-// Exponer callback global para Google Maps
+// Callback global para Google Maps
 window.initMap = async function initMap(){
   els.panel = document.getElementById('panel');
   els.progressText = document.getElementById('progressText');
@@ -74,11 +135,9 @@ window.initMap = async function initMap(){
 
   bindUI();
 
-  // Tema
   const savedTheme = localStorage.getItem(LS_KEYS.THEME) || "light";
   document.documentElement.setAttribute("data-theme", savedTheme);
 
-  // Cargar datos
   try{
     const res = await fetch('data/stops.json');
     const data = await res.json();
@@ -86,11 +145,10 @@ window.initMap = async function initMap(){
     stops = (data.stops || []).slice().sort((a,b)=> (a.order??999)-(b.order??999));
   }catch(err){
     console.error("Error al cargar stops.json", err);
-    alert("No se pudieron cargar las paradas. Revisa data/stops.json");
+    showToast({title:"Error",message:"No se pudieron cargar las paradas."});
     return;
   }
 
-  // Inicializar mapa
   map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: meta?.start?.lat || 37.17855, lng: meta?.start?.lng || -3.60360 },
     zoom: 15,
@@ -102,16 +160,12 @@ window.initMap = async function initMap(){
   directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers: true });
   directionsRenderer.setMap(map);
 
-  // Markers y polyline base
   drawMarkers();
   drawBasePolyline();
-
-  // UI de tarjetas
   renderCards();
   updateProgressUI();
-
-  // Geolocalización
   startGeolocationWatch();
+  updateMetrics();
 };
 
 function bindUI(){
@@ -127,6 +181,7 @@ function bindUI(){
     localStorage.removeItem(LS_KEYS.NEXT);
     updateProgressUI();
     renderCards();
+    updateMetrics();
   });
 
   document.getElementById('startBtn').addEventListener('click', ()=>{
@@ -146,53 +201,33 @@ function bindUI(){
   });
 }
 
+/* Marcadores y popups */
 function drawMarkers(){
   markers.clear();
-
-  // Inicio y fin con iconos distintos
   if(meta?.start){
     new google.maps.Marker({
       position: {lat: meta.start.lat, lng: meta.start.lng},
-      map,
-      title: `Inicio: ${meta.start.name}`,
-      icon: {
-        path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-        scale: 6,
-        fillColor: "#22c55e",
-        fillOpacity: 1,
-        strokeColor: "#14532d",
-        strokeWeight: 1.5
-      }
+      map, title: `Inicio: ${meta.start.name}`,
+      icon: { path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW, scale:6, fillColor:"#22c55e", fillOpacity:1, strokeColor:"#14532d", strokeWeight:1.5 }
     });
   }
-
   if(meta?.end){
     new google.maps.Marker({
       position: {lat: meta.end.lat, lng: meta.end.lng},
-      map,
-      title: `Fin: ${meta.end.name}`,
-      icon: {
-        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-        scale: 6,
-        fillColor: "#0ea5e9",
-        fillOpacity: 1,
-        strokeColor: "#0c4a6e",
-        strokeWeight: 1.5
-      }
+      map, title: `Fin: ${meta.end.name}`,
+      icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, scale:6, fillColor:"#0ea5e9", fillOpacity:1, strokeColor:"#0c4a6e", strokeWeight:1.5 }
     });
   }
-
-  // Paradas
   const info = new google.maps.InfoWindow();
   for(const stop of stops){
     const m = new google.maps.Marker({
       position: {lat: stop.lat, lng: stop.lng},
-      map,
-      title: stop.name
+      map, title: stop.name
     });
     m.addListener('click', ()=>{
       const done = isDone(stop.id);
       const links = [
+        stop.card_photo ? `<a href='${stop.card_photo}' target='_blank' rel='noopener'>Tapa</a>` : '',
         stop.website ? `<a href='${stop.website}' target='_blank' rel='noopener'>Web</a>` : '',
         stop.gmaps ? `<a href='${stop.gmaps}' target='_blank' rel='noopener'>Maps</a>` : '',
         stop.phone ? `<a href='tel:${stop.phone}'>Tel</a>` : ''
@@ -222,14 +257,9 @@ function drawMarkers(){
 }
 
 function drawBasePolyline(){
-  if(routePolyline){
-    routePolyline.setMap(null);
-    routePolyline = null;
-  }
+  if(routePolyline){ routePolyline.setMap(null); routePolyline = null; }
   const path = stops.map(s => ({lat:s.lat, lng:s.lng}));
-  routePolyline = new google.maps.Polyline({
-    path, geodesic:true, strokeColor:"#34d399", strokeOpacity:0.8, strokeWeight:4
-  });
+  routePolyline = new google.maps.Polyline({ path, geodesic:true, strokeColor:"#34d399", strokeOpacity:0.8, strokeWeight:4 });
   routePolyline.setMap(map);
 
   const bounds = new google.maps.LatLngBounds();
@@ -241,12 +271,15 @@ function drawBasePolyline(){
 
 function renderCards(){
   const progress = getProgress();
-  els.panel.innerHTML = "";
+  const panel = document.getElementById('panel');
+  panel.innerHTML = "";
   for(const stop of stops){
     const done = !!progress[stop.id];
     const card = document.createElement('article');
     card.className = "card";
-    const imgSrc = stop.photo || "assets/placeholder.jpg";
+    const imgSrc = resolvePhoto(stop);
+    const facade = stop.photo_local || imgSrc;
+    const tapa = stop.card_photo || "";
     const tel = stop.phone ? `<a href="tel:${stop.phone}">${stop.phone}</a>` : "";
     const web = stop.website ? `<a href="${stop.website}" target="_blank" rel="noopener">Web</a>` : "";
     const gmaps = stop.gmaps ? `<a href="${stop.gmaps}" target="_blank" rel="noopener">Ver en Google Maps</a>` : "";
@@ -259,29 +292,27 @@ function renderCards(){
         ${address}
         ${hours}
         ${price ? `<div>💶 ${price}</div>` : ""}
-        <div class='meta'>
-          ${tel} ${web} ${gmaps}
-        </div>
+        <div class='meta'>${tel} ${web} ${gmaps}</div>
       </div>
     `;
     card.innerHTML = `
-      <img src="${imgSrc}" alt="Foto de ${stop.name}" loading="lazy" width="120" height="120" />
+      <img src="${facade}" alt="Foto de ${stop.name}" loading="lazy" width="160" height="160" />
       <div class="card-body">
         <div class="card-title">${stop.order}. ${stop.name}</div>
         <p class="card-sub">Tapa típica: <strong>${stop.tapa || "—"}</strong></p>
         ${tags}
         ${details}
+        ${tapa ? `<div class="card-sub" style="margin-top:.4rem">📷 <a href="${tapa}" target="_blank" rel="noopener">Ver foto de la tapa</a></div>` : ""}
         <div class="card-actions">
           <button class="btn" data-action="go" data-stop="${stop.id}">Ir a esta parada</button>
           <button class="btn btn-ghost" data-action="done" data-stop="${stop.id}">${done? "Desmarcar" : "Marcar como hecha"}</button>
         </div>
       </div>
     `;
-    els.panel.appendChild(card);
+    panel.appendChild(card);
   }
 
-  // Delegación permanente
-  els.panel.addEventListener('click', (e)=>{
+  panel.addEventListener('click', (e)=>{
     const btn = e.target.closest('button');
     if(!btn) return;
     const stopId = btn.getAttribute('data-stop');
@@ -330,64 +361,22 @@ function drawDirections(dest){
       lastDirections = result;
       const t = extractTotalsFromDirections(result);
       setETA(t.distanceText, t.durationText, currentTargetId ? "Siguiente" : "Ruta");
+      updateMetrics();
     }else{
-      console.warn("Directions API falló, usar polyline como fallback:", status);
+      console.warn("Directions API falló, fallback:", status);
       const path = [origin, new google.maps.LatLng(dest.lat, dest.lng)];
-      const fallback = new google.maps.Polyline({
-        path, geodesic:true, strokeColor:"#0ea5e9", strokeOpacity:0.9, strokeWeight:5
-      });
+      const fallback = new google.maps.Polyline({ path, geodesic:true, strokeColor:"#0ea5e9", strokeOpacity:0.9, strokeWeight:5 });
       fallback.setMap(map);
       directionsRenderer.set('directions', null);
     }
   });
 }
 
-
-function routeFullItinerary(){
-  if(!stops.length) return;
-  let origin = null;
-  if(userMarker){
-    origin = userMarker.getPosition();
-  }else if(meta?.start){
-    origin = new google.maps.LatLng(meta.start.lat, meta.start.lng);
-  }else{
-    origin = new google.maps.LatLng(stops[0].lat, stops[0].lng);
-  }
-  const wp = stops.slice(0, Math.max(0, stops.length - 1)).map(s => ({
-    location: new google.maps.LatLng(s.lat, s.lng),
-    stopover: true
-  }));
-  const destination = new google.maps.LatLng(stops[stops.length - 1].lat, stops[stops.length - 1].lng);
-
-  directionsService.route({
-    origin,
-    destination,
-    waypoints: wp,
-    optimizeWaypoints: false,
-    travelMode: google.maps.TravelMode.WALKING
-  }, (result, status) => {
-    if(status === "OK"){
-      directionsRenderer.setDirections(result);
-      lastDirections = result;
-      const t = extractTotalsFromDirections(result);
-      setETA(t.distanceText, t.durationText, "Itinerario restante");
-    }else{
-      console.warn("No se pudo trazar el itinerario completo:", status);
-      // Fallback: dibuja polyline base (ya está en pantalla)
-      directionsRenderer.set('directions', null);
-    }
-  });
-}
-
-
-/* === V4: helpers de progreso para recalcular la ruta completa desde la parada alcanzada === */
+/* Itinerario completo restante (waypoints) */
 function getLastCompletedStop(){
   const p = getProgress();
-  // Buscar el stop hecho con mayor 'order'
   let last = null;
-  for(const s of stops){
-    if(p[s.id]) last = s;
-  }
+  for(const s of stops){ if(p[s.id]) last = s; }
   return last;
 }
 function getRemainingStops(){
@@ -397,33 +386,21 @@ function getRemainingStops(){
 function routeRemainingItinerary(){
   const remaining = getRemainingStops();
   if(!remaining.length){
-    // Si todo está hecho, trazamos al fin de ruta
-    if(meta?.end){
-      drawDirections({ lat: meta.end.lat, lng: meta.end.lng });
-    }
+    if(meta?.end){ drawDirections({ lat: meta.end.lat, lng: meta.end.lng }); }
     return;
   }
-
-  // Origen: tu posición > última parada completada > start
   let origin = null;
   if(userMarker){
     origin = userMarker.getPosition();
   }else{
     const last = getLastCompletedStop();
-    if(last){
-      origin = new google.maps.LatLng(last.lat, last.lng);
-    }else if(meta?.start){
-      origin = new google.maps.LatLng(meta.start.lat, meta.start.lng);
-    }else{
-      origin = new google.maps.LatLng(remaining[0].lat, remaining[0].lng);
-    }
+    if(last){ origin = new google.maps.LatLng(last.lat, last.lng); }
+    else if(meta?.start){ origin = new google.maps.LatLng(meta.start.lat, meta.start.lng); }
+    else { origin = new google.maps.LatLng(remaining[0].lat, remaining[0].lng); }
   }
-
-  // Waypoints: todas las restantes menos la última (destino)
   const destStop = remaining[remaining.length - 1];
   const wps = remaining.slice(0, Math.max(0, remaining.length - 1)).map(s => ({
-    location: new google.maps.LatLng(s.lat, s.lng),
-    stopover: true
+    location: new google.maps.LatLng(s.lat, s.lng), stopover: true
   }));
 
   directionsService.route({
@@ -438,17 +415,18 @@ function routeRemainingItinerary(){
       lastDirections = result;
       const t = extractTotalsFromDirections(result);
       setETA(t.distanceText, t.durationText, "Itinerario restante");
+      updateMetrics();
     }else{
       console.warn("No se pudo trazar el itinerario restante:", status);
       directionsRenderer.set('directions', null);
-      drawBasePolyline(); // fallback
+      drawBasePolyline();
     }
   });
 }
 
 function startGeolocationWatch(){
   if(!('geolocation' in navigator)){
-    console.warn("Geolocalización no disponible en este navegador.");
+    console.warn("Geolocalización no disponible.");
     return;
   }
   navigator.geolocation.watchPosition((pos)=>{
@@ -456,42 +434,41 @@ function startGeolocationWatch(){
     const latlng = new google.maps.LatLng(latitude, longitude);
     if(!userMarker){
       userMarker = new google.maps.Marker({
-        position: latlng,
-        map,
-        title: "Tu posición",
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 6,
-          fillColor: "#ef4444",
-          fillOpacity: 1,
-          strokeColor: "#7f1d1d",
-          strokeWeight: 1.5
-        }
+        position: latlng, map, title: "Tu posición",
+        icon: { path: google.maps.SymbolPath.CIRCLE, scale:6, fillColor:"#ef4444", fillOpacity:1, strokeColor:"#7f1d1d", strokeWeight:1.5 }
       });
     }else{
       userMarker.setPosition(latlng);
     }
-    /* V5 arrival check */
+
+    // Llegada automática con toast
     try{
       if(currentTargetId){
         const target = stops.find(s => s.id === currentTargetId);
         if(target){
           const dist = haversineMeters(latitude, longitude, target.lat, target.lng);
-          if(dist <= 35 && !arrivalPromptShown){ // ~35 m umbral
+          if(dist <= 35 && !arrivalPromptShown){
             arrivalPromptShown = true;
-            if(confirm(`Has llegado a "${target.name}". ¿Marcar esta parada como hecha?`)){
-              if(!isDone(currentTargetId)) toggleDone(currentTargetId);
-              // Ajustar siguiente objetivo y recalcular restante
-              currentTargetId = null;
-              routeRemainingItinerary();
-            }else{
-              // Si no, permite que vuelva a preguntar tras alejarse > umbral
-              setTimeout(()=>{ arrivalPromptShown = false; }, 15000);
-            }
+            showToast({
+              title:'Llegada',
+              message:`Has llegado a "${target.name}". ¿Marcar esta parada como hecha?`,
+              actions:[
+                {label:'Sí, marcar', onClick:()=>{
+                  if(!isDone(currentTargetId)) toggleDone(currentTargetId);
+                  currentTargetId = null;
+                  routeRemainingItinerary();
+                }},
+                {label:'No, luego', ghost:true, onClick:()=>{
+                  setTimeout(()=>{ arrivalPromptShown = false; }, 15000);
+                }}
+              ],
+              timeout:10000
+            });
           }
         }
       }
-    }catch(e){ console.warn("Error en comprobación de llegada:", e); }
+    }catch(e){ console.warn("Error en llegada:", e); }
+
   }, (err)=>{
     console.warn("No se pudo obtener la ubicación:", err.message);
   }, { enableHighAccuracy:true, maximumAge:5000, timeout:10000 });
@@ -499,9 +476,7 @@ function startGeolocationWatch(){
 
 /* ---------- Estado / progreso ---------- */
 function getProgress(){
-  try{
-    return JSON.parse(localStorage.getItem(LS_KEYS.PROGRESS)) || {};
-  }catch{ return {}; }
+  try{ return JSON.parse(localStorage.getItem(LS_KEYS.PROGRESS)) || {}; }catch{ return {}; }
 }
 function setProgress(obj){ localStorage.setItem(LS_KEYS.PROGRESS, JSON.stringify(obj)); }
 function isDone(stopId){ const p = getProgress(); return !!p[stopId]; }
@@ -512,10 +487,8 @@ function toggleDone(stopId){
   setProgress(p);
   updateProgressUI();
   renderCards();
-  // Si hemos marcado como hecha la siguiente, recalcular el itinerario restante
-  if(wasNext || p[stopId]){
-    routeRemainingItinerary();
-  }
+  updateMetrics();
+  if(wasNext || p[stopId]){ routeRemainingItinerary(); }
 }
 function updateProgressUI(){
   const p = getProgress();
@@ -527,8 +500,6 @@ function updateProgressUI(){
 }
 function getNextStop(){
   const p = getProgress();
-  for(const s of stops){
-    if(!p[s.id]) return s;
-  }
+  for(const s of stops){ if(!p[s.id]) return s; }
   return null;
 }

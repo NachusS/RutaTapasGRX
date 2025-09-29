@@ -20,19 +20,14 @@
       "name": "Bar Lara (San Miguel Bajo)",
       "lat": 37.18127,
       "lng": -3.59255,
-      "address": "Plaza San Miguel Bajo",
+      "address": "",
       "tapa": "Habitas con jamón / tortilla",
-      "photo": "https://source.unsplash.com/800x600/?granada,tapas,bar",
-      "notes": "Primera parada al subir por el Albaicín",
-      "phone": "",
-      "website": "",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/lara.jpg",
+      "card_photo": "assets/lara_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
       "price": "€",
-      "tags": [
-        "Clásico",
-        "Terraza"
-      ]
+      "tags": []
     },
     {
       "id": "mirador-sannicolas",
@@ -40,17 +35,14 @@
       "name": "Restaurante Mirador de San Nicolás",
       "lat": 37.18192,
       "lng": -3.59086,
+      "address": "",
       "tapa": "Tosta moruna",
-      "photo": "https://source.unsplash.com/800x600/?granada,mirador,alhambra",
-      "phone": "",
-      "website": "",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/mirador-sannicolas.jpg",
+      "card_photo": "assets/mirador-sannicolas_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
-      "price": "€€",
-      "tags": [
-        "Vistas",
-        "Turístico"
-      ]
+      "price": "€",
+      "tags": []
     },
     {
       "id": "aixa",
@@ -58,15 +50,14 @@
       "name": "Restaurante Aixa (Plaza Larga / Arco de las Pesas)",
       "lat": 37.18261,
       "lng": -3.58969,
+      "address": "",
       "tapa": "Berenjenas con miel",
-      "photo": "https://source.unsplash.com/800x600/?granada,plaza,albaicin",
-      "website": "",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/aixa.jpg",
+      "card_photo": "assets/aixa_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
       "price": "€",
-      "tags": [
-        "Plaza Larga"
-      ]
+      "tags": []
     },
     {
       "id": "ladrillo-ii",
@@ -74,14 +65,14 @@
       "name": "Restaurante Ladrillo II (Calle Panaderos)",
       "lat": 37.18202,
       "lng": -3.58853,
+      "address": "",
       "tapa": "Migas / choto",
-      "photo": "https://source.unsplash.com/800x600/?granada,restaurante,carnes",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/ladrillo-ii.jpg",
+      "card_photo": "assets/ladrillo-ii_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
-      "price": "€€",
-      "tags": [
-        "Carnes"
-      ]
+      "price": "€",
+      "tags": []
     },
     {
       "id": "aliatar",
@@ -89,14 +80,14 @@
       "name": "Bar Aliatar (Plaza Aliatar)",
       "lat": 37.18161,
       "lng": -3.58822,
+      "address": "",
       "tapa": "Pionono salado / pescaíto",
-      "photo": "https://source.unsplash.com/800x600/?granada,tapas,tradición",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/aliatar.jpg",
+      "card_photo": "assets/aliatar_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
       "price": "€",
-      "tags": [
-        "Tradición"
-      ]
+      "tags": []
     },
     {
       "id": "entraiya",
@@ -104,14 +95,14 @@
       "name": "La Entraiya (Calle Pagés)",
       "lat": 37.18101,
       "lng": -3.58804,
+      "address": "",
       "tapa": "Montadito de lomo",
-      "photo": "https://source.unsplash.com/800x600/?granada,montadito,tapas",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/entraiya.jpg",
+      "card_photo": "assets/entraiya_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
       "price": "€",
-      "tags": [
-        "Montaditos"
-      ]
+      "tags": []
     },
     {
       "id": "casa-1899",
@@ -119,14 +110,14 @@
       "name": "Casa 1899 (Paseo de los Tristes)",
       "lat": 37.17938,
       "lng": -3.59039,
+      "address": "",
       "tapa": "Remojón granadino",
-      "photo": "https://source.unsplash.com/800x600/?granada,paseo de los tristes,rio",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/casa-1899.jpg",
+      "card_photo": "assets/casa-1899_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
-      "price": "€€",
-      "tags": [
-        "Ribera río"
-      ]
+      "price": "€",
+      "tags": []
     },
     {
       "id": "ras-cafe",
@@ -134,14 +125,14 @@
       "name": "Ras Café (dirección Plaza Nueva)",
       "lat": 37.17777,
       "lng": -3.59423,
+      "address": "",
       "tapa": "Tosta de salmón",
-      "photo": "https://source.unsplash.com/800x600/?granada,café,copas",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/ras-cafe.jpg",
+      "card_photo": "assets/ras-cafe_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
       "price": "€",
-      "tags": [
-        "Café & copa"
-      ]
+      "tags": []
     },
     {
       "id": "minotauro",
@@ -149,14 +140,14 @@
       "name": "Bar Minotauro (dirección Plaza Nueva)",
       "lat": 37.17752,
       "lng": -3.59352,
+      "address": "",
       "tapa": "Paella / pincho",
-      "photo": "https://source.unsplash.com/800x600/?granada,bar,paella",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/minotauro.jpg",
+      "card_photo": "assets/minotauro_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
       "price": "€",
-      "tags": [
-        "Paella tapa"
-      ]
+      "tags": []
     },
     {
       "id": "taberna-22",
@@ -164,14 +155,14 @@
       "name": "Taberna el 22 (Cuesta San Gregorio)",
       "lat": 37.17852,
       "lng": -3.59305,
+      "address": "",
       "tapa": "Jamón y queso",
-      "photo": "https://source.unsplash.com/800x600/?granada,taberna,histórico",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/taberna-22.jpg",
+      "card_photo": "assets/taberna-22_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
       "price": "€",
-      "tags": [
-        "Cuesta histórica"
-      ]
+      "tags": []
     },
     {
       "id": "cisco-tierra",
@@ -179,14 +170,14 @@
       "name": "Taberna Cisco y Tierra (C/ Lepanto)",
       "lat": 37.17576,
       "lng": -3.59938,
+      "address": "",
       "tapa": "Carrillera",
-      "photo": "https://source.unsplash.com/800x600/?granada,taberna,guiso",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/cisco-tierra.jpg",
+      "card_photo": "assets/cisco-tierra_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
-      "price": "€€",
-      "tags": [
-        "Guiso casero"
-      ]
+      "price": "€",
+      "tags": []
     },
     {
       "id": "lumbre-moma",
@@ -194,14 +185,14 @@
       "name": "Lumbre: Las Brasas de Moma",
       "lat": 37.17517,
       "lng": -3.60016,
+      "address": "",
       "tapa": "Brocheta a la brasa",
-      "photo": "https://source.unsplash.com/800x600/?granada,brasa,restaurante",
-      "gmaps": "https://maps.app.goo.gl/",
-      "hours": "13:00–23:30",
-      "price": "€€",
-      "tags": [
-        "Brasas"
-      ]
+      "photo_local": "assets/lumbre-moma.jpg",
+      "card_photo": "assets/lumbre-moma_tapa.jpg",
+      "gmaps": "",
+      "hours": "12:00–23:00",
+      "price": "€",
+      "tags": []
     },
     {
       "id": "blanca-paloma",
@@ -209,14 +200,14 @@
       "name": "Restaurante La Blanca Paloma Centro (Escudo del Carmen)",
       "lat": 37.17458,
       "lng": -3.60067,
+      "address": "",
       "tapa": "Croquetas caseras",
-      "photo": "https://source.unsplash.com/800x600/?granada,restaurante,centro",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/blanca-paloma.jpg",
+      "card_photo": "assets/blanca-paloma_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
-      "price": "€€",
-      "tags": [
-        "Centro"
-      ]
+      "price": "€",
+      "tags": []
     },
     {
       "id": "patio-braserito",
@@ -224,14 +215,14 @@
       "name": "Bar Patio Braserito (C/ Navas)",
       "lat": 37.17406,
       "lng": -3.60157,
+      "address": "",
       "tapa": "Pinchito moruno",
-      "photo": "https://source.unsplash.com/800x600/?granada,bar,navas",
-      "gmaps": "https://maps.app.goo.gl/",
+      "photo_local": "assets/patio-braserito.jpg",
+      "card_photo": "assets/patio-braserito_tapa.jpg",
+      "gmaps": "",
       "hours": "12:00–23:00",
       "price": "€",
-      "tags": [
-        "C/ Navas"
-      ]
+      "tags": []
     },
     {
       "id": "la-tana",
@@ -239,14 +230,14 @@
       "name": "Taberna La Tana (Virgen del Rosario) — FIN",
       "lat": 37.17366,
       "lng": -3.59839,
+      "address": "",
       "tapa": "Selección de vinos + tapa del día",
-      "photo": "https://source.unsplash.com/800x600/?granada,vino,taberna",
-      "gmaps": "https://maps.app.goo.gl/",
-      "hours": "12:00–23:30",
-      "price": "€€",
-      "tags": [
-        "Vinos"
-      ]
+      "photo_local": "assets/la-tana.jpg",
+      "card_photo": "assets/la-tana_tapa.jpg",
+      "gmaps": "",
+      "hours": "12:00–23:00",
+      "price": "€",
+      "tags": []
     }
   ]
 }
