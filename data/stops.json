@@ -22,8 +22,17 @@
       "lng": -3.59255,
       "address": "Plaza San Miguel Bajo",
       "tapa": "Habitas con jamón / tortilla",
-      "photo": "assets/lara.jpg",
-      "notes": "Primera parada al subir por el Albaicín"
+      "photo": "https://source.unsplash.com/800x600/?granada,tapas,bar",
+      "notes": "Primera parada al subir por el Albaicín",
+      "phone": "",
+      "website": "",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€",
+      "tags": [
+        "Clásico",
+        "Terraza"
+      ]
     },
     {
       "id": "mirador-sannicolas",
@@ -32,7 +41,16 @@
       "lat": 37.18192,
       "lng": -3.59086,
       "tapa": "Tosta moruna",
-      "photo": "assets/mirador.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,mirador,alhambra",
+      "phone": "",
+      "website": "",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€€",
+      "tags": [
+        "Vistas",
+        "Turístico"
+      ]
     },
     {
       "id": "aixa",
@@ -41,7 +59,14 @@
       "lat": 37.18261,
       "lng": -3.58969,
       "tapa": "Berenjenas con miel",
-      "photo": "assets/aixa.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,plaza,albaicin",
+      "website": "",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€",
+      "tags": [
+        "Plaza Larga"
+      ]
     },
     {
       "id": "ladrillo-ii",
@@ -50,7 +75,13 @@
       "lat": 37.18202,
       "lng": -3.58853,
       "tapa": "Migas / choto",
-      "photo": "assets/ladrillo2.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,restaurante,carnes",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€€",
+      "tags": [
+        "Carnes"
+      ]
     },
     {
       "id": "aliatar",
@@ -59,7 +90,13 @@
       "lat": 37.18161,
       "lng": -3.58822,
       "tapa": "Pionono salado / pescaíto",
-      "photo": "assets/aliatar.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,tapas,tradición",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€",
+      "tags": [
+        "Tradición"
+      ]
     },
     {
       "id": "entraiya",
@@ -68,7 +105,13 @@
       "lat": 37.18101,
       "lng": -3.58804,
       "tapa": "Montadito de lomo",
-      "photo": "assets/entraiya.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,montadito,tapas",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€",
+      "tags": [
+        "Montaditos"
+      ]
     },
     {
       "id": "casa-1899",
@@ -77,7 +120,13 @@
       "lat": 37.17938,
       "lng": -3.59039,
       "tapa": "Remojón granadino",
-      "photo": "assets/casa1899.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,paseo de los tristes,rio",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€€",
+      "tags": [
+        "Ribera río"
+      ]
     },
     {
       "id": "ras-cafe",
@@ -86,7 +135,13 @@
       "lat": 37.17777,
       "lng": -3.59423,
       "tapa": "Tosta de salmón",
-      "photo": "assets/ras.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,café,copas",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€",
+      "tags": [
+        "Café & copa"
+      ]
     },
     {
       "id": "minotauro",
@@ -95,7 +150,13 @@
       "lat": 37.17752,
       "lng": -3.59352,
       "tapa": "Paella / pincho",
-      "photo": "assets/minotauro.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,bar,paella",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€",
+      "tags": [
+        "Paella tapa"
+      ]
     },
     {
       "id": "taberna-22",
@@ -104,7 +165,13 @@
       "lat": 37.17852,
       "lng": -3.59305,
       "tapa": "Jamón y queso",
-      "photo": "assets/el22.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,taberna,histórico",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€",
+      "tags": [
+        "Cuesta histórica"
+      ]
     },
     {
       "id": "cisco-tierra",
@@ -113,7 +180,13 @@
       "lat": 37.17576,
       "lng": -3.59938,
       "tapa": "Carrillera",
-      "photo": "assets/cisco.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,taberna,guiso",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€€",
+      "tags": [
+        "Guiso casero"
+      ]
     },
     {
       "id": "lumbre-moma",
@@ -122,7 +195,13 @@
       "lat": 37.17517,
       "lng": -3.60016,
       "tapa": "Brocheta a la brasa",
-      "photo": "assets/lumbre.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,brasa,restaurante",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "13:00–23:30",
+      "price": "€€",
+      "tags": [
+        "Brasas"
+      ]
     },
     {
       "id": "blanca-paloma",
@@ -131,7 +210,13 @@
       "lat": 37.17458,
       "lng": -3.60067,
       "tapa": "Croquetas caseras",
-      "photo": "assets/blancapaloma.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,restaurante,centro",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€€",
+      "tags": [
+        "Centro"
+      ]
     },
     {
       "id": "patio-braserito",
@@ -140,7 +225,13 @@
       "lat": 37.17406,
       "lng": -3.60157,
       "tapa": "Pinchito moruno",
-      "photo": "assets/braserito.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,bar,navas",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:00",
+      "price": "€",
+      "tags": [
+        "C/ Navas"
+      ]
     },
     {
       "id": "la-tana",
@@ -149,7 +240,13 @@
       "lat": 37.17366,
       "lng": -3.59839,
       "tapa": "Selección de vinos + tapa del día",
-      "photo": "assets/latana.jpg"
+      "photo": "https://source.unsplash.com/800x600/?granada,vino,taberna",
+      "gmaps": "https://maps.app.goo.gl/",
+      "hours": "12:00–23:30",
+      "price": "€€",
+      "tags": [
+        "Vinos"
+      ]
     }
   ]
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Ruta de Tapas por Granada</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <span class="logo">🍻</span>
+        <h1>Ruta de Tapas por Granada</h1>
+      </div>
+      <div class="controls">
+        <div class="progress-wrap" aria-live="polite">
+          <div id="etaBox" class="eta">Dist.: — | Tiempo: —</div>
+          <div id="progressText" class="progress-text">Progreso: 0 / 0</div>
+          <div class="progress-bar"><div id="progressBar"></div></div>
+        </div>
+        <div class="buttons">
+          <button id="startBtn" class="btn" title="Comenzar ruta">Comenzar ruta</button>
+          <button id="nextBtn" class="btn" title="Ir a la siguiente parada">Siguiente parada ➡️</button>
+          <button id="resetBtn" class="btn btn-ghost" title="Reiniciar checklist">Reiniciar checklist</button>
+          <button id="themeBtn" class="btn btn-ghost" title="Cambiar tema">🌓 Tema</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section id="map" aria-label="Mapa de la ruta"></section>
+      <aside id="panel" aria-label="Listado de paradas" tabindex="0"></aside>
+    </main>
+
+    <footer class="app-footer">
+      <p>
+        📍 Esta web usa tu geolocalización (si lo permites) para mostrar tu posición en el mapa.
+        Tus datos no se envían a ningún servidor: el estado se guarda localmente en tu navegador.
+      </p>
+      <p class="legend">
+        Leyenda: <span class="chip start">Inicio</span> <span class="chip stop">Parada</span> <span class="chip end">Fin</span>
+      </p>
+      <p class="tiny">
+        Hecho con ❤ para disfrutar Granada. Fotos de muestra. Ajusta coordenadas si es necesario.
+      </p>
+    </footer>
+
+    <script src="app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuy6NyB1m3HcX5ISqdEH0iax_CkqUrrwo&callback=initMap" defer></script>
+  </body>
+</html>
