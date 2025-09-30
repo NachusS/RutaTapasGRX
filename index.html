@@ -11,7 +11,7 @@
     <header class="app-header">
       <div class="brand">
         <span class="logo">🍻</span>
-        <h1>Ruta de Tapas por Granada v.6.2.</h1>
+        <h1>Ruta de Tapas por Granada</h1>
       </div>
       <div class="controls">
         <div class="progress-wrap" aria-live="polite">
@@ -42,13 +42,12 @@
       <p>
         📍 Esta web usa tu geolocalización (si lo permites) para mostrar tu posición en el mapa.
         Tus datos no se envían a ningún servidor: el estado se guarda localmente en tu navegador.
-        creado por chatGPT by NachusS
       </p>
       <p class="legend">
         Leyenda: <span class="chip start">Inicio</span> <span class="chip stop">Parada</span> <span class="chip end">Fin</span>
       </p>
       <p class="tiny">
-        Hecho con ❤ para disfrutar Granada. Fotos generadas con IA para evitar copyright.
+        Hecho con ❤ para disfrutar Granada.
       </p>
     </footer>
 
@@ -59,7 +58,6 @@
           navigator.serviceWorker.register("./sw.js").catch(()=>{});
         });
       }
-      // v6.2: precache remote photos if needed (empty by default)
       fetch('./data/remote_photos.json').then(r=>r.json()).then(map=>{
         const urls = Object.values(map).filter(Boolean);
         if(navigator.serviceWorker && navigator.serviceWorker.controller && urls.length){
@@ -67,7 +65,6 @@
         }
       }).catch(()=>{});
     </script>
-    <!-- Sustituye YOUR_API_KEY por tu clave de Google Maps -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuy6NyB1m3HcX5ISqdEH0iax_CkqUrrwo&callback=initMap" defer></script>
   </body>
 </html>
