@@ -1,4 +1,4 @@
-# Ruta de Tapas por Granada — v6.2
+# Ruta de Tapas por Granada — v6.4
 
 Web-app estática con Google Maps (ruta a pie, geoposición, checklist con LocalStorage, modo oscuro, métricas, ETA, toasts) y soporte offline (Service Worker).
 
