@@ -1,0 +1,21 @@
+﻿id,name,address,tapa,lat,lng,photo,notes,order,Paso
+puerta_elvira,Puerta de Elvira,"Plaza del Triunfo, Granada",Punto de encuentro inicial,37.18214277,-3.59961789,,,1,1
+lara,Bar Lara (San Miguel Bajo),Plaza San Miguel Bajo,Habitas con jamón / tortilla,37.18127,-3.59255,assets/lara.jpg,Primera parada al subir por el Albaicín,1,2
+mirador-sannicolas,Restaurante Mirador de San Nicolás,,Tosta moruna,37.18192,-3.59086,assets/mirador.jpg,,2,3
+aixa,Restaurante Aixa (Plaza Larga / Arco de las Pesas),,Berenjenas con miel,37.18261,-3.58969,assets/aixa.jpg,,3,4
+ladrillo-ii,Restaurante Ladrillo II (Calle Panaderos),,Migas / choto,37.18202,-3.58853,assets/ladrillo2.jpg,,4,5
+aliatar,Bar Aliatar (Plaza Aliatar),,Pionono salado / pescaíto,37.18161,-3.58822,assets/aliatar.jpg,,5,6
+entraiya,La Entraiya (Calle Pagés),,Montadito de lomo,37.18101,-3.58804,assets/entraiya.jpg,,6,7
+casa-1899,Casa 1899 (Paseo de los Tristes),,Remojón granadino,37.17938,-3.59039,assets/casa1899.jpg,,7,8
+ras-cafe,Ras Café (dirección Plaza Nueva),,Tosta de salmón,37.17777,-3.59423,assets/ras.jpg,,8,9
+minotauro,Bar Minotauro (dirección Plaza Nueva),,Paella / pincho,37.17752,-3.59352,assets/minotauro.jpg,,9,10
+taberna-22,Taberna el 22 (Cuesta San Gregorio),,Jamón y queso,37.17852,-3.59305,assets/el22.jpg,,10,11
+bodegas_castaneda,Las Bodegas Castañeda,"C. Almireceros, 1-3, Centro, 18010 Granada","Tablas frías y calientes, embutidos, croquetas, rabo de toro, bacalao con pisto, tomate aliñado, gazpacho, montaditos, Calicasas (vermut de la casa)",37.17683,-3.59699,,Clásico de Granada; tapa con consumición,,12
+bar_la_muralla,Bar La Muralla,"C. Elvira, 2, Albaicín, 18010 Granada","Tapas granadinas variadas, montaditos, raciones tradicionales",37.17706,-3.59865,,,,13
+casa_julio_1947,Casa Julio 1947,"C. Hermosa, 5, Centro, 18010 Granada","Boquerones fritos, rape en adobo, calamares fritos, berenjenas con miel, pescaito frito, croquetas",37.178,-3.598,,Taberna tradicional desde 1947,,14
+los_manueles_reyes_cat,Los Manueles Reyes Católicos – Restaurante Granadino,"C. Reyes Católicos, 61, Centro, 18010 Granada","Croquetas de jamón ibérico (emblemáticas), flamenquines, berenjenas con miel, callos, rabo de toro, pescaíto frito, tortilla, guisos",37.17653,-3.59803,,,,15
+cisco-tierra,Taberna Cisco y Tierra (C/ Lepanto),,Carrillera,37.17576,-3.59938,assets/cisco.jpg,,11,16
+lumbre-moma,Lumbre: Las Brasas de Moma,,Brocheta a la brasa,37.17517,-3.60016,assets/lumbre.jpg,,12,17
+blanca-paloma,Restaurante La Blanca Paloma Centro (Escudo del Carmen),,Croquetas caseras,37.17458,-3.60067,assets/blancapaloma.jpg,,13,18
+patio-braserito,Bar Patio Braserito (C/ Navas),,Pinchito moruno,37.17406,-3.60157,assets/braserito.jpg,,14,19
+la-tana,Taberna La Tana (Virgen del Rosario) — FIN,,Selección de vinos + tapa del día,37.17366,-3.59839,assets/latana.jpg,,15,20
