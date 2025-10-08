@@ -1,0 +1,238 @@
+{
+  "meta": {
+    "city": "Granada",
+    "title": "NachusS RutaTapas-GRX v1.0",
+    "start": {
+      "name": "Puerta Elvira",
+      "lat": 37.17855,
+      "lng": -3.6036
+    },
+    "end": {
+      "name": "Taberna La Tana",
+      "lat": 37.17366,
+      "lng": -3.59839
+    }
+  },
+  "stops": [
+    {
+      "id": "puerta_elvira",
+      "name": "Puerta de Elvira",
+      "address": "Plaza del Triunfo, Granada",
+      "tapa": "Punto de encuentro inicial",
+      "lat": 37.18214277,
+      "lng": -3.59961789,
+      "photo": "",
+      "notes": "",
+      "order": 1
+    },
+    {
+      "id": "lara",
+      "name": "Bar Lara (San Miguel Bajo)",
+      "address": "Plaza San Miguel Bajo",
+      "tapa": "Habitas con jamón / tortilla",
+      "lat": 37.18127,
+      "lng": -3.59255,
+      "photo": "assets/lara.jpg",
+      "notes": "Primera parada al subir por el Albaicín",
+      "order": 2
+    },
+    {
+      "id": "mirador-sannicolas",
+      "name": "Restaurante Mirador de San Nicolás",
+      "address": NaN,
+      "tapa": "Tosta moruna",
+      "lat": 37.18192,
+      "lng": -3.59086,
+      "photo": "assets/mirador.jpg",
+      "notes": NaN,
+      "order": 3
+    },
+    {
+      "id": "aixa",
+      "name": "Restaurante Aixa (Plaza Larga / Arco de las Pesas)",
+      "address": NaN,
+      "tapa": "Berenjenas con miel",
+      "lat": 37.18261,
+      "lng": -3.58969,
+      "photo": "assets/aixa.jpg",
+      "notes": NaN,
+      "order": 4
+    },
+    {
+      "id": "ladrillo-ii",
+      "name": "Restaurante Ladrillo II (Calle Panaderos)",
+      "address": NaN,
+      "tapa": "Migas / choto",
+      "lat": 37.18202,
+      "lng": -3.58853,
+      "photo": "assets/ladrillo2.jpg",
+      "notes": NaN,
+      "order": 5
+    },
+    {
+      "id": "aliatar",
+      "name": "Bar Aliatar (Plaza Aliatar)",
+      "address": NaN,
+      "tapa": "Pionono salado / pescaíto",
+      "lat": 37.18161,
+      "lng": -3.58822,
+      "photo": "assets/aliatar.jpg",
+      "notes": NaN,
+      "order": 6
+    },
+    {
+      "id": "entraiya",
+      "name": "La Entraiya (Calle Pagés)",
+      "address": NaN,
+      "tapa": "Montadito de lomo",
+      "lat": 37.18101,
+      "lng": -3.58804,
+      "photo": "assets/entraiya.jpg",
+      "notes": NaN,
+      "order": 7
+    },
+    {
+      "id": "casa-1899",
+      "name": "Casa 1899 (Paseo de los Tristes)",
+      "address": NaN,
+      "tapa": "Remojón granadino",
+      "lat": 37.17938,
+      "lng": -3.59039,
+      "photo": "assets/casa1899.jpg",
+      "notes": NaN,
+      "order": 8
+    },
+    {
+      "id": "ras-cafe",
+      "name": "Ras Café (dirección Plaza Nueva)",
+      "address": NaN,
+      "tapa": "Tosta de salmón",
+      "lat": 37.17777,
+      "lng": -3.59423,
+      "photo": "assets/ras.jpg",
+      "notes": NaN,
+      "order": 9
+    },
+    {
+      "id": "minotauro",
+      "name": "Bar Minotauro (dirección Plaza Nueva)",
+      "address": NaN,
+      "tapa": "Paella / pincho",
+      "lat": 37.17752,
+      "lng": -3.59352,
+      "photo": "assets/minotauro.jpg",
+      "notes": NaN,
+      "order": 10
+    },
+    {
+      "id": "taberna-22",
+      "name": "Taberna el 22 (Cuesta San Gregorio)",
+      "address": NaN,
+      "tapa": "Jamón y queso",
+      "lat": 37.17852,
+      "lng": -3.59305,
+      "photo": "assets/el22.jpg",
+      "notes": NaN,
+      "order": 11
+    },
+    {
+      "id": "bodegas_castaneda",
+      "name": "Las Bodegas Castañeda",
+      "address": "C. Almireceros, 1-3, Centro, 18010 Granada",
+      "tapa": "Tablas frías y calientes, embutidos, croquetas, rabo de toro, bacalao con pisto, tomate aliñado, gazpacho, montaditos, Calicasas (vermut de la casa)",
+      "lat": 37.17683,
+      "lng": -3.59699,
+      "photo": "assets/bodegaCastaneda.jpg",
+      "notes": "Clásico de Granada; tapa con consumición",
+      "order": 12
+    },
+    {
+      "id": "bar_la_muralla",
+      "name": "Bar La Muralla",
+      "address": "C. Elvira, 2, Albaicín, 18010 Granada",
+      "tapa": "Tapas granadinas variadas, montaditos, raciones tradicionales",
+      "lat": 37.17706,
+      "lng": -3.59865,
+      "photo": "assets/Muralla.jpg",
+      "notes": "",
+      "order": 13
+    },
+    {
+      "id": "casa_julio_1947",
+      "name": "Casa Julio 1947",
+      "address": "C. Hermosa, 5, Centro, 18010 Granada",
+      "tapa": "Boquerones fritos, rape en adobo, calamares fritos, berenjenas con miel, pescaito frito, croquetas",
+      "lat": 37.178,
+      "lng": -3.598,
+      "photo": "assets/CasaJulio.jpg",
+      "notes": "Taberna tradicional desde 1947",
+      "order": 14
+    },
+    {
+      "id": "los_manueles_reyes_cat",
+      "name": "Los Manueles Reyes Católicos – Restaurante Granadino",
+      "address": "C. Reyes Católicos, 61, Centro, 18010 Granada",
+      "tapa": "Croquetas de jamón ibérico (emblemáticas), flamenquines, berenjenas con miel, callos, rabo de toro, pescaíto frito, tortilla, guisos",
+      "lat": 37.17653,
+      "lng": -3.59803,
+      "photo": "assets/LosManueles.jpg",
+      "notes": "",
+      "order": 15
+    },
+    {
+      "id": "cisco-tierra",
+      "name": "Taberna Cisco y Tierra (C/ Lepanto)",
+      "address": NaN,
+      "tapa": "Carrillera",
+      "lat": 37.17576,
+      "lng": -3.59938,
+      "photo": "assets/cisco.jpg",
+      "notes": NaN,
+      "order": 16
+    },
+    {
+      "id": "lumbre-moma",
+      "name": "Lumbre: Las Brasas de Moma",
+      "address": NaN,
+      "tapa": "Brocheta a la brasa",
+      "lat": 37.17517,
+      "lng": -3.60016,
+      "photo": "assets/lumbre.jpg",
+      "notes": NaN,
+      "order": 17
+    },
+    {
+      "id": "blanca-paloma",
+      "name": "Restaurante La Blanca Paloma Centro (Escudo del Carmen)",
+      "address": NaN,
+      "tapa": "Croquetas caseras",
+      "lat": 37.17458,
+      "lng": -3.60067,
+      "photo": "assets/blancapaloma.jpg",
+      "notes": NaN,
+      "order": 18
+    },
+    {
+      "id": "patio-braserito",
+      "name": "Bar Patio Braserito (C/ Navas)",
+      "address": NaN,
+      "tapa": "Pinchito moruno",
+      "lat": 37.17406,
+      "lng": -3.60157,
+      "photo": "assets/braserito.jpg",
+      "notes": NaN,
+      "order": 19
+    },
+    {
+      "id": "la-tana",
+      "name": "Taberna La Tana (Virgen del Rosario) — FIN",
+      "address": NaN,
+      "tapa": "Selección de vinos + tapa del día",
+      "lat": 37.17366,
+      "lng": -3.59839,
+      "photo": "assets/latana.jpg",
+      "notes": NaN,
+      "order": 20
+    }
+  ]
+}
