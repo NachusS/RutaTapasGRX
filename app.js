@@ -1,6 +1,42 @@
-/* RutaTapasGRX - app.js (multi-ruta) */
+/* RutaTapasGRX - app.js (multi-ruta, robust JSON loader) */
 (() => {
   const LS_KEYS = { progress:'tapas_progress', theme:'tapas_theme', nextStop:'tapas_nextStopId', metrics:'tapas_metrics', route:'tapas_route_path' };
+
+  // --- Utilidades ---
+  async function loadJSONSafe(url){
+    const res = await fetch(url, { cache:'no-cache' });
+    if(!res.ok) throw new Error(`HTTP ${res.status} al cargar ${url}`);
+    const raw = await res.text();
+    // Intento 1: parse directo
+    try { return JSON.parse(raw); } catch(e1){
+      // Intento 2: saneo de tokens inválidos (NaN/Infinity) y BOM
+      const cleaned = raw
+        .replace(/^\uFEFF/, '')             // quita BOM
+        .replace(/\bNaN\b/gi, 'null')       // JSON no admite NaN
+        .replace(/\bInfinity\b/gi, 'null')  // por si acaso
+        .replace(/\b-?Inf\b/gi, 'null');
+      try { return JSON.parse(cleaned); } catch(e2){
+        console.error('Fallo al parsear JSON de', url, e2, { rawSnippet: raw.slice(0, 200) });
+        throw e2;
+      }
+    }
+  }
+
+  function coerceStop(s){
+    const num = v => (typeof v === 'number' ? v : Number(v));
+    return {
+      ...s,
+      id: String(s.id || '').trim(),
+      name: String(s.name || '').trim(),
+      address: typeof s.address === 'string' ? s.address : '',
+      tapa: String(s.tapa || '').trim(),
+      photo: String(s.photo || '').trim(),
+      notes: typeof s.notes === 'string' ? s.notes : '',
+      lat: num(s.lat),
+      lng: num(s.lng),
+      order: Number(s.order || 0)
+    };
+  }
 
   const App = {
     map:null, directionsService:null, directionsRenderer:null,
@@ -10,6 +46,10 @@
     routeList:[], currentRoutePath:'data/stops.json',
 
     async init(){
+      // Aviso si se abre como file:// (fetch y geolocalización pueden fallar)
+      if (location.protocol === 'file:') {
+        alert('Estás abriendo la app como "file://". Usa HTTPS (GitHub Pages) o un servidor local para que funcione fetch/geolocalización.');
+      }
       this.restoreTheme(); this.restoreMetrics();
       await this.loadRoutesList();
       await this.loadStops(this.currentRoutePath);
@@ -20,9 +60,7 @@
 
     async loadRoutesList(){
       try{
-        const res = await fetch('data/routes.json', {cache:'no-cache'});
-        if(!res.ok) throw new Error('HTTP '+res.status);
-        const json = await res.json();
+        const json = await loadJSONSafe('data/routes.json');
         this.routeList = json.routes || [];
       }catch(e){
         console.warn('No se pudo cargar routes.json, usando valor por defecto.', e);
@@ -72,16 +110,16 @@
 
     async loadStops(path='data/stops.json'){
       try{
-        const res = await fetch(path, { cache:'no-cache' });
-        if(!res.ok) throw new Error('HTTP '+res.status);
-        const json = await res.json();
-        json.stops = (json.stops||[]).map(s=>({...s, address: typeof s.address==='string'?s.address:'', notes: typeof s.notes==='string'?s.notes:''})).sort((a,b)=>(a.order||0)-(b.order||0));
+        const json = await loadJSONSafe(path);
+        json.stops = (json.stops||[]).map(coerceStop).sort((a,b)=>(a.order||0)-(b.order||0));
         this.data=json;
         document.title=json.meta?.title||document.title;
         const titleEl=document.getElementById('appTitle'); if(titleEl) titleEl.textContent=json.meta?.title||'RutaTapasGRX';
       }catch(e){
         console.error('No se pudieron cargar las paradas:', e);
-        alert('No se pudieron cargar las paradas. Comprueba el fichero '+path);
+        alert('No se pudieron cargar las paradas. Revisa que el JSON sea válido (sin NaN) y que la app se sirva por HTTPS.');
+        // Deja un estado mínimo para evitar fallos en otros métodos
+        this.data = { meta:{}, stops: [] };
       }
     },
 
@@ -100,9 +138,14 @@
 
     drawMarkers(){
       const start=this.data.meta?.start, end=this.data.meta?.end, stops=this.data.stops, info=new google.maps.InfoWindow();
-      if(start){ const m=new google.maps.Marker({position:{lat:start.lat,lng:start.lng}, map:this.map, title:`Inicio: ${start.name}`, icon:this.flagIcon('#10b981')}); this.markers.set('START',m); }
-      if(end){ const m=new google.maps.Marker({position:{lat:end.lat,lng:end.lng}, map:this.map, title:`Fin: ${end.name}`, icon:this.flagIcon('#f59e0b')}); this.markers.set('END',m); }
-      stops.forEach(s=>{
+      if(start && Number.isFinite(start.lat) && Number.isFinite(start.lng)){
+        const m=new google.maps.Marker({position:{lat:start.lat,lng:start.lng}, map:this.map, title:`Inicio: ${start.name||'Inicio'}`, icon:this.flagIcon('#10b981')}); this.markers.set('START',m);
+      }
+      if(end && Number.isFinite(end.lat) && Number.isFinite(end.lng)){
+        const m=new google.maps.Marker({position:{lat:end.lat,lng:end.lng}, map:this.map, title:`Fin: ${end.name||'Fin'}`, icon:this.flagIcon('#f59e0b')}); this.markers.set('END',m);
+      }
+      (stops||[]).forEach(s=>{
+        if(!Number.isFinite(s.lat)||!Number.isFinite(s.lng)) return;
         const m=new google.maps.Marker({position:{lat:s.lat,lng:s.lng}, map:this.map, title:`${s.order}. ${s.name}`, label:{text:String(s.order), fontSize:'12px', fontWeight:'700'}});
         m.addListener('click',()=>{ info.setContent(this.stopInfoHTML(s)); info.open(this.map,m); this.focusCard(s.id); });
         this.markers.set(s.id,m);
@@ -121,28 +164,32 @@
     },
 
     drawPolylineFallback(){
-      const path=this.data.stops.map(s=>({lat:s.lat,lng:s.lng}));
+      const path=(this.data.stops||[]).filter(s=>Number.isFinite(s.lat)&&Number.isFinite(s.lng)).map(s=>({lat:s.lat,lng:s.lng}));
       if(this.polyline) this.polyline.setMap(null);
+      if(!path.length) return;
       this.polyline=new google.maps.Polyline({path, geodesic:true, strokeColor:'#2563eb', strokeOpacity:.6, strokeWeight:4});
       this.polyline.setMap(this.map);
     },
 
     async routeTo(stopId){
-      const dest=this.data.stops.find(s=>s.id===stopId)||null; if(!dest) return;
+      const dest=(this.data.stops||[]).find(s=>s.id===stopId)||null; if(!dest) return;
       this.currentDestinationId=stopId; localStorage.setItem(LS_KEYS.nextStop, stopId);
       let origin=null;
       if(this.userMarker) origin=this.userMarker.getPosition();
-      if(!origin){ const idx=this.data.stops.findIndex(s=>s.id===stopId); origin= idx>0 ? {lat:this.data.stops[idx-1].lat,lng:this.data.stops[idx-1].lng} : {lat:this.data.meta.start.lat,lng:this.data.meta.start.lng}; }
+      if(!origin){
+        const idx=(this.data.stops||[]).findIndex(s=>s.id===stopId);
+        origin= idx>0 ? {lat:this.data.stops[idx-1].lat,lng:this.data.stops[idx-1].lng} : {lat:this.data.meta?.start?.lat||dest.lat, lng:this.data.meta?.start?.lng||dest.lng};
+      }
       try{
         const res=await this.directionsService.route({origin, destination:{lat:dest.lat,lng:dest.lng}, travelMode:google.maps.TravelMode.WALKING});
         this.directionsRenderer.setDirections(res);
         const leg=res.routes[0].legs[0]; this.map.fitBounds(res.routes[0].bounds);
-        this.announce(`Direcciones hacia ${dest.name}. Distancia ${leg.distance.text}, tiempo estimado ${leg.duration.text}.`);
+        this.announce(`Direcciones hacia ${dest.name}. Distancia ${leg.distance?.text||'—'}, tiempo estimado ${leg.duration?.text||'—'}.`);
       }catch(e){ console.warn('Directions fallo', e); this.map.panTo({lat:dest.lat,lng:dest.lng}); this.map.setZoom(16); this.announce('No se pudo calcular la ruta con Directions.'); }
     },
 
     buildUI(){
-      const list=document.getElementById('stopsList'); list.innerHTML=''; const stops=this.data.stops;
+      const list=document.getElementById('stopsList'); if(!list) return; list.innerHTML=''; const stops=this.data.stops||[];
       stops.forEach(s=>{
         const li=document.createElement('li'); li.className='card'; li.id=`card-${s.id}`;
         li.innerHTML=`<img src="${s.photo||'assets/cover.jpg'}" alt="Foto de ${this.escape(s.name)}"><div>
@@ -166,7 +213,7 @@
 
       const startBtn=document.getElementById('startBtn');
       if(startBtn) startBtn.addEventListener('click', ()=>{
-        const first=this.firstPending()||(this.data.stops[0]?.id); this.routeTo(first);
+        const first=this.firstPending()||(this.data.stops?.[0]?.id); if(first) this.routeTo(first);
       });
       const nextBtn=document.getElementById('nextBtn');
       if(nextBtn) nextBtn.addEventListener('click', ()=>{
@@ -190,12 +237,12 @@
 
     escape(s){ return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); },
     toggleDone(id){ const p=this.readProgress(); p[id]=!p[id]; localStorage.setItem(LS_KEYS.progress, JSON.stringify(p)); this.refreshCards(); this.updateProgressUI(); if(p[id]&&this.currentDestinationId===id){ const n=this.nextStop(); if(n) this.announce(`¡Bien! Avanza a ${n.name}.`);} },
-    refreshCards(){ this.data.stops.forEach(s=>{ const card=document.getElementById(`card-${s.id}`); if(!card) return; const btn=card.querySelector('button[data-action="toggle"]'); const done=this.isDone(s.id); btn.textContent=done?'Desmarcar':'Marcar como hecha'; btn.classList.toggle('primary', !done); btn.setAttribute('aria-pressed', String(done)); card.style.opacity=done?.65:1; }); },
+    refreshCards(){ (this.data.stops||[]).forEach(s=>{ const card=document.getElementById(`card-${s.id}`); if(!card) return; const btn=card.querySelector('button[data-action="toggle"]'); const done=this.isDone(s.id); btn.textContent=done?'Desmarcar':'Marcar como hecha'; btn.classList.toggle('primary', !done); btn.setAttribute('aria-pressed', String(done)); card.style.opacity=done?.65:1; }); },
     isDone(id){ const p=this.readProgress(); return !!p[id]; },
     readProgress(){ try{ return JSON.parse(localStorage.getItem(LS_KEYS.progress)||'{}'); }catch{ return {}; } },
-    firstPending(){ return this.data.stops.find(s=>!this.isDone(s.id))?.id||null; },
-    nextStop(){ const stops=this.data.stops; const idx=this.currentDestinationId?stops.findIndex(s=>s.id===this.currentDestinationId):-1; const list=idx>=0?stops.slice(idx+1).concat(stops.slice(0,idx+1)):stops; const next=list.find(s=>!this.isDone(s.id)); return next||stops[stops.length-1]||null; },
-    updateProgressUI(){ const total=this.data?.stops?.length||0; const done=this.data.stops.filter(s=>this.isDone(s.id)).length; const pct=total?Math.round(done/total*100):0; const txt=document.getElementById('progressText'); if(txt) txt.textContent=`Completadas ${done} / ${total}`; const bar=document.getElementById('progressBarFill'); if(bar) bar.style.width=`${pct}%`; },
+    firstPending(){ return (this.data.stops||[]).find(s=>!this.isDone(s.id))?.id||null; },
+    nextStop(){ const stops=this.data.stops||[]; const idx=this.currentDestinationId?stops.findIndex(s=>s.id===this.currentDestinationId):-1; const list=idx>=0?stops.slice(idx+1).concat(stops.slice(0,idx+1)):stops; const next=list.find(s=>!this.isDone(s.id)); return next||stops[stops.length-1]||null; },
+    updateProgressUI(){ const total=this.data?.stops?.length||0; const done=(this.data.stops||[]).filter(s=>this.isDone(s.id)).length; const pct=total?Math.round(done/total*100):0; const txt=document.getElementById('progressText'); if(txt) txt.textContent=`Completadas ${done} / ${total}`; const bar=document.getElementById('progressBarFill'); if(bar) bar.style.width=`${pct}%`; },
     focusCard(id){ const el=document.getElementById(`card-${id}`); if(!el) return; el.scrollIntoView({behavior:'smooth', block:'center'}); el.classList.add('focus-pulse'); setTimeout(()=>el.classList.remove('focus-pulse'),700); },
 
     setupGeolocation(){
