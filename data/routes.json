@@ -1,0 +1,14 @@
+{
+  "routes": [
+    {
+      "id": "ruta_grx_v1",
+      "title": "NachusS RutaTapas-GRX v1.0",
+      "file": "data/stops.json"
+    },
+    {
+      "id": "ruta_demo",
+      "title": "Ruta de ejemplo (copia)",
+      "file": "data/stops_demo.json"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+# RutaTapasGRX estática
