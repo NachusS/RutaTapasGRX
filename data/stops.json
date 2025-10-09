@@ -148,11 +148,11 @@
     },
     {
       "id": "bar_la_muralla",
-      "name": "Bar La Muralla",
+      "name": "Bar Muralla",
       "address": "C. Elvira, 2, Albaicín, 18010 Granada",
       "tapa": "Tapas granadinas variadas, montaditos, raciones tradicionales",
-      "lat": 37.17706,
-      "lng": -3.59865,
+      "lat": 37.17686,
+      "lng": -3.59651,
       "photo": "assets/Muralla.jpg",
       "notes": "",
       "order": 13

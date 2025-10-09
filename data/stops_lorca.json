@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "city": "Lorca",
+    "title": "RutaTapas-Lorca",
+    "start": {
+      "name": "Taberna de Matias",
+      "lat": 37.66559,
+      "lng": -1.70417
+    },
+    "end": {
+      "name": "El Pua Café",
+      "lat": 37.68115,
+      "lng": -1.69000
+    }
+  },
+  "stops": [
+    {
+      "id": "Taberna_de_Matias",
+      "name": "Taberna de Matias",
+      "address": "Al, lado de la Guardia Civil",
+      "tapa": "Punto de encuentro inicial",
+      "lat": 37.66559,
+      "lng": -1.70417,
+      "photo": "",
+      "notes": "",
+      "order": 1
+    },
+    {
+      "id": "CasaMusso",
+      "name": "Casa de los Musso",
+      "address": "Pio XII",
+      "tapa": "Pizzas, Marineras",
+      "lat": 37.67488,
+      "lng": -1.69964,
+      "photo": "assets/CasaMusso.jpg",
+      "notes": "Primera parada desde el Matias",
+      "order": 2
+    },
+    {
+      "id": "El-Sibarita",
+      "name": "Bar restaurante El Sibarita",
+      "address": "",
+      "tapa": "Jamón con pan en aceite",
+      "lat": 37.67413,
+      "lng": -1.69754,
+      "photo": "assets/sibarita.jpg",
+      "notes": "",
+      "order": 3
+    },
+    {
+      "id": "Albedrio",
+      "name": "Albedrío",
+      "address": "",
+      "tapa": "Tapas diseño",
+      "lat": 37.67394,
+      "lng": -1.69771,
+      "photo": "assets/albedrio.jpg",
+      "notes": "",
+      "order": 4
+    },
+    {
+      "id": "1900",
+      "name": "1900 Lounge",
+      "address": "",
+      "tapa": "Cervezas especiales Estrella",
+      "lat": 37.67384,
+      "lng": -1.69905,
+      "photo": "assets/1900.jpg",
+      "notes": "",
+      "order": 5
+    },
+    {
+      "id": "n3",
+      "name": "Restaurante Nº3",
+      "address": "",
+      "tapa": "Tapas diseño",
+      "lat": 37.67756,
+      "lng": -1.69574,
+      "photo": "assets/n3.jpg",
+      "notes": "",
+      "order": 6
+    },
+    {
+      "id": "Pua",
+      "name": "El Pua Café",
+      "address": "",
+      "tapa": "Pescado frito y anchoas",
+      "lat": 37.68104,
+      "lng": -1.68949,
+      "photo": "assets/pua.jpg",
+      "notes": "",
+      "order": 7
+    }
+  ]
+}

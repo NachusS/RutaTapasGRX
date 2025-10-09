@@ -7,8 +7,8 @@
     },
     {
       "id": "ruta_demo",
-      "title": "Ruta de ejemplo (copia)",
-      "file": "data/stops_demo.json"
+      "title": "Ruta Tapas por Lorca",
+      "file": "data/stops_lorca.json"
     }
   ]
 }
