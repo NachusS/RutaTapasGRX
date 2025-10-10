@@ -38,18 +38,36 @@ function setTheme(theme){
   if(state.routePolylines){ state.routePolylines.forEach(pl=>pl.setOptions({strokeColor: c})); }
 }
 function toggleTheme(){ const now=document.documentElement.getAttribute("data-theme"); setTheme(now==="dark"?"light":"dark"); }
+
+async function loadRoutesList(){
+  try{
+    const json = await loadJSON("data/routes.json");
+    if(Array.isArray(json)) return { routes: json };
+    if(json && Array.isArray(json.routes)) return json;
+    console.error("routes.json no contiene 'routes' array:", json);
+    return { routes: [] };
+  }catch(e){
+    console.error("Error cargando data/routes.json:", e);
+    return { routes: [] };
+  }
+}
+
 function minutesToHuman(min){ if(!Number.isFinite(min)) return "–"; const h=Math.floor(min/60); const m=Math.round(min%60); return h>0?`${h} h ${m} min`:`${m} min`; }
 
 window.initMap = async function initMap(){
   setTheme(localStorage.getItem(LS_KEYS.theme) || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark":"light"));
   try{ localStorage.setItem("tapas_metric_opens", String(state.metrics.opens + 1)); }catch{}
 
-  const routes = await loadJSON("data/routes.json").catch(_ => ({ routes: [
+  const routes = await loadRoutesList(); /* robust loader */
+  if(!routes.routes.length){ console.warn('No hay rutas en data/routes.json'); } /* fallback de ejemplo eliminado para evitar confusión */
+  // antes: catch con rutas por defecto
+  /*
     { id:"granada", name:"Granada · Ruta de tapas", file:"stops.json", cityCenter:{lat:37.1765,lng:-3.5979}},
     { id:"lorca", name:"Lorca · Ruta de tapas", file:"stops_lorca.json", cityCenter:{lat:37.6712,lng:-1.7006}}
-  ]}));
+  ]}));*/
 
   const routeSelect = $("#routeSelect");
+  if(routes.routes.length===0){ routeSelect.innerHTML = '<option value="">(Sin rutas)</option>'; }
   routes.routes.forEach(r=>{ const opt=document.createElement("option"); opt.value=r.id || r.title; opt.textContent=r.name || r.title || r.id; routeSelect.appendChild(opt); });
   const defaultRouteId = routes.routes[0]?.id || routes.routes[0]?.title || "ruta_demo";
   const selectedId = localStorage.getItem("tapas_route") || defaultRouteId;
