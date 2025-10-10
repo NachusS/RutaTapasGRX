@@ -50,8 +50,8 @@ window.initMap = async function initMap(){
   ]}));
 
   const routeSelect = $("#routeSelect");
-  routes.routes.forEach(r=>{ const opt=document.createElement("option"); opt.value=r.id; opt.textContent=r.name; routeSelect.appendChild(opt); });
-  const defaultRouteId = routes.routes[0]?.id || "granada";
+  routes.routes.forEach(r=>{ const opt=document.createElement("option"); opt.value=r.id || r.title; opt.textContent=r.name || r.title || r.id; routeSelect.appendChild(opt); });
+  const defaultRouteId = routes.routes[0]?.id || routes.routes[0]?.title || "ruta_demo";
   const selectedId = localStorage.getItem("tapas_route") || defaultRouteId;
   routeSelect.value = selectedId;
 
@@ -61,7 +61,7 @@ window.initMap = async function initMap(){
   $("#nextBtn").addEventListener("click", () => { try{ localStorage.setItem("tapas_metric_next", String(state.metrics.nextClicks + 1)); }catch{}; goNext(); });
   routeSelect.addEventListener("change", async (e)=>{ const id=e.target.value; localStorage.setItem("tapas_route", id); await loadRouteById(routes, id); });
 
-  state.map = new google.maps.Map($("#map"), { center:{lat:40.4168,lng:-3.7038}, zoom:13, mapId:"DEMO_MAP_ID" });
+  state.map = new google.maps.Map($("#map"), { center:{lat:40.4168,lng:-3.7038}, zoom:14 });
   state.directionsService = new google.maps.DirectionsService();
   state.directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers:true, preserveViewport:true });
   state.directionsRenderer.setMap(state.map);
@@ -71,11 +71,14 @@ window.initMap = async function initMap(){
 };
 
 async function loadRouteById(routes, id){
-  const meta = routes.routes.find(r=>r.id===id) || routes.routes[0];
+  const meta = routes.routes.find(r=>r.id===id || r.title===id) || routes.routes[0];
   state.routeMeta = meta;
-  $("#routeLabel").textContent = meta?.name || "Ruta";
+  $("#routeLabel").textContent = (meta?.name || meta?.title || "Ruta");
 
-  const data = await loadJSON(`data/${meta.file}`);
+  const filePath = (meta.file||'stops.json');
+  const finalPath = filePath.startsWith('data/') ? filePath : `data/${filePath}`;
+  const data = await loadJSON(finalPath);
+  state.lastLoadedMeta = data; // guarda meta para centro y títulos
   const stops = (data.stops||[]).slice().sort((a,b)=> (a.order||0)-(b.order||0));
   state.stops = stops;
   buildMap(stops, meta);
@@ -89,7 +92,12 @@ function buildMap(stops, meta){
   state.markers.forEach(m=>m.setMap(null));
   state.markers.clear();
 
-  const center = stops[0] ? {lat:stops[0].lat, lng:stops[0].lng} : meta?.cityCenter;
+  let center = null;
+  if(stops && stops.length){ center = {lat:stops[0].lat, lng:stops[0].lng}; }
+  // intenta meta.start del propio fichero de paradas
+  try{ if(state.lastLoadedMeta && state.lastLoadedMeta.meta && state.lastLoadedMeta.meta.start){ const s = state.lastLoadedMeta.meta.start; center = {lat: s.lat, lng: s.lng}; } }catch{}
+  // si no, usa cityCenter del routes.json
+  if(!center && meta && meta.cityCenter) center = meta.cityCenter;
   if(center) state.map.setCenter(center);
 
   for(const s of stops){
