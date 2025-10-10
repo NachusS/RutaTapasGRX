@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" data-theme="light">
 <head>
   <meta charset="utf-8" />
@@ -7,7 +7,7 @@
   <title>NachusS RutaTapas-GRX v1.0</title>
   <link rel="preconnect" href="https://maps.googleapis.com">
   <link rel="stylesheet" href="styles.css" />
-  <meta name="description" content="Ruta de tapas por Granada: mapa, checklist y guía paso a paso.">
+  <meta name="description" content="Ruta de tapas por Granada: mapa, checklist y guí­a paso a paso.">
 </head>
 <body>
   <header class="app-header" role="banner">
@@ -17,26 +17,24 @@
     </div>
     <div class="controls" role="toolbar" aria-label="Controles principales">
       <div class="progress-wrap" aria-live="polite">
-        <div class="progress-label">
-          <span id="progressText">Completadas 0 / 0</span>
-        </div>
-        <div class="progress-bar" aria-hidden="true">
-          <div id="progressBarFill" class="progress-fill" style="width:0%"></div>
-        </div>
+        <div class="progress-label"><span id="progressText">Completadas 0 / 0</span></div>
+        <div class="progress-bar" aria-hidden="true"><div id="progressBarFill" class="progress-fill" style="width:0%"></div></div>
       </div>
-      <!-- Route picker will be inserted here -->
-      <div class="route-picker"><label for="routeSelect" class="sr-only">Seleccionar ruta</label><select id="routeSelect" class="routeSelect" aria-label="Seleccionar ruta"></select></div><div class="buttons">
+      <div class="route-picker">
+        <label for="routeSelect" class="sr-only">Seleccionar ruta</label>
+        <select id="routeSelect" class="routeSelect" aria-label="Seleccionar ruta"></select>
+      </div>
+      <div class="buttons">
         <button id="startBtn" class="btn primary" aria-label="Comenzar ruta">Comenzar ruta</button>
-        <button id="nextBtn" class="btn" aria-label="Ir a la siguiente parada">Siguiente parada ▶</button>
+        <button id="nextBtn" class="btn" aria-label="Ir a la siguiente parada">Siguiente parada â–¶</button>
         <button id="resetBtn" class="btn danger" aria-label="Reiniciar checklist">Reiniciar</button>
-        <button id="themeBtn" class="btn" aria-pressed="false" aria-label="Cambiar tema claro/oscuro">🌗</button>
+        <button id="themeBtn" class="btn" aria-pressed="false" aria-label="Cambiar tema claro/oscuro">ðŸŒ—</button>
       </div>
     </div>
   </header>
 
   <main class="layout">
     <section id="map" class="map" role="region" aria-label="Mapa de la ruta"></section>
-
     <aside id="panel" class="panel" role="complementary" aria-label="Listado de paradas" tabindex="0">
       <ul id="stopsList" class="stops"></ul>
     </aside>
@@ -49,14 +47,12 @@
       <span class="legend-item"><span class="icon you" aria-hidden="true"></span> Tú</span>
     </div>
     <small>
-      Creado por @NachusS (09/10/2025). La posición se procesa localmente en tu navegador.
-      <a href="#" aria-label="Abrir política de privacidad">Política de privacidad</a>
+      Esta app usa la API de geolocalización y Google Maps. La posición se procesa localmente en tu navegador.
+      <a href="#" aria-label="Abrir polí­tica de privacidad">Polí­tica de privacidad</a>
     </small>
   </footer>
 
-  <script>
-    window.initMap = () => window.App && window.App.initMap && window.App.initMap();
-  </script>
+  <script>window.initMap = () => window.App && window.App.initMap && window.App.initMap();</script>
   <script src="app.js"></script>
   <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuy6NyB1m3HcX5ISqdEH0iax_CkqUrrwo&callback=initMap"></script>
 </body>
