@@ -1,4 +1,4 @@
-/* RutaTapas · v5.6 — rutas robustas + tracking chunked + InfoWindow único + fixes toggle */
+/* RutaTapas · v6.0 — rutas robustas + tracking + InfoWindow único + switch sincronizado + contador */
 const state = {
   map: null,
   directionsService: null,
@@ -25,19 +25,19 @@ const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || null; }
 
 function loadJSON(url){
-  const u = url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now(); // cache-bust
-  return fetch(u, {cache:"no-cache"}).then(r => {
-    if(!r.ok) throw new Error(`HTTP ${r.status} al cargar ${url}`);
+  const u = new URL(url, document.baseURI);
+  u.searchParams.set('v', String(Date.now())); // cache-bust
+  return fetch(u.toString(), {cache:"no-cache"}).then(r=>{
+    if(!r.ok) throw new Error(`HTTP ${r.status} al cargar ${u}`);
     return r.json();
   });
-}).then(r=>{ if(!r.ok) throw new Error(`HTTP ${r.status} al cargar ${url}`); return r.json(); }); }
+}
 function getProgress(){ try{ return JSON.parse(localStorage.getItem(LS_KEYS.progress) || "{}"); }catch{ return {}; } }
 function setProgress(obj){ localStorage.setItem(LS_KEYS.progress, JSON.stringify(obj)); }
 function setTheme(theme){
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem(LS_KEYS.theme, theme);
   $("#toggleThemeBtn")?.setAttribute("aria-pressed", theme === "dark");
-  // recolorea polylines del tracking completo
   const c = cssVar('--brand') || '#2563eb';
   if(state.routePolylines){ state.routePolylines.forEach(pl=>pl.setOptions({strokeColor: c})); }
 }
@@ -45,18 +45,26 @@ function toggleTheme(){ const now=document.documentElement.getAttribute("data-th
 function minutesToHuman(min){ if(!Number.isFinite(min)) return "–"; const h=Math.floor(min/60); const m=Math.round(min%60); return h>0?`${h} h ${m} min`:`${m} min`; }
 
 async function loadRoutesList(){
-  try{
-    let json;
-    try{ json = await loadJSON("data/routes.json"); }
-    catch(_e){ json = await loadJSON("./data/routes.json"); }
-    if(Array.isArray(json)) return { routes: json };
-    if(json && Array.isArray(json.routes)) return json;
-    console.error("routes.json no contiene 'routes' array:", json);
-    return { routes: [] };
-  }catch(e){
-    console.error("Error cargando data/routes.json:", e);
-    return { routes: [] };
+  const tries = [
+    'data/routes.json',
+    './data/routes.json',
+    new URL('data/routes.json', document.baseURI).toString(),
+    'routes.json'
+  ];
+  const errors = [];
+  for(const t of tries){
+    try{
+      const json = await loadJSON(t);
+      if(Array.isArray(json)) return { routes: json };
+      if(json && Array.isArray(json.routes)) return json;
+      errors.push(`Estructura inválida en ${t}`);
+    }catch(e){
+      errors.push(`${t}: ${e && (e.message||e)}`);
+    }
   }
+  showDiag('No se pudo cargar data/routes.json. Revisa ruta/estructura.');
+  console.error('Fallos al cargar rutas:', errors);
+  return { routes: [] };
 }
 
 window.initMap = async function initMap(){
@@ -67,22 +75,32 @@ window.initMap = async function initMap(){
   const routes = await loadRoutesList();
   const routeSelect = $("#routeSelect");
   if(routes.routes.length===0){
-    routeSelect.innerHTML = '<option value=\"\">(Sin rutas)</option>';
+    routeSelect.innerHTML = '<option value="" disabled selected>(Sin rutas)</option>';
+    // inicializa mapa aunque no haya rutas
+    state.map = new google.maps.Map($("#map"), { center:{lat:37.1765,lng:-3.5979}, zoom:14 });
   } else {
     routes.routes.forEach(r=>{ const opt=document.createElement("option"); opt.value=r.id || r.title; opt.textContent=r.name || r.title || r.id; routeSelect.appendChild(opt); });
+    const defaultRouteId = routes.routes[0]?.id || routes.routes[0]?.title || "ruta_demo";
+    const selectedId = localStorage.getItem("tapas_route") || defaultRouteId;
+    routeSelect.value = selectedId;
+
+    $("#toggleThemeBtn").addEventListener("click", toggleTheme);
+    $("#resetChecklistBtn").addEventListener("click", resetChecklist);
+    $("#startBtn").addEventListener("click", () => startNavigation());
+    $("#nextBtn").addEventListener("click", () => { try{ localStorage.setItem("tapas_metric_next", String(state.metrics.nextClicks + 1)); }catch{}; goNext(); });
+    routeSelect.addEventListener("change", async (e)=>{ const id=e.target.value; localStorage.setItem("tapas_route", id); await loadRouteById(routes, id); });
+
+    state.map = new google.maps.Map($("#map"), { center:{lat:40.4168,lng:-3.7038}, zoom:14 });
+    state.directionsService = new google.maps.DirectionsService();
+    state.directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers:true, preserveViewport:true });
+    state.directionsRenderer.setMap(state.map);
+    state.infoWindow = new google.maps.InfoWindow();
+    state.map.addListener('click', ()=>{ if(state.infoWindow) state.infoWindow.close(); });
+
+    await loadRouteById(routes, selectedId);
   }
-  const defaultRouteId = routes.routes[0]?.id || routes.routes[0]?.title || "ruta_demo";
-  const selectedId = localStorage.getItem("tapas_route") || defaultRouteId;
-  routeSelect.value = selectedId;
 
-  $("#toggleThemeBtn").addEventListener("click", toggleTheme);
-  $("#resetChecklistBtn").addEventListener("click", resetChecklist);
-  $("#startBtn").addEventListener("click", () => startNavigation());
-  $("#nextBtn").addEventListener("click", () => { try{ localStorage.setItem("tapas_metric_next", String(state.metrics.nextClicks + 1)); }catch{}; goNext(); });
-  routeSelect.addEventListener("change", async (e)=>{ const id=e.target.value; localStorage.setItem("tapas_route", id); await loadRouteById(routes, id); });
-  const toggleFR = document.getElementById('toggleFullRoute');
-
-  // Sync desktop & mobile switches
+  // sincroniza switches (desktop/móvil)
   const toggleFR = document.getElementById('toggleFullRoute');
   const toggleFRm = document.getElementById('toggleFullRouteMobile');
   const applyStateToSwitches = () => {
@@ -99,15 +117,6 @@ window.initMap = async function initMap(){
   if(toggleFR){ toggleFR.addEventListener('change', ()=> onSwitchChange(toggleFR.checked)); }
   if(toggleFRm){ toggleFRm.addEventListener('change', ()=> onSwitchChange(toggleFRm.checked)); }
 
-
-  state.map = new google.maps.Map($("#map"), { center:{lat:40.4168,lng:-3.7038}, zoom:14 });
-  state.directionsService = new google.maps.DirectionsService();
-  state.directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers:true, preserveViewport:true });
-  state.directionsRenderer.setMap(state.map);
-  state.infoWindow = new google.maps.InfoWindow();
-  state.map.addListener('click', ()=>{ if(state.infoWindow) state.infoWindow.close(); });
-
-  await loadRouteById(routes, selectedId);
   setupGeolocation();
 };
 
@@ -119,9 +128,9 @@ async function loadRouteById(routes, id){
   const filePath = (meta.file||'data/stops.json');
   const finalPath = filePath.startsWith('data/') ? filePath : `data/${filePath}`;
   const data = await loadJSON(finalPath);
-  state.lastLoadedMeta = data; // por si trae meta.start / meta.end
+  state.lastLoadedMeta = data;
   const stops = (data.stops||[]).slice().sort((a,b)=> (a.order||0)-(b.order||0)).map((s,i)=>{
-    if(!s.id) s.id = (s.name||`stop_${i+1}`).toLowerCase().replace(/\W+/g,'_');
+    if(!s.id) s.id = (s.name||`stop_${i+1}`).toLowerCase().replace(/\\W+/g,'_');
     return s;
   });
   state.stops = stops;
@@ -133,11 +142,9 @@ async function loadRouteById(routes, id){
 }
 
 function buildMap(stops, meta){
-  // limpia marcadores previos
   state.markers.forEach(m=>m.setMap(null));
   state.markers.clear();
 
-  // centro
   let center = null;
   if(state.lastLoadedMeta && state.lastLoadedMeta.meta && state.lastLoadedMeta.meta.start){
     const s = state.lastLoadedMeta.meta.start; center = {lat: s.lat, lng: s.lng};
@@ -167,12 +174,10 @@ function buildMap(stops, meta){
     state.markers.set(s.id, marker);
   }
 
-  // fallback polyline invisible por defecto
   const path = stops.map(s=>({lat:s.lat, lng:s.lng}));
   state.poly && state.poly.setMap(null);
   state.poly = new google.maps.Polyline({ path, geodesic:false, strokeOpacity:0.0, map: state.map });
 
-  // fit bounds
   if(path.length){
     const bounds = new google.maps.LatLngBounds();
     path.forEach(p=>bounds.extend(p));
@@ -201,7 +206,6 @@ function buildList(stops){
     panel.appendChild(card);
   }
 
-  // Delegación + binding directo (doble red para asegurar en móviles)
   panel.addEventListener("click", (e)=>{
     const btn=e.target.closest("button[data-act]"); if(!btn) return;
     e.stopPropagation();
@@ -294,7 +298,6 @@ function updateETA(){
 
 /** Ruta completa (chunked) sobre TODAS las paradas */
 async function buildFullRoutePolyline(){
-  // borra polylines anteriores
   if(state.routePolylines){ state.routePolylines.forEach(pl=>pl.setMap(null)); }
   state.routePolylines = [];
   const pts = state.stops.map(s=>({lat:s.lat, lng:s.lng}));
@@ -312,7 +315,6 @@ async function buildFullRoutePolyline(){
     const destination = chunk[chunk.length-1];
     const waypoints = chunk.slice(1, -1).map(p=>({location:p, stopover:false}));
 
-    // eslint-disable-next-line no-await-in-loop
     await new Promise((resolve)=>{
       state.directionsService.route({
         origin, destination, waypoints, travelMode: google.maps.TravelMode.WALKING, optimizeWaypoints:false
@@ -342,16 +344,22 @@ async function buildFullRoutePolyline(){
     const mins = totalSeconds/60;
     document.querySelector("#etaTotal").textContent = minutesToHuman(mins);
   }
-  updateFullRouteVisibility();
   if(totalMeters > 0){
     const km = (totalMeters/1000).toFixed(1);
     const el = document.querySelector('#distanceTotal'); if(el) el.textContent = `${km} km`;
   }
+  updateFullRouteVisibility();
+}
+
+function updateFullRouteVisibility(){
+  if(!state.routePolylines) return;
+  const mapRef = state.showFullRoute ? state.map : null;
+  state.routePolylines.forEach(pl=>pl.setMap(mapRef));
 }
 
 /** Geolocalización en tiempo real */
 function setupGeolocation(){
-  if(!("geolocation" in navigator)){ toast("Tu navegador no soporta Geolocalización. Puedes navegar manualmente con ‘Siguiente parada’."); return; }
+  if(!("geolocation" in navigator)){ showDiag("Tu navegador no soporta Geolocalización. Usa ‘Siguiente parada’."); return; }
   try{ state.watchId = navigator.geolocation.watchPosition(onGeo, onGeoError, { enableHighAccuracy:true, maximumAge:5000, timeout:15000 }); }catch(e){ onGeoError(e); }
 }
 function onGeo(pos){
@@ -364,20 +372,8 @@ function onGeo(pos){
     state.userMarker.setPosition(here); state.userCircle.setCenter(here); state.userCircle.setRadius(Math.min(accuracy||25, 60));
   }
 }
-function onGeoError(err){ try{ localStorage.setItem("tapas_metric_geoerr", String(state.metrics.geoErrors + 1)); }catch{}; console.warn("Geolocalización error:", err && (err.message||err.code)); toast("No se pudo obtener tu posición. Revisa permisos o usa ‘Siguiente parada’.", true); }
-function toast(msg, warn=false){
-  let el=document.createElement("div"); el.role="status"; el.setAttribute("aria-live","polite");
-  Object.assign(el.style,{position:"fixed",left:"50%",bottom:"16px",transform:"translateX(-50%)",background:warn?"#ef4444":"#111827",color:"#fff",padding:"10px 14px",borderRadius:"12px",boxShadow:"0 6px 18px rgba(0,0,0,.25)",zIndex:"9999"});
-  el.textContent=msg; document.body.appendChild(el); setTimeout(()=>{ el.remove(); }, 2800);
-}
-
-function updateFullRouteVisibility(){
-  if(!state.routePolylines) return;
-  const mapRef = state.showFullRoute ? state.map : null;
-  state.routePolylines.forEach(pl=>pl.setMap(mapRef));
-}
-
+function onGeoError(err){ try{ localStorage.setItem("tapas_metric_geoerr", String(state.metrics.geoErrors + 1)); }catch{}; console.warn("Geolocalización error:", err && (err.message||err.code)); showDiag("No se pudo obtener tu posición. Revisa permisos o usa ‘Siguiente parada’."); }
 function showDiag(msg){
   const d=document.createElement('div'); d.className='diag'; d.textContent=msg;
-  document.body.appendChild(d); setTimeout(()=>d.remove(), 4500);
+  document.body.appendChild(d); setTimeout(()=>d.remove(), 5000);
 }
