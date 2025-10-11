@@ -1,4 +1,4 @@
-/* RutaTapas · v6.0 — rutas robustas + tracking + InfoWindow único + switch sincronizado + contador */
+/* RutaTapas · v6.1 — rutas robustas + tracking + InfoWindow único + switch sincronizado + contador */
 const state = {
   map: null,
   directionsService: null,
@@ -76,7 +76,6 @@ window.initMap = async function initMap(){
   const routeSelect = $("#routeSelect");
   if(routes.routes.length===0){
     routeSelect.innerHTML = '<option value="" disabled selected>(Sin rutas)</option>';
-    // inicializa mapa aunque no haya rutas
     state.map = new google.maps.Map($("#map"), { center:{lat:37.1765,lng:-3.5979}, zoom:14 });
   } else {
     routes.routes.forEach(r=>{ const opt=document.createElement("option"); opt.value=r.id || r.title; opt.textContent=r.name || r.title || r.id; routeSelect.appendChild(opt); });

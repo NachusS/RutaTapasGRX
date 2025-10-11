@@ -13,7 +13,7 @@ html[data-theme="dark"]{
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,sans-serif;background:var(--bg);color:var(--fg);}
-.app-header{padding:10px 12px;position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--border);z-index:20}
+.app-header{padding:10px 12px; /* sin sticky para que no quede fija */ background:var(--bg);border-bottom:1px solid var(--border);}
 .brand{display:flex;align-items:center;gap:10px}
 .brand-cover{width:44px;height:44px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
 .title{margin:0;font-size:1.25rem;font-weight:700}
@@ -65,7 +65,7 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
 
 /* Desktop layout */
 @media (min-width: 900px){
-  .app-main{grid-template-columns: 60% 40%;height:70vh}
+  .app-main{grid-template-columns: 60% 40%;}
   #map{height:70vh}
   #panel{max-height:70vh;border-top:none;border-left:1px solid var(--border)}
   .card{grid-template-columns: 180px 1fr}

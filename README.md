@@ -1,11 +1,12 @@
-# RutaTapas MultiRuta · v6.0
+# RutaTapas MultiRuta · v6.1
 
-- Rutas desde `data/routes.json` con **carga blindada** (múltiples rutas relativas + anticaché), muestra diagnóstico si falla.
-- Tracking **completo** con chunking (WALKING) + **distancia total** + ETA total.
+- Header no fijo (scrolla en móvil y en escritorio). Más espacio para mapa y tarjetas.
+- Rutas desde `data/routes.json` con **carga blindada** (multipath + anticaché), banner de diagnóstico si falla.
+- Tracking **completo** (chunked) + **distancia total** + ETA total.
 - Navegación puntual “Comenzar/Siguiente parada” (DirectionsRenderer).
-- **InfoWindow único** (no se acumulan popups). Cierra al pinchar en el mapa.
-- **Checklist** persistente (botón **Marcar como hecha** corregido y accesible).
-- **Dark/Light** con variables CSS (el color de la ruta se adapta al tema).
+- **InfoWindow único** (sin popups acumulados). Cierre al pinchar en el mapa.
+- **Checklist** persistente (“Marcar como hecha” corregido y accesible).
+- **Dark/Light** con variables CSS (color del trazado adaptado).
 - **Switch “Ruta completa”** sincronizado (desktop/móvil), persistido.
 - **100% estático** para GitHub Pages (HTTPS).
 
