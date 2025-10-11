@@ -24,7 +24,13 @@ const $ = (sel, root=document) => root.querySelector(sel);
 const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || null; }
 
-function loadJSON(url){ return fetch(url, {cache:"no-cache"}).then(r=>{ if(!r.ok) throw new Error(`HTTP ${r.status} al cargar ${url}`); return r.json(); }); }
+function loadJSON(url){
+  const u = url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now(); // cache-bust
+  return fetch(u, {cache:"no-cache"}).then(r => {
+    if(!r.ok) throw new Error(`HTTP ${r.status} al cargar ${url}`);
+    return r.json();
+  });
+}).then(r=>{ if(!r.ok) throw new Error(`HTTP ${r.status} al cargar ${url}`); return r.json(); }); }
 function getProgress(){ try{ return JSON.parse(localStorage.getItem(LS_KEYS.progress) || "{}"); }catch{ return {}; } }
 function setProgress(obj){ localStorage.setItem(LS_KEYS.progress, JSON.stringify(obj)); }
 function setTheme(theme){
@@ -40,7 +46,9 @@ function minutesToHuman(min){ if(!Number.isFinite(min)) return "–"; const h=Ma
 
 async function loadRoutesList(){
   try{
-    const json = await loadJSON("data/routes.json");
+    let json;
+    try{ json = await loadJSON("data/routes.json"); }
+    catch(_e){ json = await loadJSON("./data/routes.json"); }
     if(Array.isArray(json)) return { routes: json };
     if(json && Array.isArray(json.routes)) return json;
     console.error("routes.json no contiene 'routes' array:", json);
@@ -367,4 +375,9 @@ function updateFullRouteVisibility(){
   if(!state.routePolylines) return;
   const mapRef = state.showFullRoute ? state.map : null;
   state.routePolylines.forEach(pl=>pl.setMap(mapRef));
+}
+
+function showDiag(msg){
+  const d=document.createElement('div'); d.className='diag'; d.textContent=msg;
+  document.body.appendChild(d); setTimeout(()=>d.remove(), 4500);
 }
