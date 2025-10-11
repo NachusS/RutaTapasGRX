@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <title>RutaTapas MultiRuta · v5.0</title>
-  <meta name="description" content="Web‑app dinámica de rutas de tapas a pie por Granada y Lorca.">
+  <title>RutaTapas MultiRuta · v5.8</title>
+  <meta name="description" content="Web-app dinámica de rutas de tapas a pie por Granada y Lorca.">
   <link rel="preconnect" href="https://maps.googleapis.com" crossorigin>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,10 +14,15 @@
     <div class="brand">
       <img src="assets/cover.jpg" alt="Portada Ruta de Tapas" class="brand-cover" />
       <h1 class="title">RutaTapas · <span id="routeLabel" aria-live="polite">–</span></h1>
-      <span class="version-badge" aria-label="Versión de la app">v5.0</span>
+      <span class="version-badge" aria-label="Versión de la app">v5.6</span>
     </div>
 
     <div class="controls-row" role="group" aria-label="Controles principales">
+      <label class="switch switch-desktop" title="Mostrar/ocultar trazado completo">
+        <input id="toggleFullRoute" type="checkbox" aria-label="Mostrar ruta completa">
+        <span class="slider"></span>
+        <span class="switch-label">Ruta completa</span>
+      </label>
       <label for="routeSelect" class="sr-only">Selecciona ruta</label>
       <select id="routeSelect" aria-label="Selecciona una ruta"></select>
 
@@ -36,12 +41,19 @@
       <div class="eta-row">
         <div><small>Tiempo estimado total: <span id="etaTotal">–</span></small></div>
         <div><small>Llevas: <span id="etaDone">–</span></small></div>
-            <div class="eta-row">
+      </div>
+      <div class="eta-row">
         <div><small>Distancia total: <span id="distanceTotal">–</span></small></div>
       </div>
     </section>
 
+    <!-- En móvil, los botones de navegación justo debajo del progreso -->
     <div class="nav-actions" role="group" aria-label="Acciones de navegación">
+      <label class="switch switch-mobile" title="Mostrar/ocultar trazado completo (móvil)">
+        <input id="toggleFullRouteMobile" type="checkbox" aria-label="Mostrar ruta completa">
+        <span class="slider"></span>
+        <span class="switch-label">Ruta completa</span>
+      </label>
       <button id="startBtn" class="btn primary" type="button">Comenzar ruta</button>
       <button id="nextBtn" class="btn" type="button">Siguiente parada</button>
     </div>
@@ -59,12 +71,11 @@
       <span>👤 Mi posición</span>
     </div>
     <p class="privacy">
-      Esta app usa la Geolocalización del navegador para mostrar tu posición. Más info en la <a href="#" rel="nofollow">política de privacidad</a>.
+      Creado por @NachusS (11/10/2025) Esta app usa la Geolocalización del navegador. Más info en la <a href="#" rel="nofollow">política de privacidad</a>.
     </p>
   </footer>
 
   <script src="app.js" defer></script>
-  <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuy6NyB1m3HcX5ISqdEH0iax_CkqUrrwo&callback=initMap"></script>
   <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuy6NyB1m3HcX5ISqdEH0iax_CkqUrrwo&callback=initMap"></script>
 </body>
 </html>

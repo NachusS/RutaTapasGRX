@@ -1,4 +1,4 @@
-/* RutaTapas · v5.0 */
+/* RutaTapas · v5.6 — rutas robustas + tracking chunked + InfoWindow único + fixes toggle */
 const state = {
   map: null,
   directionsService: null,
@@ -6,10 +6,12 @@ const state = {
   userMarker: null,
   userCircle: null,
   markers: new Map(),
+  infoWindow: null,
   stops: [],
   routeMeta: null,
   currentTargetId: null,
   watchId: null,
+  routePolylines: [],
   metrics: {
     opens: Number(localStorage.getItem("tapas_metric_opens")||0),
     nextClicks: Number(localStorage.getItem("tapas_metric_next")||0),
@@ -17,14 +19,10 @@ const state = {
   }
 };
 
-const LS_KEYS = { progress: "tapas_progress", theme: "tapas_theme", next: "tapas_nextStopId" };
+const LS_KEYS = { progress: "tapas_progress", theme: "tapas_theme", next: "tapas_nextStopId", showRoute: "tapas_showFullRoute" };
 const $ = (sel, root=document) => root.querySelector(sel);
 const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-
-function cssVar(name){
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || null;
-}
-
+function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || null; }
 
 function loadJSON(url){ return fetch(url, {cache:"no-cache"}).then(r=>{ if(!r.ok) throw new Error(`HTTP ${r.status} al cargar ${url}`); return r.json(); }); }
 function getProgress(){ try{ return JSON.parse(localStorage.getItem(LS_KEYS.progress) || "{}"); }catch{ return {}; } }
@@ -33,11 +31,12 @@ function setTheme(theme){
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem(LS_KEYS.theme, theme);
   $("#toggleThemeBtn")?.setAttribute("aria-pressed", theme === "dark");
-  // Update polyline colors to match theme
+  // recolorea polylines del tracking completo
   const c = cssVar('--brand') || '#2563eb';
   if(state.routePolylines){ state.routePolylines.forEach(pl=>pl.setOptions({strokeColor: c})); }
 }
 function toggleTheme(){ const now=document.documentElement.getAttribute("data-theme"); setTheme(now==="dark"?"light":"dark"); }
+function minutesToHuman(min){ if(!Number.isFinite(min)) return "–"; const h=Math.floor(min/60); const m=Math.round(min%60); return h>0?`${h} h ${m} min`:`${m} min`; }
 
 async function loadRoutesList(){
   try{
@@ -52,23 +51,18 @@ async function loadRoutesList(){
   }
 }
 
-function minutesToHuman(min){ if(!Number.isFinite(min)) return "–"; const h=Math.floor(min/60); const m=Math.round(min%60); return h>0?`${h} h ${m} min`:`${m} min`; }
-
 window.initMap = async function initMap(){
+  state.showFullRoute = (localStorage.getItem(LS_KEYS.showRoute) ?? '1') !== '0';
   setTheme(localStorage.getItem(LS_KEYS.theme) || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark":"light"));
   try{ localStorage.setItem("tapas_metric_opens", String(state.metrics.opens + 1)); }catch{}
 
-  const routes = await loadRoutesList(); /* robust loader */
-  if(!routes.routes.length){ console.warn('No hay rutas en data/routes.json'); } /* fallback de ejemplo eliminado para evitar confusión */
-  // antes: catch con rutas por defecto
-  /*
-    { id:"granada", name:"Granada · Ruta de tapas", file:"stops.json", cityCenter:{lat:37.1765,lng:-3.5979}},
-    { id:"lorca", name:"Lorca · Ruta de tapas", file:"stops_lorca.json", cityCenter:{lat:37.6712,lng:-1.7006}}
-  ]}));*/
-
+  const routes = await loadRoutesList();
   const routeSelect = $("#routeSelect");
-  if(routes.routes.length===0){ routeSelect.innerHTML = '<option value="">(Sin rutas)</option>'; }
-  routes.routes.forEach(r=>{ const opt=document.createElement("option"); opt.value=r.id || r.title; opt.textContent=r.name || r.title || r.id; routeSelect.appendChild(opt); });
+  if(routes.routes.length===0){
+    routeSelect.innerHTML = '<option value=\"\">(Sin rutas)</option>';
+  } else {
+    routes.routes.forEach(r=>{ const opt=document.createElement("option"); opt.value=r.id || r.title; opt.textContent=r.name || r.title || r.id; routeSelect.appendChild(opt); });
+  }
   const defaultRouteId = routes.routes[0]?.id || routes.routes[0]?.title || "ruta_demo";
   const selectedId = localStorage.getItem("tapas_route") || defaultRouteId;
   routeSelect.value = selectedId;
@@ -78,11 +72,32 @@ window.initMap = async function initMap(){
   $("#startBtn").addEventListener("click", () => startNavigation());
   $("#nextBtn").addEventListener("click", () => { try{ localStorage.setItem("tapas_metric_next", String(state.metrics.nextClicks + 1)); }catch{}; goNext(); });
   routeSelect.addEventListener("change", async (e)=>{ const id=e.target.value; localStorage.setItem("tapas_route", id); await loadRouteById(routes, id); });
+  const toggleFR = document.getElementById('toggleFullRoute');
+
+  // Sync desktop & mobile switches
+  const toggleFR = document.getElementById('toggleFullRoute');
+  const toggleFRm = document.getElementById('toggleFullRouteMobile');
+  const applyStateToSwitches = () => {
+    if(toggleFR) toggleFR.checked = !!state.showFullRoute;
+    if(toggleFRm) toggleFRm.checked = !!state.showFullRoute;
+  };
+  applyStateToSwitches();
+  const onSwitchChange = (checked) => {
+    state.showFullRoute = !!checked;
+    localStorage.setItem(LS_KEYS.showRoute, state.showFullRoute ? '1' : '0');
+    updateFullRouteVisibility();
+    applyStateToSwitches();
+  };
+  if(toggleFR){ toggleFR.addEventListener('change', ()=> onSwitchChange(toggleFR.checked)); }
+  if(toggleFRm){ toggleFRm.addEventListener('change', ()=> onSwitchChange(toggleFRm.checked)); }
+
 
   state.map = new google.maps.Map($("#map"), { center:{lat:40.4168,lng:-3.7038}, zoom:14 });
   state.directionsService = new google.maps.DirectionsService();
   state.directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers:true, preserveViewport:true });
   state.directionsRenderer.setMap(state.map);
+  state.infoWindow = new google.maps.InfoWindow();
+  state.map.addListener('click', ()=>{ if(state.infoWindow) state.infoWindow.close(); });
 
   await loadRouteById(routes, selectedId);
   setupGeolocation();
@@ -93,11 +108,14 @@ async function loadRouteById(routes, id){
   state.routeMeta = meta;
   $("#routeLabel").textContent = (meta?.name || meta?.title || "Ruta");
 
-  const filePath = (meta.file||'stops.json');
+  const filePath = (meta.file||'data/stops.json');
   const finalPath = filePath.startsWith('data/') ? filePath : `data/${filePath}`;
   const data = await loadJSON(finalPath);
-  state.lastLoadedMeta = data; // guarda meta para centro y títulos
-  const stops = (data.stops||[]).slice().sort((a,b)=> (a.order||0)-(b.order||0));
+  state.lastLoadedMeta = data; // por si trae meta.start / meta.end
+  const stops = (data.stops||[]).slice().sort((a,b)=> (a.order||0)-(b.order||0)).map((s,i)=>{
+    if(!s.id) s.id = (s.name||`stop_${i+1}`).toLowerCase().replace(/\W+/g,'_');
+    return s;
+  });
   state.stops = stops;
   buildMap(stops, meta);
   await buildFullRoutePolyline();
@@ -107,15 +125,19 @@ async function loadRouteById(routes, id){
 }
 
 function buildMap(stops, meta){
+  // limpia marcadores previos
   state.markers.forEach(m=>m.setMap(null));
   state.markers.clear();
 
+  // centro
   let center = null;
-  if(stops && stops.length){ center = {lat:stops[0].lat, lng:stops[0].lng}; }
-  // intenta meta.start del propio fichero de paradas
-  try{ if(state.lastLoadedMeta && state.lastLoadedMeta.meta && state.lastLoadedMeta.meta.start){ const s = state.lastLoadedMeta.meta.start; center = {lat: s.lat, lng: s.lng}; } }catch{}
-  // si no, usa cityCenter del routes.json
-  if(!center && meta && meta.cityCenter) center = meta.cityCenter;
+  if(state.lastLoadedMeta && state.lastLoadedMeta.meta && state.lastLoadedMeta.meta.start){
+    const s = state.lastLoadedMeta.meta.start; center = {lat: s.lat, lng: s.lng};
+  }else if(stops && stops.length){
+    center = {lat:stops[0].lat, lng:stops[0].lng};
+  }else if(meta && meta.cityCenter){
+    center = meta.cityCenter;
+  }
   if(center) state.map.setCenter(center);
 
   for(const s of stops){
@@ -125,18 +147,29 @@ function buildMap(stops, meta){
       icon: (s.order===1 || s.order===stops.length) ? "https://maps.gstatic.com/mapfiles/ms2/micons/flag.png" : undefined,
       title: `${s.order}. ${s.name}`
     });
-    const info = new google.maps.InfoWindow({ content: `<strong>${s.order}. ${s.name}</strong><br><small>${s.address||""}</small>` });
-    marker.addListener("click", ()=>{ info.open({anchor:marker, map:state.map}); goTo(s.id); });
+    marker.addListener("click", ()=>{
+      if(state.infoWindow){ state.infoWindow.close(); }
+      const html = `<div style="font:600 14px system-ui, -apple-system, Segoe UI, Roboto; color:#111; line-height:1.35;">
+        ${s.order}. ${s.name}<br><span style="font:400 12px system-ui; color:#333;">${s.address||""}</span>
+      </div>`;
+      state.infoWindow.setContent(html);
+      state.infoWindow.open({anchor:marker, map: state.map, shouldFocus:true});
+      goTo(s.id);
+    });
     state.markers.set(s.id, marker);
   }
 
+  // fallback polyline invisible por defecto
   const path = stops.map(s=>({lat:s.lat, lng:s.lng}));
   state.poly && state.poly.setMap(null);
   state.poly = new google.maps.Polyline({ path, geodesic:false, strokeOpacity:0.0, map: state.map });
 
-  const bounds = new google.maps.LatLngBounds();
-  path.forEach(p=>bounds.extend(p));
-  try{ state.map.fitBounds(bounds); }catch{}
+  // fit bounds
+  if(path.length){
+    const bounds = new google.maps.LatLngBounds();
+    path.forEach(p=>bounds.extend(p));
+    try{ state.map.fitBounds(bounds); }catch{}
+  }
 }
 
 function buildList(stops){
@@ -148,19 +181,41 @@ function buildList(stops){
     card.innerHTML = `
       <img src="${s.photo || `assets/${s.id||'placeholder'}.jpg`}" alt="Foto de ${s.name}">
       <div>
-        <h3>${s.order}. ${s.name} ${s.order===1?'<span class="badge">Inicio</span>':''}${s.order===stops.length?'<span class="badge">Fin</span>':''}</h3>
+        <h3>${s.order}. ${s.name} <span class="badge order-badge">${s.order}/${stops.length}</span> ${s.order===1?'<span class="badge">Inicio</span>':''}${s.order===stops.length?'<span class="badge">Fin</span>':''}</h3>
         <p>${s.tapa?`Tapa típica: ${s.tapa}`:''}</p>
         <p>${s.address||''}</p>
         <div class="actions">
-          <button class="btn" data-act="toggle" data-id="${s.id}" aria-pressed="${!!progress[s.id]}">${progress[s.id]?'Desmarcar':'Marcar como hecha'}</button>
-          <button class="btn" data-act="goto" data-id="${s.id}">Ir a esta parada</button>
+          <button type="button" class="btn" data-act="toggle" data-id="${s.id}" aria-pressed="${!!progress[s.id]}">${progress[s.id]?'Desmarcar':'Marcar como hecha'}</button>
+          <button type="button" class="btn" data-act="goto" data-id="${s.id}">Ir a esta parada</button>
         </div>
       </div>
     `;
     panel.appendChild(card);
   }
-  panel.addEventListener("click", (e)=>{ const btn=e.target.closest("button[data-act]"); if(!btn) return; const id=btn.getAttribute("data-id"); const act=btn.getAttribute("data-act"); if(act==="toggle") toggleDone(id); if(act==="goto") goTo(id); });
-  panel.addEventListener("keydown",(e)=>{ if((e.key==="Enter"||e.key===" ") && e.target.matches(".card")){ const idx=Array.from(panel.children).indexOf(e.target); const s=state.stops[idx]; if(s) goTo(s.id); } });
+
+  // Delegación + binding directo (doble red para asegurar en móviles)
+  panel.addEventListener("click", (e)=>{
+    const btn=e.target.closest("button[data-act]"); if(!btn) return;
+    e.stopPropagation();
+    const id=btn.getAttribute("data-id"); const act=btn.getAttribute("data-act");
+    if(act==="toggle") toggleDone(id);
+    if(act==="goto") goTo(id);
+  });
+  $$("#panel button[data-act]").forEach(btn=>{
+    btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      const id = btn.getAttribute("data-id");
+      const act = btn.getAttribute("data-act");
+      if(act==="toggle") toggleDone(id);
+      if(act==="goto") goTo(id);
+    }, { passive: true });
+  });
+
+  panel.addEventListener("keydown",(e)=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.matches(".card")){
+      const idx=Array.from(panel.children).indexOf(e.target); const s=state.stops[idx]; if(s) goTo(s.id);
+    }
+  });
 }
 
 function restoreProgressUI(){
@@ -170,7 +225,7 @@ function restoreProgressUI(){
     const done = !!progress[id];
     btn.textContent = done? "Desmarcar":"Marcar como hecha";
     btn.setAttribute("aria-pressed", String(done));
-    const card = btn.closest(".card"); card.style.opacity = done ? .6 : 1;
+    const card = btn.closest(".card"); if(card){ card.style.opacity = done ? .6 : 1; }
   });
   const total = state.stops.length;
   const doneCount = state.stops.filter(s => progress[s.id]).length;
@@ -189,7 +244,13 @@ function goTo(id){
   const stop = state.stops.find(s=>s.id===id); if(!stop) return;
   state.currentTargetId = id; localStorage.setItem(LS_KEYS.next, id);
   const mk = state.markers.get(id);
-  if(mk){ state.map.panTo(mk.getPosition()); state.map.setZoom(16); new google.maps.InfoWindow({content:`<strong>${stop.name}</strong>`}).open({anchor:mk, map:state.map}); }
+  if(mk){
+    state.map.panTo(mk.getPosition()); state.map.setZoom(16);
+    if(state.infoWindow){ state.infoWindow.close(); }
+    const html = `<div style="font:600 14px system-ui; color:#111; line-height:1.35;">${stop.order? stop.order+'. ' : ''}${stop.name}</div>`;
+    state.infoWindow.setContent(html);
+    state.infoWindow.open({anchor: mk, map: state.map, shouldFocus: true});
+  }
   startNavigation();
 }
 
@@ -223,41 +284,14 @@ function updateETA(){
   $("#etaDone").textContent = minutesToHuman(doneMinutes);
 }
 
-function setupGeolocation(){
-  if(!("geolocation" in navigator)){ toast("Tu navegador no soporta Geolocalización. Puedes navegar manualmente con ‘Siguiente parada’."); return; }
-  try{ state.watchId = navigator.geolocation.watchPosition(onGeo, onGeoError, { enableHighAccuracy:true, maximumAge:5000, timeout:15000 }); }catch(e){ onGeoError(e); }
-}
-function onGeo(pos){
-  const { latitude:lat, longitude:lng, accuracy } = pos.coords;
-  const here = new google.maps.LatLng(lat,lng);
-  if(!state.userMarker){
-    state.userMarker = new google.maps.Marker({ position: here, map: state.map, title:"Mi posición", icon:"https://maps.gstatic.com/mapfiles/ms2/micons/man.png" });
-    state.userCircle = new google.maps.Circle({ strokeOpacity:0.2, fillOpacity:0.08, map: state.map, center: here, radius: Math.min(accuracy||25, 60) });
-  }else{
-    state.userMarker.setPosition(here); state.userCircle.setCenter(here); state.userCircle.setRadius(Math.min(accuracy||25, 60));
-  }
-}
-function onGeoError(err){ try{ localStorage.setItem("tapas_metric_geoerr", String(state.metrics.geoErrors + 1)); }catch{}; console.warn("Geolocalización error:", err && (err.message||err.code)); toast("No se pudo obtener tu posición. Revisa permisos o usa ‘Siguiente parada’.", true); }
-function toast(msg, warn=false){
-  let el=document.createElement("div"); el.role="status"; el.setAttribute("aria-live","polite");
-  Object.assign(el.style,{position:"fixed",left:"50%",bottom:"16px",transform:"translateX(-50%)",background:warn?"#ef4444":"#111827",color:"#fff",padding:"10px 14px",borderRadius:"12px",boxShadow:"0 6px 18px rgba(0,0,0,.25)",zIndex:"9999"});
-  el.textContent=msg; document.body.appendChild(el); setTimeout(()=>{ el.remove(); }, 3000);
-}
-
-
-/** =========================
- *  Ruta completa (chunked waypoints) para mostrar el tracking a pie entre TODAS las paradas
- *  - Máx 25 puntos por petición (origen+destino+23 waypoints)
- *  - Unimos los overview_paths en polylines
- *  ========================= */
+/** Ruta completa (chunked) sobre TODAS las paradas */
 async function buildFullRoutePolyline(){
-  const strokeC = cssVar('--brand') || '#2563eb';
-  // Limpia polylines anteriores
+  // borra polylines anteriores
   if(state.routePolylines){ state.routePolylines.forEach(pl=>pl.setMap(null)); }
   state.routePolylines = [];
-
   const pts = state.stops.map(s=>({lat:s.lat, lng:s.lng}));
   if(pts.length < 2) return;
+  const strokeC = cssVar('--brand') || '#2563eb';
 
   const MAX_PTS = 25; // origin + 23 waypoints + destination
   let i = 0;
@@ -277,40 +311,60 @@ async function buildFullRoutePolyline(){
       }, (result, status)=>{
         if(status === "OK" && result?.routes?.[0]){
           const route = result.routes[0];
-          // sumamos duraciones y distancias
           if(route.legs){
             route.legs.forEach(l=>{
               totalSeconds += (l.duration?.value||0);
               totalMeters += (l.distance?.value||0);
             });
           }
-          // dibujamos polyline del overview_path
           const path = route.overview_path;
           const poly = new google.maps.Polyline({ path, map: state.map, strokeOpacity: 0.85, strokeWeight: 4, strokeColor: strokeC });
           state.routePolylines.push(poly);
         }else{
-          // Si falla, mostramos el fallback simple de este tramo
           const simple = new google.maps.Polyline({ path: chunk, map: state.map, strokeOpacity: 0.85, strokeWeight: 4, strokeColor: strokeC });
           state.routePolylines.push(simple);
         }
         resolve();
       });
     });
-
-    // Avanza ventana para el próximo chunk (último punto reaprovechado como origen)
-    if(i === 0) i += (MAX_PTS - 1);
-    else i += (MAX_PTS - 1);
+    i += (MAX_PTS - 1);
   }
 
-  // Actualiza ETA total con la suma de la ruta completa (si hay datos)
   if(totalSeconds > 0){
     const mins = totalSeconds/60;
     document.querySelector("#etaTotal").textContent = minutesToHuman(mins);
   }
+  updateFullRouteVisibility();
   if(totalMeters > 0){
     const km = (totalMeters/1000).toFixed(1);
     const el = document.querySelector('#distanceTotal'); if(el) el.textContent = `${km} km`;
   }
-  // Si quieres mostrar distancia total, podrías añadir un span dedicado o un tooltip.
 }
 
+/** Geolocalización en tiempo real */
+function setupGeolocation(){
+  if(!("geolocation" in navigator)){ toast("Tu navegador no soporta Geolocalización. Puedes navegar manualmente con ‘Siguiente parada’."); return; }
+  try{ state.watchId = navigator.geolocation.watchPosition(onGeo, onGeoError, { enableHighAccuracy:true, maximumAge:5000, timeout:15000 }); }catch(e){ onGeoError(e); }
+}
+function onGeo(pos){
+  const { latitude:lat, longitude:lng, accuracy } = pos.coords;
+  const here = new google.maps.LatLng(lat,lng);
+  if(!state.userMarker){
+    state.userMarker = new google.maps.Marker({ position: here, map: state.map, title:"Mi posición", icon:"https://maps.gstatic.com/mapfiles/ms2/micons/man.png" });
+    state.userCircle = new google.maps.Circle({ strokeOpacity:0.2, fillOpacity:0.08, map: state.map, center: here, radius: Math.min(accuracy||25, 60) });
+  }else{
+    state.userMarker.setPosition(here); state.userCircle.setCenter(here); state.userCircle.setRadius(Math.min(accuracy||25, 60));
+  }
+}
+function onGeoError(err){ try{ localStorage.setItem("tapas_metric_geoerr", String(state.metrics.geoErrors + 1)); }catch{}; console.warn("Geolocalización error:", err && (err.message||err.code)); toast("No se pudo obtener tu posición. Revisa permisos o usa ‘Siguiente parada’.", true); }
+function toast(msg, warn=false){
+  let el=document.createElement("div"); el.role="status"; el.setAttribute("aria-live","polite");
+  Object.assign(el.style,{position:"fixed",left:"50%",bottom:"16px",transform:"translateX(-50%)",background:warn?"#ef4444":"#111827",color:"#fff",padding:"10px 14px",borderRadius:"12px",boxShadow:"0 6px 18px rgba(0,0,0,.25)",zIndex:"9999"});
+  el.textContent=msg; document.body.appendChild(el); setTimeout(()=>{ el.remove(); }, 2800);
+}
+
+function updateFullRouteVisibility(){
+  if(!state.routePolylines) return;
+  const mapRef = state.showFullRoute ? state.map : null;
+  state.routePolylines.forEach(pl=>pl.setMap(mapRef));
+}

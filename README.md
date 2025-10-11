@@ -1,46 +1,25 @@
-# RutaTapas MultiRuta · v5.0
+# RutaTapas MultiRuta · v5.6
 
-App estática (GitHub Pages) para rutas de tapas andando en Google Maps (Granada / Lorca).
-- **Sin build**: solo `index.html`, `styles.css`, `app.js`, carpeta `data/` y `assets/`.
-- **Google Maps JavaScript API** con `DirectionsService` (`WALKING`) y `DirectionsRenderer`.
-- **Geolocalización** en tiempo real (`watchPosition`).
-- **Checklist persistente** + progreso/ETA y **modo claro/oscuro** con CSS variables.
-- **Accesible**: aria-live, roles, foco navegable, contraste AA.
+- Rutas desde `data/routes.json` (usa `id|title` y ficheros tipo `data/stops*.json`).
+- Tracking **completo** con chunking de waypoints (WALKING) + distancia total + ETA total.
+- Navegación puntual “Comenzar/Siguiente parada” (DirectionsRenderer).
+- **InfoWindow único** (no se acumulan popups). Cierra al pinchar en el mapa.
+- **Checklist** persistente (botón **Marcar como hecha** corregido y accesible).
+- **Dark/Light** con variables CSS (el color de la ruta se adapta al tema).
+- **100% estático** para GitHub Pages (HTTPS).
 
-## Estructura
-```
-/
-├─ index.html
-├─ styles.css
-├─ app.js
-├─ data/
-│  ├─ routes.json
-│  ├─ stops.json
-│  └─ stops_lorca.json
-└─ assets/
-   └─ cover.jpg (y fotos opcionales por id)
-```
-
-## Deploy en GitHub Pages
-1. Crea un repositorio y sube estos ficheros a la rama `main`.
-2. En Settings → Pages, selecciona **Deploy from a branch** → `main` → `/root`.
-3. Asegúrate de que la URL sirve por **HTTPS** (geolocalización lo requiere).
-4. Restringe tu API Key de Google Maps a tu dominio.
+## Publicación
+1. Sube todo a `main` y activa GitHub Pages (Deploy from a branch → `main`).
+2. Carga por HTTPS. Restringe la API key al dominio.
 
 ## Datos
-- `data/routes.json` define las rutas disponibles (id, nombre, fichero de paradas y centro ciudad).
-- `data/stops.json` y `data/stops_lorca.json` contienen `stops[]` con:
+- `data/routes.json` (tu formato):  
   ```json
-  { "id": "bar-xxx", "order": 1, "name": "...", "tapa": "...", "lat": 37.123, "lng": -3.456, "address": "...", "photo": "assets/bar-xxx.jpg" }
+  {
+    "routes": [
+      { "id": "ruta_grx_v1", "title": "NachusS RutaTapas-GRX v1.0", "file": "data/stops.json" },
+      { "id": "ruta_demo", "title": "Ruta Tapas por Lorca", "file": "data/stops_lorca.json" }
+    ]
+  }
   ```
-
-## Persistencia (LocalStorage)
-- `tapas_progress`: `{ [stopId]: boolean }`
-- `tapas_theme`: `"light" | "dark"`
-- `tapas_nextStopId`: `string`
-- (opc.) métricas mínimas: `tapas_metric_opens`, `tapas_metric_next`, `tapas_metric_geoerr`
-
-## Notas
-- Si `Directions` falla por cuota/red, se activa **fallback polyline** local.
-- El mapa se centra en la **primera parada** de la ruta cargada.
-- Los botones **Comenzar ruta** y **Siguiente parada** aparecen **debajo del header de progreso** en móvil, tal como se requiere.
+- Cada `stops*.json` con `stops[]` ordenados por `order` y (opcional) `meta.start`.

@@ -42,6 +42,9 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
 .legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .sr-only{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
 
+/* InfoWindow text readable across themes */
+.gm-style-iw-d, .gm-style-iw-c { color:#111 !important; }
+
 /* Desktop layout */
 @media (min-width: 900px){
   .app-main{grid-template-columns: 60% 40%;height:70vh}
@@ -51,4 +54,20 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
   .card img{height:140px}
 }
 
-.eta-row strong{color:var(--fg)}
+/* Toggle switch */
+.switch{display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border:1px solid var(--border);border-radius:12px;background:var(--card)}
+.switch input{display:none}
+.switch .slider{position:relative;display:inline-block;width:38px;height:20px;border-radius:999px;background:var(--border);transition:background .2s}
+.switch .slider::after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s, background .2s, box-shadow .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch input:checked + .slider{background:var(--brand)}
+.switch input:checked + .slider::after{transform:translateX(18px)}
+.switch .switch-label{font-size:.9rem;color:var(--muted)}
+/* Order badge */
+.order-badge{margin-left:6px;background:transparent;border:1px dashed var(--border);color:var(--muted);}
+
+/* Responsive placement for full-route switch */
+.switch-mobile{display:none}
+@media (max-width: 899px){
+  .switch-desktop{display:none}
+  .switch-mobile{display:inline-flex}
+}
