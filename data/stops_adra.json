@@ -45,7 +45,7 @@
       "tapa": "Esparrago / atún",
       "lat": 36.74812582483786, 
       "lng": -3.020430132809778,
-      "photo": "assets/emilio.jpg",
+      "photo": "assets/adraEmilio.jpg",
       "notes": "",
       "web": "https://adraEmilio.es/",
       "order": 3
@@ -81,7 +81,7 @@
       "tapa": "Pescao frito",
       "lat": 36.74704373840772, 
       "lng": -3.014731203335516,
-      "photo": "assets/adraLosFinos.jpg",
+      "photo": "assets/adraLosFinos.png",
       "notes": "",
       "web": "https://www.restaurantelosfinos.com/",
       "order": 6
@@ -124,3 +124,4 @@
     }
   ]
 }
+
