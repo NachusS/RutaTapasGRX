@@ -1,14 +1,19 @@
 {
   "routes": [
     {
-      "id": "ruta_grx_v1",
-      "title": "NachusS RutaTapas-GRX v1.0",
+      "id": "ruta_01",
+      "title": "Granada NachusS v.1",
       "file": "data/stops.json"
     },
     {
-      "id": "ruta_demo",
-      "title": "Ruta Tapas por Lorca",
+      "id": "ruta_02",
+      "title": "Lorca v.1",
       "file": "data/stops_lorca.json"
+    },
+    {
+      "id": "ruta_03",
+      "title": "Adra v.1",
+      "file": "data/stops_adra.json"
     }
   ]
 }

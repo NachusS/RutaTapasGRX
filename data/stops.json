@@ -18,11 +18,12 @@
       "id": "puerta_elvira",
       "name": "Puerta de Elvira",
       "address": "Plaza del Triunfo, Granada",
-      "tapa": "Punto de encuentro inicial",
+      "tapa": "",
       "lat": 37.18214277,
       "lng": -3.59961789,
       "photo": "assets/PuertaElvira.jpg",
-      "notes": "",
+      "notes": "Punto de encuentro inicial",
+      "web": "https://es.wikipedia.org/wiki/Puerta_de_Elvira",
       "order": 1
     },
     {
@@ -34,6 +35,7 @@
       "lng": -3.59255,
       "photo": "assets/lara.jpg",
       "notes": "Primera parada al subir por el Albaicín",
+      "web": "",
       "order": 2
     },
     {
@@ -45,6 +47,7 @@
       "lng": -3.59086,
       "photo": "assets/mirador.jpg",
       "notes": "",
+      "web": "",
       "order": 3
     },
     {
@@ -56,6 +59,7 @@
       "lng": -3.58969,
       "photo": "assets/aixa.jpg",
       "notes": "",
+      "web": "",
       "order": 4
     },
     {
@@ -67,6 +71,7 @@
       "lng": -3.58853,
       "photo": "assets/ladrillo2.jpg",
       "notes": "",
+      "web": "",
       "order": 5
     },
     {
@@ -78,6 +83,7 @@
       "lng": -3.58822,
       "photo": "assets/aliatar.jpg",
       "notes": "",
+      "web": "",
       "order": 6
     },
     {
@@ -89,6 +95,7 @@
       "lng": -3.58804,
       "photo": "assets/entraiya.jpg",
       "notes": "",
+      "web": "",
       "order": 7
     },
     {
@@ -100,6 +107,7 @@
       "lng": -3.59039,
       "photo": "assets/casa1899.jpg",
       "notes": "",
+      "web": "",
       "order": 8
     },
     {
@@ -111,6 +119,7 @@
       "lng": -3.59423,
       "photo": "assets/ras.jpg",
       "notes": "",
+      "web": "",
       "order": 9
     },
     {
@@ -122,6 +131,7 @@
       "lng": -3.59352,
       "photo": "assets/minotauro.jpg",
       "notes": "",
+      "web": "",
       "order": 10
     },
     {
@@ -133,6 +143,7 @@
       "lng": -3.59305,
       "photo": "assets/el22.jpg",
       "notes": "",
+      "web": "",
       "order": 11
     },
     {
@@ -144,6 +155,7 @@
       "lng": -3.59699,
       "photo": "assets/bodegaCastaneda.jpg",
       "notes": "Clásico de Granada; tapa con consumición",
+      "web": "https://casacastaneda.es/",
       "order": 12
     },
     {
@@ -155,6 +167,7 @@
       "lng": -3.59651,
       "photo": "assets/Muralla.jpg",
       "notes": "",
+      "web": "",
       "order": 13
     },
     {
@@ -166,6 +179,7 @@
       "lng": -3.598,
       "photo": "assets/CasaJulio.jpg",
       "notes": "Taberna tradicional desde 1947",
+      "web": "https://casajulio1947.com/",
       "order": 14
     },
     {
@@ -177,6 +191,7 @@
       "lng": -3.59803,
       "photo": "assets/LosManueles.jpg",
       "notes": "",
+      "web": "",
       "order": 15
     },
     {
@@ -188,6 +203,7 @@
       "lng": -3.59938,
       "photo": "assets/cisco.jpg",
       "notes": "",
+      "web": "",
       "order": 16
     },
     {
@@ -199,6 +215,7 @@
       "lng": -3.60016,
       "photo": "assets/lumbre.jpg",
       "notes": "",
+      "web": "",
       "order": 17
     },
     {
@@ -210,6 +227,7 @@
       "lng": -3.60067,
       "photo": "assets/blancapaloma.jpg",
       "notes": "",
+      "web": "",
       "order": 18
     },
     {
@@ -221,6 +239,7 @@
       "lng": -3.60157,
       "photo": "assets/braserito.jpg",
       "notes": "",
+      "web": "",
       "order": 19
     },
     {
@@ -232,6 +251,7 @@
       "lng": -3.59839,
       "photo": "assets/latana.jpg",
       "notes": "",
+      "web": "https://www.tabernalatana.com/",
       "order": 20
     }
   ]
