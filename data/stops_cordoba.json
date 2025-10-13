@@ -1,0 +1,186 @@
+{
+  "meta": {
+    "city": "Cordoba",
+    "title": "Cordoba v.1 - Paco",
+    "start": {
+      "name": "Plaza Corredera",
+      "lat": 37.88359168662521, 
+      "lng": -4.774468999598741
+    },
+    "end": {
+      "name": "Bodega de San Basilio",
+      "lat": 37.876011501510625,
+      "lng": -4.783773980294933
+    }
+  },
+  "stops": [
+    {
+      "id": "corredera",
+      "name": "Plaza Corredera",
+      "address": "Comienzo ruta",
+      "tapa": "",
+      "lat": 37.88359168662521
+      "lng": -4.774468999598741,
+      "photo": "assets/CordobaCorredera.jpg",
+      "notes": "",
+      "web:":"",
+      "order": 1
+    },
+    {
+      "id": "cazuela",
+      "name": "La Cazuela de la Esparteria",
+      "address": "",
+      "tapa": "",
+      "lat": 37.884002373365504, 
+      "lng": -4.775305854216509,
+      "photo": "assets/CordobaCazuela.jpg",
+      "notes": "",
+      "web:": "http://www.lacazueladelaesparteria.es/",
+      "order": 2
+    },
+    {
+      "id": "salinas",
+      "name": "Taberna Salinas",
+      "address": "",
+      "tapa": "",
+      "lat": 37.884234270250325, 
+      "lng": -4.775735987891278,
+      "photo": "assets/CordobaSalinas.jpg",
+      "notes": "",
+      "web:": "http://www.tabernasalinas.com/la-carta/",
+      "order": 3
+    },
+    {
+      "id": "gallo",
+      "name": "Taberna El Gallo",
+      "address": "",
+      "tapa": "Gambas fritas /Salpicón Marisco",
+      "lat": 37.884803012154826, 
+      "lng": -4.776906201994093,
+      "photo": "assets/CordobaGallo.jpg",
+      "notes": "",
+      "web:": "https://www.elgallodelcentro.com/",
+      "order": 4
+    },
+    {
+      "id": "gongora",
+      "name": "Taberna Góngora",
+      "address": "",
+      "tapa": "Rabo de Toro",
+      "lat": 37.88641064028906, 
+      "lng": -4.778684743511263,
+      "photo": "assets/CordobaGongora.jpg",
+      "notes": "",
+      "web:": "https://tabernagongora.eatbu.com/",
+      "order": 5
+    },
+    {
+      "id": "pisto",
+      "name": "Taberna San Miguel "Casa El Pisto"",
+      "address": "",
+      "tapa": "Tapas típicas cordobesas",
+      "lat": 37.88574338280305, 
+      "lng": -4.779260094384213,
+      "photo": "assets/CordobaPisto.jpg",
+      "notes": "",
+      "web:": "https://www.casaelpisto.com/",
+      "order": 6
+    },
+    {
+      "id": "montillana",
+      "name": "Taberna La Montillana",
+      "address": "",
+      "tapa": "",
+      "lat": 37.88575278786717, 
+      "lng": -4.779794318188539,
+      "photo": "assets/CordobaMontillana.jpg",
+      "notes": "",
+      "web:": "https://tabernalamontillana.com/carta/",
+      "order": 7
+    },
+    {
+      "id": "carrasquin",
+      "name": "Bar Carrasquín",
+      "address": "",
+      "tapa": "",
+      "lat": 37.884109763696394,  
+      "lng": -4.780343807327419,
+      "photo": "assets/CordobaCarrasquin.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 8
+    },
+    {
+      "id": "tollin",
+      "name": "Taberna CASA TOLLÍN",
+      "address": "",
+      "tapa": "Atún / Montaditos",
+      "lat": 37.884153161257274,  
+      "lng": -4.780200309058778,
+      "photo": "assets/CordobaTollin.jpg",
+      "notes": "",
+      "web:": "http://www.casatollin.com/",
+      "order": 9
+    },
+    {
+      "id": "correo",
+      "name": "bar Correo",
+      "address": "",
+      "tapa": "Latas",
+      "lat": 37.88414521011453,   
+      "lng": -4.779988095656069,
+      "photo": "assets/CordobaCorreo.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 10
+    },
+    {
+      "id": "santos",
+      "name": "Bar Santos",
+      "address": "",
+      "tapa": "Tortilla Patatas",
+      "lat": 37.87995811035788,   
+      "lng": -4.779238985439033,
+      "photo": "assets/CordobaSantos.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 11
+    },
+    {
+      "id": "pepe",
+      "name": "Casa Pepe de La Judería",
+      "address": "",
+      "tapa": "",
+      "lat": 37.879741980498416,   
+      "lng": -4.781300274944577,
+      "photo": "assets/CordobaPepe.jpg",
+      "notes": "",
+      "web:": "http://www.restaurantecasapepedelajuderia.com/",
+      "order": 12
+    },
+    {
+      "id": "churrasco",
+      "name": "Restaurante El Churrasco",
+      "address": "",
+      "tapa": "Berenjenas / Carne brasa",
+      "lat": 37.88012340227303,   
+      "lng": -4.781907916041111,
+      "photo": "assets/CordobaChurrasco.jpg",
+      "notes": "",
+      "web:": "hhttps://www.elchurrasco.com/",
+      "order": 13
+    },
+    {
+      "id": "basilio",
+      "name": "Bodega de San Basilio",
+      "address": "",
+      "tapa": "Rabo de Toro",
+      "lat": 37.876011501510625,   
+      "lng": -4.783773980294933,
+      "photo": "assets/CordobaBasilio.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 14
+    }
+  ]
+}
