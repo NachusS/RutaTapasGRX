@@ -7,13 +7,14 @@
   --brand: #2563eb;
   --ok: #16a34a;
   --warn: #f59e0b;
+  --accent: #d946ef; /* resalte etiquetas */
 }
 html[data-theme="dark"]{
-  --bg:#0b0f14; --fg:#e5e7eb; --muted:#94a3b8; --card:#111827; --border:#1f2937; --brand:#60a5fa; --ok:#22c55e; --warn:#fbbf24;
+  --bg:#0b0f14; --fg:#e5e7eb; --muted:#94a3b8; --card:#111827; --border:#1f2937; --brand:#60a5fa; --ok:#22c55e; --warn:#fbbf24; --accent:#f472b6;
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,sans-serif;background:var(--bg);color:var(--fg);}
-.app-header{padding:10px 12px; /* sin sticky para que no quede fija */ background:var(--bg);border-bottom:1px solid var(--border);}
+.app-header{padding:10px 12px; background:var(--bg);border-bottom:1px solid var(--border);}
 .brand{display:flex;align-items:center;gap:10px}
 .brand-cover{width:44px;height:44px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
 .title{margin:0;font-size:1.25rem;font-weight:700}
@@ -55,9 +56,26 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
 .switch input:checked + .slider::after{transform:translateX(18px)}
 .switch .switch-label{font-size:.9rem;color:var(--muted)}
 .switch-mobile{display:none}
+
+/* Highlighted labels */
+.control-label,
+.control-label-mobile{
+  font-weight:700;
+  color:var(--accent);
+  padding:6px 8px;
+  border:1px dashed var(--accent);
+  border-radius:10px;
+  align-self:center;
+}
+/* Show only desktop label on desktop; only mobile label on mobile */
 @media (max-width: 899px){
+  .control-label-desktop{display:none}
   .switch-desktop{display:none}
   .switch-mobile{display:inline-flex}
+  .control-label-mobile{display:inline-flex}
+}
+@media (min-width: 900px){
+  .control-label-mobile{display:none}
 }
 
 /* Diagnostics banner */

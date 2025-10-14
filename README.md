@@ -1,27 +1,27 @@
-# RutaTapas MultiRuta · v6.1
+# RutaTapas MultiRuta · v6.3
 
-- Header no fijo (scrolla en móvil y en escritorio). Más espacio para mapa y tarjetas.
-- Rutas desde `data/routes.json` con **carga blindada** (multipath + anticaché), banner de diagnóstico si falla.
+- Etiqueta **“Selecciona ruta:”** visible en escritorio, **y también en móvil** (debajo del progreso, junto al switch y los botones).
+- Carga robusta de `data/routes.json` (anticaché + multipath) con diagnóstico visual si falla.
+- Header no fijo (desaparece al hacer scroll).
 - Tracking **completo** (chunked) + **distancia total** + ETA total.
-- Navegación puntual “Comenzar/Siguiente parada” (DirectionsRenderer).
-- **InfoWindow único** (sin popups acumulados). Cierre al pinchar en el mapa.
+- Navegación “Comenzar/Siguiente parada” con DirectionsRenderer.
+- **InfoWindow único** sin popups acumulados (cierra al pinchar en el mapa).
 - **Checklist** persistente (“Marcar como hecha” corregido y accesible).
-- **Dark/Light** con variables CSS (color del trazado adaptado).
-- **Switch “Ruta completa”** sincronizado (desktop/móvil), persistido.
-- **100% estático** para GitHub Pages (HTTPS).
+- Modo **Dark/Light** con color de trazado adaptado.
+- Switch **“Ruta completa”** sincronizado (desktop/móvil), persistido.
+- 100% estático, listo para **GitHub Pages** (HTTPS).
 
 ## Publicación
-1. Sube todo a `main` y activa GitHub Pages (Deploy from a branch → `main`).
-2. Carga por **HTTPS**. Restringe la API key al dominio.
+1. Sube todo el contenido a tu repositorio (rama `main`) y activa GitHub Pages.
+2. Asegúrate de servir por **HTTPS** y restringe la API key al dominio de Pages.
 
 ## Datos
-- `data/routes.json` (tu formato), ejemplo:
-  ```json
-  {
-    "routes": [
-      { "id": "ruta_grx_v1", "title": "NachusS RutaTapas-GRX v1.0", "file": "data/stops.json" },
-      { "id": "ruta_lorca_v1", "title": "Ruta Tapas por Lorca", "file": "data/stops_lorca.json" }
-    ]
-  }
-  ```
-- `stops*.json` con `stops[]` (order, name, lat, lng, address, tapa, photo opc.) y opcional `meta.start`.
+Ejemplo de `data/routes.json`:
+```json
+{
+  "routes": [
+    { "id": "ruta_grx_v1", "title": "NachusS RutaTapas-GRX v1.0", "file": "data/stops.json" },
+    { "id": "ruta_lorca_v1", "title": "Ruta Tapas por Lorca", "file": "data/stops_lorca.json" }
+  ]
+}
+```

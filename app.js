@@ -1,4 +1,4 @@
-/* RutaTapas · v6.1 — rutas robustas + tracking + InfoWindow único + switch sincronizado + contador */
+/* RutaTapas · v6.3 — etiqueta móvil+desktop, rutas robustas, tracking, etc. */
 const state = {
   map: null,
   directionsService: null,
@@ -99,7 +99,7 @@ window.initMap = async function initMap(){
     await loadRouteById(routes, selectedId);
   }
 
-  // sincroniza switches (desktop/móvil)
+  // Sync switches (desktop & mobile)
   const toggleFR = document.getElementById('toggleFullRoute');
   const toggleFRm = document.getElementById('toggleFullRouteMobile');
   const applyStateToSwitches = () => {
