@@ -19,6 +19,11 @@
       "id": "ruta_04",
       "title": "Cordoba v.1 - Paco",
       "file": "data/stops_cordoba.json"
+    },
+    {
+      "id": "ruta_05",
+      "title": "Huescar - Nacho",
+      "file": "data/stops_huescar.json"
     }
   ]
 }

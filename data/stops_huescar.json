@@ -1,0 +1,175 @@
+{
+  "meta": {
+    "city": "Huescar",
+    "title": "Huescar - NachusS",
+    "start": {
+      "name": "Restuarante los Jardines",
+      "lat": 37.80579799639576, 
+      "lng": -2.541745152642503
+    },
+    "end": {
+      "name": "Bar La Cabaña",
+      "lat": 37.815459468064205, 
+      "lng": -2.5402404832593874
+    }
+  },
+  "stops": [
+    {
+      "id": "jardines",
+      "name": "Restuarante los Jardines",
+      "address": "",
+      "tapa": "Carne con tomate",
+      "lat": 37.80579799639576,
+      "lng": -2.541745152642503,
+      "photo": "assets/huescarJardines.jpg",
+      "notes": "Punto de encuentro inicial",
+      "web": "",
+      "order": 1
+    },
+    {
+      "id": "fuente",
+      "name": "Bar La Fuente",
+      "address": "",
+      "tapa": "Estrella levante especial",
+      "lat": 37.80630510395141, 
+      "lng": -2.541218599108311,
+      "photo": "assets/huescarFuente.jpg",
+      "notes": "",
+      "web": "",
+      "order": 2
+    },
+    {
+      "id": "zurita",
+      "name": "Cervecería La Zurita",
+      "address": "",
+      "tapa": "Nuggle de pollo / Cachopo",
+      "lat": 37.807442095883935,  
+      "lng": -2.5410712405691243,
+      "photo": "assets/huescarZurita.jpg",
+      "notes": "",
+      "web": "https://cdn-files.altipla.consulting/calidad/Pdkw/carta-la-zurita.jpg",
+      "order": 3
+    },
+    {
+      "id": "4rrrr",
+      "name": "Café Bar Las 4RRRR",
+      "address": "",
+      "tapa": "variadas",
+      "lat": 37.80731173075806,  
+      "lng": -2.543582351952986,
+      "photo": "assets/huescar4rrrr.jpg",
+      "notes": "",
+      "web": "",
+      "order": 4
+    },
+    {
+      "id": "tabarrera",
+      "name": "Café bar la tabarrera",
+      "address": "",
+      "tapa": "Tablas / Alpargatas",
+      "lat": 37.80880919699152,  
+      "lng": -2.5425676869657186,
+      "photo": "assets/huescarTabarrera.jpg",
+      "notes": "",
+      "web": "",
+      "order": 5
+    },
+    {
+      "id": "pepillo",
+      "name": "Bar Pepillo 2",
+      "address": "",
+      "tapa": "Pescao frito",
+      "lat": 37.80878349231957,  
+      "lng": -2.5400701763222373,
+      "photo": "assets/huescarPepillo.jpg",
+      "notes": "",
+      "web": "",
+      "order": 6
+    },
+    {
+      "id": "cafeX",
+      "name": "Cafe X",
+      "address": "",
+      "tapa": "Carne con Tomate",
+      "lat": 37.80878972828999,  
+      "lng": -2.539687875223378,
+      "photo": "assets/huescarX.jpg",
+      "notes": "",
+      "web": "",
+      "order": 7
+    },
+    {
+      "id": "caballo",
+      "name": "Restaurante El Caballo",
+      "address": "",
+      "tapa": "Ensalada de roquefort / croquetas",
+      "lat": 37.81037473312034,  
+      "lng": -2.539419682750053,
+      "photo": "assets/huescarCaballo.png",
+      "notes": "",
+      "web": "",
+      "order": 8
+    },
+    {
+      "id": "elpili",
+      "name": "Vineria El Pili",
+      "address": "",
+      "tapa": "Vino del pais",
+      "lat": 37.810351580126024,  
+      "lng": -2.5416639291319076,
+      "photo": "assets/huescarPili.jpg",
+      "notes": "",
+      "web": "",
+      "order": 9
+    },
+    {
+      "id": "chumi",
+      "name": "Bar Chumi",
+      "address": "",
+      "tapa": "variadas",
+      "lat": 37.81212289313209,   
+      "lng": -2.540598564589174,
+      "photo": "assets/huescarChumi.jpg",
+      "notes": "",
+      "web": "",
+      "order": 10
+    },
+    {
+      "id": "barrio",
+      "name": "Bar El Barrio",
+      "address": "",
+      "tapa": "variadas",
+      "lat": 37.81310157875769,    
+      "lng": -2.5374265487242615,
+      "photo": "assets/huescarBarrio.jpg",
+      "notes": "",
+      "web": "",
+      "order": 11
+    },
+    {
+      "id": "beteta",
+      "name": "Bar Beteta",
+      "address": "",
+      "tapa": "variadas",
+      "lat": 37.814034489585964,    
+      "lng": -2.540562642901074,
+      "photo": "assets/huescarBeteta.jpg",
+      "notes": "",
+      "web": "",
+      "order": 12
+    },
+    {
+      "id": "cabana",
+      "name": "Bar La Cabaña",
+      "address": "",
+      "tapa": "variadas",
+      "lat": 37.815459468064205,    
+      "lng": -2.5402404832593874,
+      "photo": "assets/huescarCabana.jpg",
+      "notes": "",
+      "web": "",
+      "order": 13
+    }
+  ]
+}
+
