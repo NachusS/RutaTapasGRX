@@ -1,59 +1,84 @@
 <!doctype html>
-</div>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>RutaTapas MultiRuta · v6.3</title>
+  <meta name="description" content="Web-app dinámica de rutas de tapas a pie por Granada y Lorca.">
+  <link rel="preconnect" href="https://maps.googleapis.com" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header" role="banner">
+    <div class="brand">
+      <img src="assets/cover.jpg" alt="Portada Ruta de Tapas" class="brand-cover" />
+      <h1 class="title">RutaTapas · <span id="routeLabel" aria-live="polite">–</span></h1>
+      <span class="version-badge" aria-label="Versión de la app">v6.3</span>
+    </div>
 
+    <div class="controls-row" role="group" aria-label="Controles principales">
+      <label for="routeSelect" class="control-label control-label-desktop">Selecciona ruta:</label>
+      <select id="routeSelect" aria-label="Selecciona una ruta"></select>
 
-<section class="progress" aria-live="polite">
-<div class="progress-header">
-<strong>Progreso</strong>
-<span id="progressText">0 / 0</span>
-</div>
-<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
-<div id="progressFill" class="progress-fill"></div>
-</div>
-<div class="eta-row">
-<div><small>Tiempo estimado total: <span id="etaTotal">–</span></small></div>
-<div><small>Llevas: <span id="etaDone">–</span></small></div>
-</div>
-<div class="eta-row">
-<div><small>Distancia total: <span id="distanceTotal">–</span></small></div>
-</div>
-</section>
+      <label class="switch switch-desktop" title="Mostrar/ocultar trazado completo">
+        <input id="toggleFullRoute" type="checkbox" aria-label="Mostrar ruta completa">
+        <span class="slider"></span>
+        <span class="switch-label">Ruta completa</span>
+      </label>
 
+      <button id="toggleThemeBtn" class="btn" type="button" aria-pressed="false" aria-label="Cambiar modo claro/oscuro">🌓</button>
+      <button id="resetChecklistBtn" class="btn" type="button" aria-label="Reiniciar progreso">Reiniciar</button>
+    </div>
 
-<div class="nav-actions" role="group" aria-label="Acciones de navegación">
-<label for="routeSelect" class="control-label-mobile">Selecciona ruta:</label>
+    <section class="progress" aria-live="polite">
+      <div class="progress-header">
+        <strong>Progreso</strong>
+        <span id="progressText">0 / 0</span>
+      </div>
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+      <div class="eta-row">
+        <div><small>Tiempo estimado total: <span id="etaTotal">–</span></small></div>
+        <div><small>Llevas: <span id="etaDone">–</span></small></div>
+      </div>
+      <div class="eta-row">
+        <div><small>Distancia total: <span id="distanceTotal">–</span></small></div>
+      </div>
+    </section>
 
+    <div class="nav-actions" role="group" aria-label="Acciones de navegación">
+      <!-- Mobile-only visible label -->
+      <label for="routeSelect" class="control-label-mobile">Selecciona ruta:</label>
 
-<label class="switch switch-mobile" title="Mostrar/ocultar trazado completo (móvil)">
-<input id="toggleFullRouteMobile" type="checkbox" aria-label="Mostrar ruta completa">
-<span class="slider"></span>
-<span class="switch-label">Ruta completa</span>
-</label>
-<button id="startBtn" class="btn primary" type="button">Comenzar ruta</button>
-<button id="nextBtn" class="btn" type="button">Siguiente parada</button>
-</div>
-</header>
+      <label class="switch switch-mobile" title="Mostrar/ocultar trazado completo (móvil)">
+        <input id="toggleFullRouteMobile" type="checkbox" aria-label="Mostrar ruta completa">
+        <span class="slider"></span>
+        <span class="switch-label">Ruta completa</span>
+      </label>
+      <button id="startBtn" class="btn primary" type="button">Comenzar ruta</button>
+      <button id="nextBtn" class="btn" type="button">Siguiente parada</button>
+    </div>
+  </header>
 
+  <main class="app-main">
+    <section id="map" role="region" aria-label="Mapa de la ruta"></section>
+    <aside id="panel" role="region" aria-label="Listado de paradas"></aside>
+  </main>
 
-<main class="app-main">
-<section id="map" role="region" aria-label="Mapa de la ruta"></section>
-<aside id="panel" role="region" aria-label="Listado de paradas"></aside>
-</main>
+  <footer class="app-footer">
+    <div class="legend">
+      <span>🏁 Inicio/Fin</span>
+      <span>📍 Parada</span>
+      <span>👤 Mi posición</span>
+    </div>
+    <p class="privacy">
+      <a href="https://nachuss.github.io/" rel="nofollow">@NachusS</a> (09/10/2025) v.6.3. Esta app usa la Geolocalización del navegador para mostrar tu posición.
+    </p>
+  </footer>
 
-
-<footer class="app-footer">
-<div class="legend">
-<span>🏁 Inicio/Fin</span>
-<span>📍 Parada</span>
-<span>👤 Mi posición</span>
-</div>
-<p class="privacy">
-App creada por @NachusS el (29-Oct-2025) V.6.4 <a href="#" rel="nofollow">política de privacidad</a>.
-</p>
-</footer>
-
-
-<script src="app.js" defer></script>
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuy6NyB1m3HcX5ISqdEH0iax_CkqUrrwo&callback=initMap"></script>
+  <script src="app.js" defer></script>
+  <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuy6NyB1m3HcX5ISqdEH0iax_CkqUrrwo&callback=initMap"></script>
 </body>
 </html>
