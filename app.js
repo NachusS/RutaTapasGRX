@@ -184,18 +184,39 @@ function buildMap(stops, meta){
   }
 }
 
+
 function buildList(stops){
   const panel = $("#panel"); panel.innerHTML="";
   const progress = getProgress();
   for(const s of stops){
     const card = document.createElement("article");
-    card.className = "card"; card.setAttribute("tabindex","0");
+    card.className = "card card-3d"; card.setAttribute("tabindex","0");
+    const ratingVal = getRating(s.id);
+    const hasWeb = !!(s.web && String(s.web).trim().length>0);
+    const webHTML = hasWeb ? `<a class="web-link" href="${s.web}" target="_blank" rel="noopener noreferrer" aria-label="Abrir web de ${s.name}">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2c1.9 0 3.64.66 5.01 1.76H6.99A7.97 7.97 0 0 1 12 4Zm-7.46 5h14.92a8.03 8.03 0 0 1 0 6H4.54a8.03 8.03 0 0 1 0-6Zm1.45 8.24h10.03A7.97 7.97 0 0 1 12 20c-1.9 0-3.64-.66-5.01-1.76ZM9 6.5h6c.83 1.15 1.44 2.57 1.74 4H7.26c.3-1.43.9-2.85 1.74-4Zm0 11c-.83-1.15-1.44-2.57-1.74-4h9.48c-.3 1.43-.9 2.85-1.74 4H9Z"/></svg>
+    </a>` : '';
     card.innerHTML = `
-      <img src="${s.photo || `assets/${s.id||'placeholder'}.jpg`}" alt="Foto de ${s.name}">
-      <div>
-        <h3>${s.order}. ${s.name} <span class="badge order-badge">${s.order}/${stops.length}</span> ${s.order===1?'<span class="badge">Inicio</span>':''}${s.order===stops.length?'<span class="badge">Fin</span>':''}</h3>
-        <p>${s.tapa?`Tapa típica: ${s.tapa}`:''}</p>
-        <p>${s.address||''}</p>
+      <div class="card-visual">
+        <img src="${s.photo || `assets/${s.id||'placeholder'}.jpg`}" alt="Foto de ${s.name}">
+        <div class="card-glow" aria-hidden="true"></div>
+      </div>
+      <div class="card-body">
+        <header class="card-head">
+          <h3>${s.order? (s.order + '. ') : ''}${s.name}</h3>
+          <div class="head-actions">${webHTML}</div>
+        </header>
+        <p class="tapa">${s.tapa?`Tapa típica: ${s.tapa}`:''}</p>
+        <p class="addr">${s.address||''}</p>
+
+        <div class="rating" role="radiogroup" aria-label="Valoración" data-id="${s.id}" data-value="${ratingVal}">
+          ${[1,2,3,4,5].map(i=>`
+            <button type="button" class="star" role="radio" aria-label="${i} estrella${i>1?'s':''}" aria-checked="${i===ratingVal}" data-value="${i}">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 2.3l2.7 6 6.5.5-4.9 4.2 1.5 6.4L12 16.9 6.2 19.4l1.5-6.4-4.9-4.2 6.5-.5L12 2.3z"/></svg>
+            </button>
+          `).join("")}
+        </div>
+
         <div class="actions">
           <button type="button" class="btn" data-act="toggle" data-id="${s.id}" aria-pressed="${!!progress[s.id]}">${progress[s.id]?'Desmarcar':'Marcar como hecha'}</button>
           <button type="button" class="btn" data-act="goto" data-id="${s.id}">Ir a esta parada</button>
@@ -205,27 +226,62 @@ function buildList(stops){
     panel.appendChild(card);
   }
 
+  // buttons actions
   panel.addEventListener("click", (e)=>{
+    const star=e.target.closest(".rating .star");
+    if(star){
+      const group = star.closest(".rating");
+      const id = group.dataset.id;
+      const value = Number(star.dataset.value)||0;
+      setRating(id, value);
+      return;
+    }
     const btn=e.target.closest("button[data-act]"); if(!btn) return;
     e.stopPropagation();
     const id=btn.getAttribute("data-id"); const act=btn.getAttribute("data-act");
     if(act==="toggle") toggleDone(id);
     if(act==="goto") goTo(id);
   });
-  $$("#panel button[data-act]").forEach(btn=>{
-    btn.addEventListener("click", (e)=>{
-      e.stopPropagation();
-      const id = btn.getAttribute("data-id");
-      const act = btn.getAttribute("data-act");
-      if(act==="toggle") toggleDone(id);
-      if(act==="goto") goTo(id);
-    }, { passive: true });
-  });
 
+  // keyboard for rating (arrow keys)
   panel.addEventListener("keydown",(e)=>{
-    if((e.key==="Enter"||e.key===" ") && e.target.matches(".card")){
+    if(e.target.closest(".rating")){
+      const group = e.target.closest(".rating");
+      const id = group.dataset.id;
+      let val = getRating(id);
+      if(e.key==="ArrowRight"||e.key==="ArrowUp"){ val = Math.min(5, val+1); setRating(id,val); e.preventDefault(); }
+      if(e.key==="ArrowLeft"||e.key==="ArrowDown"){ val = Math.max(0, val-1); setRating(id,val); e.preventDefault(); }
+    } else if((e.key==="Enter"||e.key===" ") && e.target.matches(".card")){
       const idx=Array.from(panel.children).indexOf(e.target); const s=state.stops[idx]; if(s) goTo(s.id);
     }
+  });
+
+  // initialize stars fill
+  $$(".rating").forEach(g=> updateRatingGroupUI(g, Number(g.dataset.value)||0 ));
+}
+
+
+
+// --- Ratings (1–5 stars) with LocalStorage persistence ---
+const RATING_PREFIX = "tapas_rating"; // localStorage key prefix
+function ratingKey(routeId, stopId){ return `${RATING_PREFIX}:${routeId||'default'}:${stopId}`; }
+function getRating(stopId){
+  try{ return Number(localStorage.getItem(ratingKey(state?.routeMeta?.id, stopId)) || 0) || 0; }catch{return 0;}
+}
+function setRating(stopId, value){
+  const v = Math.max(0, Math.min(5, Number(value)||0));
+  try{ localStorage.setItem(ratingKey(state?.routeMeta?.id, stopId), String(v)); }catch{}
+  // update UI
+  const rg = document.querySelector(`.rating[data-id="${CSS.escape(stopId)}"]`);
+  if(rg){ updateRatingGroupUI(rg, v); }
+}
+function updateRatingGroupUI(group, value){
+  group.setAttribute("data-value", String(value));
+  const stars = group.querySelectorAll('[role="radio"]');
+  stars.forEach((btn, i)=>{
+    const selected = (i+1)<=value;
+    btn.setAttribute("aria-checked", String((i+1)===value));
+    btn.dataset.filled = selected ? "1" : "0";
   });
 }
 
