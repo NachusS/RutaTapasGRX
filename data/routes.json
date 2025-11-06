@@ -24,6 +24,11 @@
       "id": "ruta_05",
       "title": "Huescar - Nacho",
       "file": "data/stops_huescar.json"
+    },
+    {
+      "id": "ruta_06",
+      "title": "Almeria Centro - Nacho",
+      "file": "data/stops_almeria.json"
     }
   ]
 }
