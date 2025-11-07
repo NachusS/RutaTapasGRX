@@ -23,7 +23,7 @@
       "lng": -2.4664008253147705,
       "photo": "assets/AlmeriaCasaPuga.jpg",
       "notes": "",
-      "web:":"",
+      "web:":"https://www.barcasapuga.es/",
       "order": 1
     },
     {
@@ -158,5 +158,5 @@
       "web:": "",
       "order": 12
     }
-]
+  ]
 }
