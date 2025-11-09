@@ -3,24 +3,24 @@
     "city": "Almeria",
     "title": "Almeria Centro - Nacho",
     "start": {
-      "name": "Chiringuito Amalia",
-      "lat": 36.745916442080095,
-      "lng": -3.0261646957640567
+      "name": "Casa Puga",
+      "lat": 36.84037982678665,
+      "lng": -2.4664008253147705
     },
     "end": {
-      "name": "Bar La Campana",
-      "lat": 36.74870606852794, 
-      "lng": -3.015987830003896
+      "name": "La Consentida",
+      "lat": 36.83881700109086, 
+      "lng": -2.464660708455987
     }
   },
   "stops": [
     {
-      "id": "Amalia",
-      "name": "Chiringuito Amalia",
-      "address": "Playa Sirena Loca",
+      "id": "casapuga",
+      "name": "Casa Puga",
+      "address": "",
       "tapa": "Pescao frito",
-      "lat": 36.745916442080095,
-      "lng": -3.0261646957640567,
+      "lat": 36.84037982678665,
+      "lng": -2.4664008253147705,
       "photo": "assets/adraAmalia.jpg",
       "notes": "Punto de encuentro inicial",
       "web": "",
@@ -111,12 +111,12 @@
       "order": 8
     },
     {
-      "id": "campana",
-      "name": "Bar La Campana",
+      "id": "consentida",
+      "name": "La Consentida",
       "address": "",
       "tapa": "Franfurt",
-      "lat": 36.74871809686054, 
-      "lng": -3.015982138845134,
+      "lat": 36.83881700109086, 
+      "lng": -2.464660708455987,
       "photo": "assets/adraCampana.jpg",
       "notes": "",
       "web": "",
