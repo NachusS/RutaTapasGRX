@@ -21,10 +21,22 @@
       "tapa": "Pescao frito",
       "lat": 36.84037982678665,
       "lng": -2.4664008253147705,
-      "photo": "assets/adraAmalia.jpg",
+      "photo": "assets/AlmeriaCasaPuga.JPG",
       "notes": "Punto de encuentro inicial",
       "web": "",
       "order": 1
+    },
+    {
+      "id": "elquincho",
+      "name": "Bar El Quincho",
+      "address": "",
+      "tapa": "Gambas fritas /Salpicón Marisco",
+      "lat": 36.84041114270745,  
+      "lng": -2.4664288650321606,
+      "photo": "assets/AlmeriaElQuincho.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 2
     },
     {
       "id": "consentida",
