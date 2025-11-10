@@ -39,6 +39,30 @@
       "order": 2
     },
     {
+      "id": "jovellanos16",
+      "name": "Jovellanos 16",
+      "address": "",
+      "tapa": "",
+      "lat": 36.84085398646019,  
+      "lng": -2.4667331186856467,
+      "photo": "assets/AlmeriaJovellanos16.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 3
+    },
+    {
+      "id": "nuestratierra",
+      "name": "Taberna Nuestra Tierra",
+      "address": "",
+      "tapa": "",
+      "lat": 36.840873842413195,  
+      "lng": -2.466747200278364,
+      "photo": "assets/AlmeriaNuestraTierra.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 4
+    },
+    {
       "id": "consentida",
       "name": "La Consentida",
       "address": "",
