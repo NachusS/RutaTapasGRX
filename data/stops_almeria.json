@@ -63,18 +63,6 @@
       "order": 4
     },
     {
-      "id": "laesquinica",
-      "name": "La Esquinica",
-      "address": "",
-      "tapa": "Tapas diseño",
-      "lat": 36.84062943303715,  
-      "lng": -2.4623831885003464,
-      "photo": "assets/AlmeriaEsquinica.jpg",
-      "notes": "",
-      "web:": "",
-      "order": 6
-    },
-    {
       "id": "consentida",
       "name": "La Consentida",
       "address": "",
