@@ -63,6 +63,30 @@
       "order": 4
     },
     {
+      "id": "valentin",
+      "name": "Restaurante Valentín",
+      "address": "",
+      "tapa": "Champan con ostras",
+      "lat": 36.841203198324344,  
+      "lng": --2.4647054130129478,
+      "photo": "assets/AlmeriaValentin.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 5
+    },
+    {
+      "id": "laesquinica",
+      "name": "La Esquinica",
+      "address": "",
+      "tapa": "Tapas diseño",
+      "lat": 36.84062943303715,  
+      "lng": -2.4623831885003464,
+      "photo": "assets/AlmeriaEsquinica.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 6
+    },
+    {
       "id": "consentida",
       "name": "La Consentida",
       "address": "",
