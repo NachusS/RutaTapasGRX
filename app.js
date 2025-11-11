@@ -1,16 +1,3 @@
-
-// === v6.5.1-b: tolerant web field resolver ===
-function getStopWeb(s){
-  if(!s || typeof s !== 'object') return null;
-  const candidates = ['web', 'website', 'url', 'Web', 'WEB', 'web:', 'pagina', 'page', 'link'];
-  for(const k of candidates){
-    if(Object.prototype.hasOwnProperty.call(s, k)){
-      const v = s[k];
-      if(typeof v === 'string' && v.trim().length){ return v.trim(); }
-    }
-  }
-  return null;
-}
 /* RutaTapas · v6.3 — etiqueta móvil+desktop, rutas robustas, tracking, etc. */
 const state = {
   map: null,
@@ -205,9 +192,10 @@ function buildList(stops){
     const card = document.createElement("article");
     card.className = "card card-3d"; card.setAttribute("tabindex","0");
     const ratingVal = getRating(s.id);
-    const webValue = getStopWeb(s);
-    const hasWeb = !!(webValue && String(webValue).trim().length>0);
-    const webHTML = hasWeb ? buildWebsiteHTML(s.name, webValue) : "";
+    const hasWeb = !!(s.web && String(s.web).trim().length>0);
+    const webHTML = hasWeb ? `<a class="web-link" href="${s.web}" target="_blank" rel="noopener noreferrer" aria-label="Abrir web de ${s.name}">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2c1.9 0 3.64.66 5.01 1.76H6.99A7.97 7.97 0 0 1 12 4Zm-7.46 5h14.92a8.03 8.03 0 0 1 0 6H4.54a8.03 8.03 0 0 1 0-6Zm1.45 8.24h10.03A7.97 7.97 0 0 1 12 20c-1.9 0-3.64-.66-5.01-1.76ZM9 6.5h6c.83 1.15 1.44 2.57 1.74 4H7.26c.3-1.43.9-2.85 1.74-4Zm0 11c-.83-1.15-1.44-2.57-1.74-4h9.48c-.3 1.43-.9 2.85-1.74 4H9Z"/></svg>
+    </a>` : '';
     card.innerHTML = `
       <div class="card-visual">
         <img src="${s.photo || `assets/${s.id||'placeholder'}.jpg`}" alt="Foto de ${s.name}">
