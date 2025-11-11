@@ -35,7 +35,7 @@
       "lng": -2.4664288650321606,
       "photo": "assets/AlmeriaElQuincho.jpg",
       "notes": "",
-      "web:": "",
+      "web:": "https://elquinchobraseria.com/",
       "order": 2
     },
     {
@@ -45,9 +45,9 @@
       "tapa": "",
       "lat": 36.84085398646019,  
       "lng": -2.4667331186856467,
-      "photo": "assets/AlmeriaJovellanos16.jpg",
+      "photo": "assets/AlmeriaJovellanos.jpg",
       "notes": "",
-      "web:": "",
+      "web:": "https://www.instagram.com/jovellanos16/?hl=es",
       "order": 3
     },
     {
@@ -59,7 +59,7 @@
       "lng": -2.466747200278364,
       "photo": "assets/AlmeriaNuestraTierra.jpg",
       "notes": "",
-      "web:": "",
+      "web:": "https://www.tabernanuestratierra.com/",
       "order": 4
     },
     {
@@ -71,7 +71,7 @@
       "lng": -2.4647054130129478,
       "photo": "assets/AlmeriaValentin.jpg",
       "notes": "",
-      "web:": "",
+      "web:": "https://www.restaurantevalentin.es/",
       "order": 5
     },
     {
@@ -81,9 +81,9 @@
       "tapa": "Tapas diseño",
       "lat": 36.84062943303715,  
       "lng": -2.4623831885003464,
-      "photo": "assets/AlmeriaEsquinica.jpg",
+      "photo": "assets/AlmeriaLaEsquinica.jpg",
       "notes": "",
-      "web:": "",
+      "web:": "https://www.instagram.com/la_esquinica_almeria/?hl=es",
       "order": 6
     },
     {
@@ -95,7 +95,7 @@
       "lng": -2.4624861732456473,
       "photo": "assets/AlmeriaQuintoToro.jpg",
       "notes": "",
-      "web:": "",
+      "web:": "https://www.facebook.com/elquintotoroalmeria/?locale=es_ES",
       "order": 7
     },
     {
@@ -107,7 +107,7 @@
       "lng": -2.461872031999616,
       "photo": "assets/AlmeriaMiniBar.jpg",
       "notes": "",
-      "web:": "",
+      "web:": "https://www.minube.com/rincon/restaurante-mini-bar-a79177",
       "order": 8
     },
     {
@@ -119,7 +119,7 @@
       "lng": -2.4617683821611154,
       "photo": "assets/AlmeriaCasaSevilla.jpg",
       "notes": "",
-      "web:": "",
+      "web:": "https://casa-sevilla.com/",
       "order": 9
     },
     {
@@ -129,9 +129,9 @@
       "tapa": "hamburguesas",
       "lat": 36.83624286916344,    
       "lng": -2.4624333751103586,
-      "photo": "assets/AlmeriaBasi.jpg",
+      "photo": "assets/AlmeriaRinconBasi.jpg",
       "notes": "",
-      "web:": "",
+      "web:": "https://www.instagram.com/elrincondebasi/?hl=es",
       "order": 10
     },
     {
@@ -143,7 +143,7 @@
       "lng": -2.465694195745972,
       "photo": "assets/AlmeriaLaMala.jpg",
       "notes": "",
-      "web:": "",
+      "web:": "https://carta.menu/restaurants/almeria/la-mala-croqueteria",
       "order": 11
     },    
     {
@@ -153,9 +153,9 @@
       "tapa": "Franfurt",
       "lat": 36.83881700109086, 
       "lng": -2.464660708455987,
-      "photo": "assets/adraCampana.jpg",
+      "photo": "assets/AlmeriaConsentida.jpg",
       "notes": "",
-      "web": "",
+      "web": "https://braserialaconsentida.es/",
       "order": 12
     }
   ]
