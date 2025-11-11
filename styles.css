@@ -112,29 +112,3 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
 .rating .star:hover svg{ transform: scale(1.15); }
 .rating .star[data-filled="1"] svg path{ fill: var(--accent); }
 .rating .star[data-filled="0"] svg path{ fill: color-mix(in srgb, var(--fg), transparent 80%); }
-
-
-/* === v6.5.1: Website link styles (PC & mobile) === */
-.head-actions { display: flex; align-items: center; gap: 10px; }
-.web-link{
-  display:inline-flex; align-items:center; gap:8px;
-  text-decoration:none; font-weight:600;
-  padding:6px 10px; border-radius:12px;
-  background: rgba(255,255,255,0.08);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
-  outline: none;
-}
-.web-link:hover{ transform: translateY(-1px); }
-.web-link:focus-visible{ box-shadow: 0 0 0 3px rgba(66,133,244,.45); }
-.web-icon{ width:20px; height:20px; border-radius:50%; object-fit:cover; }
-.web-text{ font-size: .95rem; }
-
-@media (max-width:520px){
-  .web-link{ padding:6px 8px; gap:6px; }
-  .web-icon{ width:18px; height:18px; }
-  /* To keep minimal on very small screens, you may hide label: */
-  /* .web-text{ display:none; } */
-}
-/* === end v6.5.1 === */
