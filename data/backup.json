@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "city": "Almeria",
+    "title": "Almeria v.1 - Nacho",
+    "start": {
+      "name": "Casa Puga",
+      "lat": 36.84037982678665,  
+      "lng": -2.4664008253147705
+    },
+    "end": {
+      "name": "La Consentida",
+      "lat": 36.83881700109086,
+      "lng": -2.464660708455987
+    }
+  },
+  "stops": [
+    {
+      "id": "casapuga",
+      "name": "Casa Puga",
+      "address": "Comienzo ruta",
+      "tapa": "",
+      "lat": 36.84037982678665,
+      "lng": -2.4664008253147705,
+      "photo": "assets/AlmeriaCasaPuga.jpg",
+      "notes": "",
+      "web:":"https://www.barcasapuga.es/",
+      "order": 1
+    },
+    {
+      "id": "elquincho",
+      "name": "Bar El Quincho",
+      "address": "",
+      "tapa": "Gambas fritas /Salpicón Marisco",
+      "lat": 36.84041114270745,  
+      "lng": -2.4664288650321606,
+      "photo": "assets/AlmeriaElQuincho.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 2
+    },
+    {
+      "id": "jovellanos16",
+      "name": "Jovellanos 16",
+      "address": "",
+      "tapa": "",
+      "lat": 36.84085398646019,  
+      "lng": -2.4667331186856467,
+      "photo": "assets/AlmeriaJovellanos16.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 3
+    },
+    {
+      "id": "nuestratierra",
+      "name": "Taberna Nuestra Tierra",
+      "address": "",
+      "tapa": "",
+      "lat": 36.840873842413195,  
+      "lng": -2.466747200278364,
+      "photo": "assets/AlmeriaNuestraTierra.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 4
+    },
+        {
+      "id": "valentin",
+      "name": "Restaurante Valentín",
+      "address": "",
+      "tapa": "Champan con ostras",
+      "lat": 36.841203198324344,  
+      "lng": --2.4647054130129478,
+      "photo": "assets/AlmeriaValentin.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 5
+    },
+    {
+      "id": "laesquinica",
+      "name": "La Esquinica",
+      "address": "",
+      "tapa": "Tapas diseño",
+      "lat": 36.84062943303715,  
+      "lng": -2.4623831885003464,
+      "photo": "assets/AlmeriaEsquinica.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 6
+    },
+    {
+      "id": "quintotoro",
+      "name": "El Quinto Toro",
+      "address": "",
+      "tapa": "Remojon San Antón",
+      "lat": 36.83980935546997,  
+      "lng": -2.4624861732456473,
+      "photo": "assets/AlmeriaQuintoToro.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 7
+    },
+    {
+      "id": "MiniBar",
+      "name": "Mini Bar",
+      "address": "",
+      "tapa": "Fritos de pescado",
+      "lat": 36.83784452198219,   
+      "lng": -2.461872031999616,
+      "photo": "assets/AlmeriaMiniBar.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 8
+    },
+    {
+      "id": "casasevilla",
+      "name": "Casa Sevilla",
+      "address": "",
+      "tapa": "Jamón del bueno y caro",
+      "lat": 36.83743827224372,   
+      "lng": -2.4617683821611154,
+      "photo": "assets/AlmeriaCasaSevilla.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 9
+    },
+    {
+      "id": "rinconbasi",
+      "name": "El Rincon de Basi Centro",
+      "address": "",
+      "tapa": "hamburguesas",
+      "lat": 36.83624286916344,    
+      "lng": -2.4624333751103586,
+      "photo": "assets/AlmeriaBasi.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 10
+    },
+    {
+      "id": "lamala",
+      "name": "Restaurante La Mala Original",
+      "address": "",
+      "tapa": "Tortilla Patatas",
+      "lat": 36.837790775893794,    
+      "lng": -2.465694195745972,
+      "photo": "assets/AlmeriaLaMala.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 11
+    },
+    {
+      "id": "consentida",
+      "name": "La Consentida",
+      "address": "",
+      "tapa": "",
+      "lat": 36.83881700109086,    
+      "lng": -2.464660708455987,
+      "photo": "assets/AlmeriaConsentidajpg",
+      "notes": "",
+      "web:": "",
+      "order": 12
+    }
+  ]
+}
