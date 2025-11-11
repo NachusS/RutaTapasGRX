@@ -109,6 +109,42 @@
       "notes": "",
       "web:": "",
       "order": 8
+    },
+    {
+      "id": "casasevilla",
+      "name": "Casa Sevilla",
+      "address": "",
+      "tapa": "Jamón del bueno y caro",
+      "lat": 36.83743827224372,   
+      "lng": -2.4617683821611154,
+      "photo": "assets/AlmeriaCasaSevilla.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 9
+    },
+    {
+      "id": "rinconbasi",
+      "name": "El Rincon de Basi Centro",
+      "address": "",
+      "tapa": "hamburguesas",
+      "lat": 36.83624286916344,    
+      "lng": -2.4624333751103586,
+      "photo": "assets/AlmeriaBasi.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 10
+    },
+    {
+      "id": "lamala",
+      "name": "Restaurante La Mala Original",
+      "address": "",
+      "tapa": "Tortilla Patatas",
+      "lat": 36.837790775893794,    
+      "lng": -2.465694195745972,
+      "photo": "assets/AlmeriaLaMala.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 11
     },    
     {
       "id": "consentida",
@@ -120,7 +156,7 @@
       "photo": "assets/adraCampana.jpg",
       "notes": "",
       "web": "",
-      "order": 9
+      "order": 12
     }
   ]
 }
