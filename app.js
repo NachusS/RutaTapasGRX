@@ -1,9 +1,5 @@
 
-// === v6.5.1-b: tolerant web field resolver ===
-function getStopWeb(s){
-  if(!s || typeof s !== 'object') return null;
-
-// === v6.5.2: website link helpers (re-add) ===
+// === v6.5.1: web link helpers ===
 function normalizeUrl(raw){
   if(!raw || typeof raw !== "string") return null;
   const cleaned = raw.trim();
@@ -19,16 +15,7 @@ function buildWebsiteHTML(name, url){
             <span class="web-text">Web</span>
           </a>`;
 }
-// === end v6.5.2 helpers ===
-  const candidates = ['web', 'website', 'url', 'Web', 'WEB', 'web:', 'pagina', 'page', 'link'];
-  for(const k of candidates){
-    if(Object.prototype.hasOwnProperty.call(s, k)){
-      const v = s[k];
-      if(typeof v === 'string' && v.trim().length){ return v.trim(); }
-    }
-  }
-  return null;
-}
+// === end helpers ===
 /* RutaTapas · v6.3 — etiqueta móvil+desktop, rutas robustas, tracking, etc. */
 const state = {
   map: null,
@@ -223,9 +210,8 @@ function buildList(stops){
     const card = document.createElement("article");
     card.className = "card card-3d"; card.setAttribute("tabindex","0");
     const ratingVal = getRating(s.id);
-    const webValue = getStopWeb(s);
-    const hasWeb = !!(webValue && String(webValue).trim().length>0);
-    const webHTML = hasWeb ? buildWebsiteHTML(s.name, webValue) : "";
+    const hasWeb = !!(s.web && String(s.web).trim().length>0);
+    const webHTML = hasWeb ? buildWebsiteHTML(s.name, s.web) : "";
     card.innerHTML = `
       <div class="card-visual">
         <img src="${s.photo || `assets/${s.id||'placeholder'}.jpg`}" alt="Foto de ${s.name}">

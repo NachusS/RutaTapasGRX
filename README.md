@@ -1,4 +1,4 @@
-# RutaTapas MultiRuta · v6.5.2
+# RutaTapas MultiRuta · v6.3
 
 - Etiqueta **“Selecciona ruta:”** visible en escritorio, **y también en móvil** (debajo del progreso, junto al switch y los botones).
 - Carga robusta de `data/routes.json` (anticaché + multipath) con diagnóstico visual si falla.
