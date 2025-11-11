@@ -73,6 +73,42 @@
       "notes": "",
       "web:": "",
       "order": 5
+    },
+    {
+      "id": "laesquinica",
+      "name": "La Esquinica",
+      "address": "",
+      "tapa": "Tapas diseño",
+      "lat": 36.84062943303715,  
+      "lng": -2.4623831885003464,
+      "photo": "assets/AlmeriaEsquinica.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 6
+    },
+    {
+      "id": "quintotoro",
+      "name": "El Quinto Toro",
+      "address": "",
+      "tapa": "Remojon San Antón",
+      "lat": 36.83980935546997,  
+      "lng": -2.4624861732456473,
+      "photo": "assets/AlmeriaQuintoToro.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 7
+    },
+    {
+      "id": "MiniBar",
+      "name": "Mini Bar",
+      "address": "",
+      "tapa": "Fritos de pescado",
+      "lat": 36.83784452198219,   
+      "lng": -2.461872031999616,
+      "photo": "assets/AlmeriaMiniBar.jpg",
+      "notes": "",
+      "web:": "",
+      "order": 8
     },    
     {
       "id": "consentida",
