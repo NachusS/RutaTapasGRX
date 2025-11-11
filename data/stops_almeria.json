@@ -75,6 +75,18 @@
       "order": 5
     },
     {
+      "id": "salitre",
+      "name": "Bar de Vinos Salitre",
+      "address": "",
+      "tapa": "Tapas Matias chico",
+      "lat": 36.841203198324344,  
+      "lng": -2.4647054130129478,
+      "photo": "assets/AlmeriaSalitre.jpg",
+      "notes": "",
+      "web:": "hhttps://salitrebardevinos.es/",
+      "order": 6
+    },
+    {
       "id": "laesquinica",
       "name": "La Esquinica",
       "address": "",
@@ -84,7 +96,7 @@
       "photo": "assets/AlmeriaLaEsquinica.jpg",
       "notes": "",
       "web:": "https://www.instagram.com/la_esquinica_almeria/?hl=es",
-      "order": 6
+      "order": 7
     },
     {
       "id": "quintotoro",
@@ -96,7 +108,7 @@
       "photo": "assets/AlmeriaQuintoToro.jpg",
       "notes": "",
       "web:": "https://www.facebook.com/elquintotoroalmeria/?locale=es_ES",
-      "order": 7
+      "order": 8
     },
     {
       "id": "MiniBar",
@@ -108,7 +120,7 @@
       "photo": "assets/AlmeriaMiniBar.jpg",
       "notes": "",
       "web:": "https://www.minube.com/rincon/restaurante-mini-bar-a79177",
-      "order": 8
+      "order": 9
     },
     {
       "id": "casasevilla",
@@ -120,7 +132,7 @@
       "photo": "assets/AlmeriaCasaSevilla.jpg",
       "notes": "",
       "web:": "https://casa-sevilla.com/",
-      "order": 9
+      "order": 10
     },
     {
       "id": "rinconbasi",
@@ -132,7 +144,7 @@
       "photo": "assets/AlmeriaRinconBasi.jpg",
       "notes": "",
       "web:": "https://www.instagram.com/elrincondebasi/?hl=es",
-      "order": 10
+      "order": 11
     },
     {
       "id": "lamala",
@@ -144,7 +156,7 @@
       "photo": "assets/AlmeriaLaMala.jpg",
       "notes": "",
       "web:": "https://carta.menu/restaurants/almeria/la-mala-croqueteria",
-      "order": 11
+      "order": 12
     },    
     {
       "id": "consentida",
@@ -156,7 +168,7 @@
       "photo": "assets/AlmeriaConsentida.jpg",
       "notes": "",
       "web": "https://braserialaconsentida.es/",
-      "order": 12
+      "order": 13
     }
   ]
 }
