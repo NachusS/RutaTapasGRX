@@ -112,3 +112,10 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
 .rating .star:hover svg{ transform: scale(1.15); }
 .rating .star[data-filled="1"] svg path{ fill: var(--accent); }
 .rating .star[data-filled="0"] svg path{ fill: color-mix(in srgb, var(--fg), transparent 80%); }
+
+.web-link[disabled],
+.web-link[aria-disabled="true"]{
+  opacity:.4;
+  cursor:not-allowed;
+  pointer-events:none;
+}
