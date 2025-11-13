@@ -273,23 +273,33 @@ card.innerHTML = `
     const btn=e.target.closest("button[data-act]"); if(!btn) return;
     e.stopPropagation();
     const id=btn.getAttribute("data-id"); const act=btn.getAttribute("data-act");
-    if(act==="toggle") toggleDone(id);
-    const marker = state.markers.get(id);
-    if(marker){
+
+    if(act==="toggle"){
+      toggleDone(id);
+      const marker = state.markers.get(id);
+      if(marker){
         const progress = getProgress();
         const done = !!progress[id];
-
-        if(done){
-            marker.setIcon(getCheckedMarkerIcon());
-        } else {
-            marker.setIcon(getDefaultMarkerIcon());
-        }
+        marker.setIcon({
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: done ? 10 : 9,
+          fillColor: done ? "#16a34a" : "#ef4444",
+          fillOpacity: 1,
+          strokeWeight: 2,
+          strokeColor: "#ffffff"
+        });
+      }
     }
 
     if(act==="goto") goTo(id);
     if(act==="open-web"){
       const url = btn.getAttribute("data-url");
       if(url){
+        try{ window.open(url, "_blank", "noopener"); }catch(e){ window.open(url, "_blank"); }
+      }
+    }
+  });
+if(url){
         try{ window.open(url, "_blank", "noopener"); }catch(e){ window.open(url, "_blank"); }
       }
     }
