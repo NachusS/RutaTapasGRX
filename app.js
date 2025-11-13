@@ -199,12 +199,9 @@ const normalizedWeb = hasWeb && /^https?:\/\//i.test(rawWeb) ? rawWeb : (hasWeb 
 const webLabel = rawWeb;
 
 const webHTML = hasWeb
-  ? `<button type="button" class="web-link" data-act="open-web" data-url="${normalizedWeb}" aria-label="Abrir web de ${s.name}">
-       <img src="assets/acceso-web.png" alt="Ir a la web" class="icon-web">
-     </button>`
-  : `<button type="button" class="web-link" disabled aria-disabled="true" title="Sin web disponible">
-       <img src="assets/acceso-web.png" alt="Sin web" class="icon-web">
-     </button>`;
+  ? `<button type="button" class="web-link web-icon-btn" data-act="open-web" ...data-url="${normalizedWeb}" aria-label="Abrir web de ${s.name}"></button>`
+  : `<button type="button" class="web-link web-icon-btn" disabled aria-disabled="true" title="Sin web disponible"></button>`;
+
 card.innerHTML = `
       <div class="card-visual">
         <img src="${s.photo || `assets/${s.id||'placeholder'}.jpg`}" alt="Foto de ${s.name}">
