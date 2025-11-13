@@ -201,7 +201,7 @@ const webHTML = hasWeb
   : `<button type="button" class="web-link" disabled aria-disabled="true" title="Sin web disponible">
        <img src="assets/acceso-web.png" alt="Sin web" class="icon-web">
      </button>`;
-card.innerHTMLcard.innerHTML = `
+card.innerHTML = `
       <div class="card-visual">
         <img src="${s.photo || `assets/${s.id||'placeholder'}.jpg`}" alt="Foto de ${s.name}">
         <div class="card-glow" aria-hidden="true"></div>
