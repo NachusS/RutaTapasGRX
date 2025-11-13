@@ -190,11 +190,47 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
 }
 
 
-/* Alternating card backgrounds */
-.card-light {
-  background: #f7f9fc;
+
+/* Alternating card backgrounds with glassmorphism */
+.card.card-3d{
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,0.45);
+  box-shadow:0 18px 45px rgba(15,23,42,0.35);
+  backdrop-filter:blur(18px) saturate(135%);
+  -webkit-backdrop-filter:blur(18px) saturate(135%);
 }
 
-.card-dark {
-  background: #e3e7ef;
+/* Light card: subtle frosted panel */
+.card-light{
+  background:linear-gradient(135deg, rgba(248,250,252,0.88), rgba(226,232,240,0.96));
+}
+
+/* Dark card: vibrant glass look for dark mode */
+.card-dark{
+  background:linear-gradient(135deg, rgba(30,64,175,0.92), rgba(15,23,42,0.96));
+}
+
+/* Text colors tuned for contrast on each card */
+.card-light h3,
+.card-light .tapa,
+.card-light .addr,
+.card-light .web-label{
+  color:#0b1120;
+}
+
+.card-dark h3,
+.card-dark .tapa,
+.card-dark .addr,
+.card-dark .web-label{
+  color:#f9fafb;
+}
+
+/* Ensure generic card paragraphs are not too muted over glass background */
+.card.card-3d p{
+  font-size:.9rem;
+}
+
+/* Optional: stronger title weight for readability */
+.card.card-3d h3{
+  font-weight:700;
 }
