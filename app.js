@@ -199,8 +199,9 @@ const normalizedWeb = hasWeb && /^https?:\/\//i.test(rawWeb) ? rawWeb : (hasWeb 
 const webLabel = rawWeb;
 
 const webHTML = hasWeb
-  ? `<button type="button" class="web-link web-icon-btn" data-act="open-web" ...data-url="${normalizedWeb}" aria-label="Abrir web de ${s.name}"></button>`
+  ? `<button type="button" class="web-link web-icon-btn" data-act="open-web" data-url="${normalizedWeb}" aria-label="Abrir web de ${s.name}"></button>`
   : `<button type="button" class="web-link web-icon-btn" disabled aria-disabled="true" title="Sin web disponible"></button>`;
+
 
 card.innerHTML = `
       <div class="card-visual">
@@ -214,7 +215,6 @@ card.innerHTML = `
         </header>
         <p class="tapa">${s.tapa?`Tapa típica: ${s.tapa}`:''}</p>
         <p class="addr">${s.address||''}</p>
-        ${hasWeb && webLabel ? `<p class="web-label">${webLabel}</p>` : ""}
 
 
         <div class="rating" role="radiogroup" aria-label="Valoración" data-id="${s.id}" data-value="${ratingVal}">
