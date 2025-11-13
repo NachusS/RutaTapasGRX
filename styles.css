@@ -120,12 +120,19 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
   cursor:not-allowed;
   pointer-events:none;
 }
-.icon-web{
-  width:32px;
-  height:32px;
-  object-fit:contain;
+.icon-web {
+    width: 32px !important;
+    height: 32px !important;
+    flex-shrink: 0 !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    padding: 0 !important;
+    margin: 0 8px 0 0 !important;
 }
-
+.web-link img {
+    width: 32px !important;
+    height: 32px !important;
+}
 .web-link svg{ display:block; }
 .tapa,.addr{ margin:0; font-size:.92rem; color: var(--muted); }
 
