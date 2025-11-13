@@ -207,7 +207,7 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
 
 /* Dark card: vibrant glass look for dark mode */
 .card-dark{
-  background:linear-gradient(135deg, rgba(30,64,175,0.92), rgba(15,23,42,0.96));
+  background:linear-gradient(135deg, rgba(24,24,27,0.96), rgba(82,82,91,0.9));
 }
 
 /* Text colors tuned for contrast on each card */
