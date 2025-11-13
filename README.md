@@ -1,4 +1,4 @@
-# RutaTapas MultiRuta · v6.5
+# RutaTapas MultiRuta · v6.7.13
 
 - Etiqueta **“Selecciona ruta:”** visible en escritorio, **y también en móvil** (debajo del progreso, junto al switch y los botones).
 - Carga robusta de `data/routes.json` (anticaché + multipath) con diagnóstico visual si falla.
@@ -25,3 +25,5 @@ Ejemplo de `data/routes.json`:
   ]
 }
 ```
+# Acceso a la app-web
+https://nachuss.github.io/RutaTapasGRX/
