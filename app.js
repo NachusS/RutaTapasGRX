@@ -190,7 +190,7 @@ function buildList(stops){
   const progress = getProgress();
   for(const s of stops){
     const card = document.createElement("article");
-    card.className = "card card-3d"; card.setAttribute("tabindex","0");
+    card.className = "card card-3d"; card.classList.add((stops.indexOf(s)%2===0)?"card-light":"card-dark"); card.setAttribute("tabindex","0");
     const ratingVal = getRating(s.id);
 
 const rawWeb = (s.web || "").trim();

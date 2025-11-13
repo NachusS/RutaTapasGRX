@@ -188,3 +188,13 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
   color:var(--accent);
   word-break:break-all;
 }
+
+
+/* Alternating card backgrounds */
+.card-light {
+  background: #f7f9fc;
+}
+
+.card-dark {
+  background: #e3e7ef;
+}
