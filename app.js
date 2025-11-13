@@ -1,30 +1,4 @@
 /* RutaTapas · v6.3 — etiqueta móvil+desktop, rutas robustas, tracking, etc. */
-// === Marker Icon Helpers ===
-function getCheckedMarkerIcon(color = "#16a34a") {
-    return {
-        url: `data:image/svg+xml;charset=UTF-8,
-        <svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'>
-            <circle cx='24' cy='24' r='15' fill='${color}' stroke='white' stroke-width='3'/>
-            <path d='M18 24l4 4 8-10' stroke='white' stroke-width='4' fill='none'
-            stroke-linecap='round' stroke-linejoin='round'/>
-        </svg>`,
-        scaledSize: new google.maps.Size(40, 40),
-        anchor: new google.maps.Point(20, 20)
-    };
-}
-
-function getDefaultMarkerIcon(color = "#2563eb") {
-    return {
-        url: `data:image/svg+xml;charset=UTF-8,
-        <svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'>
-            <circle cx='24' cy='24' r='15' fill='${color}' stroke='white' stroke-width='3'/>
-        </svg>`,
-        scaledSize: new google.maps.Size(40, 40),
-        anchor: new google.maps.Point(20, 20)
-    };
-}
-
-
 const state = {
   map: null,
   directionsService: null,
@@ -181,12 +155,18 @@ function buildMap(stops, meta){
   if(center) state.map.setCenter(center);
 
   for(const s of stops){
+    const baseIcon = (s.order===1 || s.order===stops.length)
+      ? "https://maps.gstatic.com/mapfiles/ms2/micons/flag.png"
+      : null;
+
     const marker = new google.maps.Marker({
       position: {lat:s.lat,lng:s.lng},
       map: state.map,
-      icon: (s.order===1 || s.order===stops.length) ? "https://maps.gstatic.com/mapfiles/ms2/micons/flag.png" : undefined,
+      icon: baseIcon || undefined,
       title: `${s.order}. ${s.name}`
     });
+    marker._baseIcon = baseIcon;
+
     marker.addListener("click", ()=>{
       if(state.infoWindow){ state.infoWindow.close(); }
       const html = `<div style="font:600 14px system-ui, -apple-system, Segoe UI, Roboto; color:#111; line-height:1.35;">
@@ -273,19 +253,19 @@ card.innerHTML = `
     const btn=e.target.closest("button[data-act]"); if(!btn) return;
     e.stopPropagation();
     const id=btn.getAttribute("data-id"); const act=btn.getAttribute("data-act");
-    if(act==="toggle") toggleDone(id);
-    const marker = state.markers.get(id);
-    if(marker){
+    if(act==="toggle"){
+      toggleDone(id);
+      const marker = state.markers.get(id);
+      if(marker){
         const progress = getProgress();
         const done = !!progress[id];
-
         if(done){
-            marker.setIcon(getCheckedMarkerIcon());
+          marker.setIcon("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
         } else {
-            marker.setIcon(getDefaultMarkerIcon());
+          marker.setIcon(marker._baseIcon || undefined);
         }
+      }
     }
-
     if(act==="goto") goTo(id);
     if(act==="open-web"){
       const url = btn.getAttribute("data-url");
