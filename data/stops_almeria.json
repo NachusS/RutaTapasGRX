@@ -35,7 +35,7 @@
       "lng": -2.4664288650321606,
       "photo": "assets/AlmeriaElQuincho.jpg",
       "notes": "",
-      "web:": "https://elquinchobraseria.com/",
+      "web": "https://elquinchobraseria.com/",
       "order": 2
     },
     {
@@ -47,7 +47,7 @@
       "lng": -2.4667331186856467,
       "photo": "assets/AlmeriaJovellanos.jpg",
       "notes": "",
-      "web:": "https://www.instagram.com/jovellanos16/?hl=es",
+      "web": "https://www.instagram.com/jovellanos16/?hl=es",
       "order": 3
     },
     {
@@ -59,7 +59,7 @@
       "lng": -2.466747200278364,
       "photo": "assets/AlmeriaNuestraTierra.jpg",
       "notes": "",
-      "web:": "https://www.tabernanuestratierra.com/",
+      "web": "https://www.tabernanuestratierra.com/",
       "order": 4
     },
     {
@@ -71,7 +71,7 @@
       "lng": -2.4647054130129478,
       "photo": "assets/AlmeriaValentin.jpg",
       "notes": "",
-      "web:": "https://www.restaurantevalentin.es/",
+      "web": "https://www.restaurantevalentin.es/",
       "order": 5
     },
     {
@@ -83,7 +83,7 @@
       "lng": -2.462805348556892,
       "photo": "assets/AlmeriaSalitre.jpg",
       "notes": "",
-      "web:": "hhttps://salitrebardevinos.es/",
+      "web": "https://salitrebardevinos.es/",
       "order": 6
     },
     {
@@ -95,7 +95,7 @@
       "lng": -2.4623831885003464,
       "photo": "assets/AlmeriaLaEsquinica.jpg",
       "notes": "",
-      "web:": "https://www.instagram.com/la_esquinica_almeria/?hl=es",
+      "web": "https://www.instagram.com/la_esquinica_almeria/?hl=es",
       "order": 7
     },
     {
@@ -107,7 +107,7 @@
       "lng": -2.4624861732456473,
       "photo": "assets/AlmeriaQuintoToro.jpg",
       "notes": "",
-      "web:": "https://www.facebook.com/elquintotoroalmeria/?locale=es_ES",
+      "web": "https://www.facebook.com/elquintotoroalmeria/?locale=es_ES",
       "order": 8
     },
     {
@@ -119,7 +119,7 @@
       "lng": -2.461872031999616,
       "photo": "assets/AlmeriaMiniBar.jpg",
       "notes": "",
-      "web:": "https://www.minube.com/rincon/restaurante-mini-bar-a79177",
+      "web": "https://www.minube.com/rincon/restaurante-mini-bar-a79177",
       "order": 9
     },
     {
@@ -131,7 +131,7 @@
       "lng": -2.4617683821611154,
       "photo": "assets/AlmeriaCasaSevilla.jpg",
       "notes": "",
-      "web:": "https://casa-sevilla.com/",
+      "web": "https://casa-sevilla.com/",
       "order": 10
     },
     {
@@ -143,7 +143,7 @@
       "lng": -2.4624333751103586,
       "photo": "assets/AlmeriaRinconBasi.jpg",
       "notes": "",
-      "web:": "https://www.instagram.com/elrincondebasi/?hl=es",
+      "web": "https://www.instagram.com/elrincondebasi/?hl=es",
       "order": 11
     },
     {
@@ -155,7 +155,7 @@
       "lng": -2.465694195745972,
       "photo": "assets/AlmeriaLaMala.jpg",
       "notes": "",
-      "web:": "https://carta.menu/restaurants/almeria/la-mala-croqueteria",
+      "web": "https://carta.menu/restaurants/almeria/la-mala-croqueteria",
       "order": 12
     },    
     {

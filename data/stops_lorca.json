@@ -23,6 +23,7 @@
       "lng": -1.70417,
       "photo": "assets/matias.jpg",
       "notes": "",
+      "web": "",
       "order": 1
     },
     {
@@ -34,6 +35,7 @@
       "lng": -1.69964,
       "photo": "assets/CasaMusso.jpg",
       "notes": "Primera parada desde el Matias",
+      "web": "",
       "order": 2
     },
     {
@@ -45,6 +47,7 @@
       "lng": -1.69754,
       "photo": "assets/sibarita.jpg",
       "notes": "",
+      "web": "",
       "order": 3
     },
     {
@@ -56,6 +59,7 @@
       "lng": -1.69771,
       "photo": "assets/albedrio.jpg",
       "notes": "",
+      "web": "",
       "order": 4
     },
     {
@@ -67,6 +71,7 @@
       "lng": -1.69905,
       "photo": "assets/1900.jpg",
       "notes": "",
+      "web": "",
       "order": 5
     },
     {
@@ -78,6 +83,7 @@
       "lng": -1.69574,
       "photo": "assets/n3.jpg",
       "notes": "",
+      "web": "",
       "order": 6
     },
     {
@@ -89,6 +95,7 @@
       "lng": -1.68949,
       "photo": "assets/pua.jpg",
       "notes": "",
+      "web": "",
       "order": 7
     }
   ]

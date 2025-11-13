@@ -192,10 +192,14 @@ function buildList(stops){
     const card = document.createElement("article");
     card.className = "card card-3d"; card.setAttribute("tabindex","0");
     const ratingVal = getRating(s.id);
-    
-const hasWeb = !!(s.web && String(s.web).trim().length>0);
+
+const rawWeb = (s.web || "").trim();
+const hasWeb = rawWeb.length > 0;
+const normalizedWeb = hasWeb && /^https?:\/\//i.test(rawWeb) ? rawWeb : (hasWeb ? `https://${rawWeb}` : "");
+const webLabel = rawWeb;
+
 const webHTML = hasWeb
-  ? `<button type="button" class="web-link" data-act="open-web" data-url="${s.web}" aria-label="Abrir web de ${s.name}">
+  ? `<button type="button" class="web-link" data-act="open-web" data-url="${normalizedWeb}" aria-label="Abrir web de ${s.name}">
        <img src="assets/acceso-web.png" alt="Ir a la web" class="icon-web">
      </button>`
   : `<button type="button" class="web-link" disabled aria-disabled="true" title="Sin web disponible">
@@ -213,6 +217,8 @@ card.innerHTML = `
         </header>
         <p class="tapa">${s.tapa?`Tapa típica: ${s.tapa}`:''}</p>
         <p class="addr">${s.address||''}</p>
+        ${hasWeb && webLabel ? `<p class="web-label">${webLabel}</p>` : ""}
+
 
         <div class="rating" role="radiogroup" aria-label="Valoración" data-id="${s.id}" data-value="${ratingVal}">
           ${[1,2,3,4,5].map(i=>`

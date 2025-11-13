@@ -23,7 +23,7 @@
       "lng": -4.774468999598741,
       "photo": "assets/CordobaCorredera.jpg",
       "notes": "",
-      "web:":"",
+      "web":"",
       "order": 1
     },
     {
@@ -35,7 +35,7 @@
       "lng": -4.775305854216509,
       "photo": "assets/CordobaCazuela.jpg",
       "notes": "",
-      "web:": "http://www.lacazueladelaesparteria.es/",
+      "web": "http://www.lacazueladelaesparteria.es/",
       "order": 2
     },
     {
@@ -47,7 +47,7 @@
       "lng": -4.775735987891278,
       "photo": "assets/CordobaSalinas.jpg",
       "notes": "",
-      "web:": "http://www.tabernasalinas.com/la-carta/",
+      "web": "http://www.tabernasalinas.com/la-carta/",
       "order": 3
     },
     {
@@ -59,7 +59,7 @@
       "lng": -4.776906201994093,
       "photo": "assets/CordobaGallo.jpg",
       "notes": "",
-      "web:": "https://www.elgallodelcentro.com/",
+      "web": "https://www.elgallodelcentro.com/",
       "order": 4
     },
     {
@@ -71,7 +71,7 @@
       "lng": -4.778684743511263,
       "photo": "assets/CordobaGongora.jpg",
       "notes": "",
-      "web:": "https://tabernagongora.eatbu.com/",
+      "web": "https://tabernagongora.eatbu.com/",
       "order": 5
     },
     {
@@ -83,7 +83,7 @@
       "lng": -4.779260094384213,
       "photo": "assets/CordobaPisto.jpg",
       "notes": "",
-      "web:": "https://www.casaelpisto.com/",
+      "web": "https://www.casaelpisto.com/",
       "order": 6
     },
     {
@@ -95,7 +95,7 @@
       "lng": -4.779794318188539,
       "photo": "assets/CordobaMontillana.jpg",
       "notes": "",
-      "web:": "https://tabernalamontillana.com/carta/",
+      "web": "https://tabernalamontillana.com/carta/",
       "order": 7
     },
     {
@@ -107,7 +107,7 @@
       "lng": -4.780343807327419,
       "photo": "assets/CordobaCarrasquin.jpg",
       "notes": "",
-      "web:": "",
+      "web": "",
       "order": 8
     },
     {
@@ -119,7 +119,7 @@
       "lng": -4.780200309058778,
       "photo": "assets/CordobaTollin.jpg",
       "notes": "",
-      "web:": "http://www.casatollin.com/",
+      "web": "http://www.casatollin.com/",
       "order": 9
     },
     {
@@ -131,7 +131,7 @@
       "lng": -4.779988095656069,
       "photo": "assets/CordobaCorreo.jpg",
       "notes": "",
-      "web:": "",
+      "web": "",
       "order": 10
     },
     {
@@ -155,7 +155,7 @@
       "lng": -4.781300274944577,
       "photo": "assets/CordobaPepe.jpg",
       "notes": "",
-      "web:": "http://www.restaurantecasapepedelajuderia.com/",
+      "web": "http://www.restaurantecasapepedelajuderia.com/",
       "order": 12
     },
     {
@@ -167,7 +167,7 @@
       "lng": -4.781907916041111,
       "photo": "assets/CordobaChurrasco.jpg",
       "notes": "",
-      "web:": "hhttps://www.elchurrasco.com/",
+      "web": "hhttps://www.elchurrasco.com/",
       "order": 13
     },
     {
@@ -179,7 +179,7 @@
       "lng": -4.783773980294933,
       "photo": "assets/CordobaBasilio.jpg",
       "notes": "",
-      "web:": "",
+      "web": "",
       "order": 14
     }
   ]
