@@ -252,3 +252,24 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
   border-color: var(--accent);
   background: color-mix(in srgb, var(--accent), transparent 70%);
 }
+
+/* Wrapper frame for stars */
+.rating {
+  padding:6px 10px;
+  border:1px solid rgba(0,0,0,0.15);
+  border-radius:10px;
+  display:inline-flex;
+  gap:6px;
+  background:rgba(255,255,255,0.4);
+  backdrop-filter:blur(6px);
+}
+
+/* Stronger visibility for unfilled stars in light cards */
+.card-light .rating .star[data-filled="0"] svg path{
+  fill: rgba(60,60,60,0.35);
+}
+
+.card-light .rating .star{
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.25);
+}
