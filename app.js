@@ -192,15 +192,16 @@ function buildList(stops){
     const card = document.createElement("article");
     card.className = "card card-3d"; card.setAttribute("tabindex","0");
     const ratingVal = getRating(s.id);
-    const hasWeb = !!(s.web && String(s.web).trim().length>0);
-    const webHTML = hasWeb
-      ? `<button type="button" class="web-link" data-act="open-web" data-url="${s.web}" aria-label="Abrir web de ${s.name}">
-      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2c1.9 0 3.64.66 5.01 1.76H6.99A7.97 7.97 0 0 1 12 4Zm-7.46 5h14.92a8.03 8.03 0 0 1 0 6H4.54a8.03 8.03 0 0 1 0-6Zm1.45 8.24h10.03A7.97 7.97 0 0 1 12 20c-1.9 0-3.64-.66-5.01-1.76ZM9 6.5h6c.83 1.15 1.44 2.57 1.74 4H7.26c.3-1.43.9-2.85 1.74-4Zm0 11c-.83-1.15-1.44-2.57-1.74-4h9.48c-.3 1.43-.9 2.85-1.74 4H9Z"/></svg>
-    </button>`
-      : `<button type="button" class="web-link" disabled aria-disabled="true" title="Sin web disponible">
-      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2c1.9 0 3.64.66 5.01 1.76H6.99A7.97 7.97 0 0 1 12 4Zm-7.46 5h14.92a8.03 8.03 0 0 1 0 6H4.54a8.03 8.03 0 0 1 0-6Zm1.45 8.24h10.03A7.97 7.97 0 0 1 12 20c-1.9 0-3.64-.66-5.01-1.76ZM9 6.5h6c.83 1.15 1.44 2.57 1.74 4H7.26c.3-1.43.9-2.85 1.74-4Zm0 11c-.83-1.15-1.44-2.57-1.74-4h9.48c-.3 1.43-.9 2.85-1.74 4H9Z"/></svg>
-    </button>`;
-    card.innerHTML = `
+    
+const hasWeb = !!(s.web && String(s.web).trim().length>0);
+const webHTML = hasWeb
+  ? `<button type="button" class="web-link" data-act="open-web" data-url="${s.web}" aria-label="Abrir web de ${s.name}">
+       <img src="assets/acceso-web.png" alt="Ir a la web" class="icon-web">
+     </button>`
+  : `<button type="button" class="web-link" disabled aria-disabled="true" title="Sin web disponible">
+       <img src="assets/acceso-web.png" alt="Sin web" class="icon-web">
+     </button>`;
+card.innerHTMLcard.innerHTML = `
       <div class="card-visual">
         <img src="${s.photo || `assets/${s.id||'placeholder'}.jpg`}" alt="Foto de ${s.name}">
         <div class="card-glow" aria-hidden="true"></div>

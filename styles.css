@@ -119,3 +119,9 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
   cursor:not-allowed;
   pointer-events:none;
 }
+
+.icon-web{
+  width:20px;
+  height:20px;
+  object-fit:contain;
+}
