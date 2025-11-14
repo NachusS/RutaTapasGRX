@@ -29,6 +29,11 @@
       "id": "ruta_06",
       "title": "Almeria Centro - Nacho",
       "file": "data/stops_almeria.json"
+    },
+    {
+      "id": "ruta_07",
+      "title": "Malaga - Mamen",
+      "file": "data/stops_malaga.json"
     }
   ]
 }

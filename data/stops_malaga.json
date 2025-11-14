@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "city": "Malaga",
+    "title": "Malaga - Mamen",
+    "start": {
+      "name": "Los Mellizos",
+      "lat": 36.718952362730064, 
+      "lng": -4.420636641154554
+    },
+    "end": {
+      "name": "Bar La Campana",
+      "lat": 36.74870606852794, 
+      "lng": -3.015987830003896
+    }
+  },
+  "stops": [
+    {
+      "id": "mellizos",
+      "name": "Los Mellizos",
+      "address": "",
+      "tapa": "Pescao, gambas y frituras",
+      "lat": 36.718952362730064,
+      "lng": -4.420636641154554,
+      "photo": "assets/MalagaMellizos.jpg",
+      "notes": "Punto de encuentro inicial",
+      "web": "https://losmellizos.net/",
+      "order": 1
+    },
+    {
+      "id": "mar_adra",
+      "name": "Gastrobar Mar de Adra",
+      "address": "",
+      "tapa": "Hamburguesa de pulpo",
+      "lat": 36.74610986735339, 
+      "lng": -3.0238472700696732,
+      "photo": "assets/adraMardeAdra.png",
+      "notes": "",
+      "web": "",
+      "order": 2
+    },
+    {
+      "id": "emilio",
+      "name": "Bar Emilio",
+      "address": "",
+      "tapa": "Esparrago / atún",
+      "lat": 36.74812582483786, 
+      "lng": -3.020430132809778,
+      "photo": "assets/adraEmilio.jpg",
+      "notes": "",
+      "web": "https://adraEmilio.es/",
+      "order": 3
+    },
+    {
+      "id": "pajar",
+      "name": "Bar El Pajar",
+      "address": "",
+      "tapa": "Pulpada",
+      "lat": 36.74597793892159, 
+      "lng": -3.016855546918681,
+      "photo": "assets/adraPajar.jpg",
+      "notes": "",
+      "web": "",
+      "order": 4
+    },
+    {
+      "id": "la_granja",
+      "name": "Taberna La Granja Rock",
+      "address": "",
+      "tapa": "Atún / Gallo Pedro frito",
+      "lat": 36.74625908569938, 
+      "lng": -3.01604536078941,
+      "photo": "assets/adraGranja.jpg",
+      "notes": "",
+      "web": "",
+      "order": 5
+    },
+    {
+      "id": "finos",
+      "name": "Bodega los Finos",
+      "address": "",
+      "tapa": "Pescao frito",
+      "lat": 36.74704373840772, 
+      "lng": -3.014731203335516,
+      "photo": "assets/adraLosFinos.png",
+      "notes": "",
+      "web": "https://www.restaurantelosfinos.com/",
+      "order": 6
+    },
+    {
+      "id": "coines",
+      "name": "Bar Coines",
+      "address": "",
+      "tapa": "Atún /Pescao variado",
+      "lat": 36.748227093033606, 
+      "lng": -3.0151713819019608,
+      "photo": "assets/adraCoines.jpg",
+      "notes": "",
+      "web": "",
+      "order": 7
+    },
+    {
+      "id": "tapeo",
+      "name": "Bodega Del Tapeo",
+      "address": "",
+      "tapa": "Patatas con queso derretido",
+      "lat": 36.74865646901185, 
+      "lng": -3.0140230877872893,
+      "photo": "assets/adraTapeo.jpg",
+      "notes": "",
+      "web": "",
+      "order": 8
+    },
+    {
+      "id": "campana",
+      "name": "Bar La Campana",
+      "address": "",
+      "tapa": "Franfurt",
+      "lat": 36.74871809686054, 
+      "lng": -3.015982138845134,
+      "photo": "assets/adraCampana.jpg",
+      "notes": "",
+      "web": "",
+      "order": 9
+    }
+  ]
+}
+
