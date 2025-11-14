@@ -8,9 +8,9 @@
       "lng": -4.420636641154554
     },
     "end": {
-      "name": "Bar La Campana",
-      "lat": 36.74870606852794, 
-      "lng": -3.015987830003896
+      "name": "Meson Lo Güeno",
+      "lat": 36.71944904347154, 
+      "lng": -4.4219855362513325
     }
   },
   "stops": [
@@ -27,100 +27,52 @@
       "order": 1
     },
     {
-      "id": "mar_adra",
-      "name": "Gastrobar Mar de Adra",
+      "id": "casaguardia",
+      "name": "Antigua Casa Guardia",
       "address": "",
-      "tapa": "Hamburguesa de pulpo",
-      "lat": 36.74610986735339, 
-      "lng": -3.0238472700696732,
-      "photo": "assets/adraMardeAdra.png",
+      "tapa": "",
+      "lat": 36.71792045651173,  
+      "lng": -4.422342151683617,
+      "photo": "assets/MalagaCasaGuardia.png",
       "notes": "",
-      "web": "",
+      "web": "https://antiguacasadeguardia.com/",
       "order": 2
     },
     {
-      "id": "emilio",
-      "name": "Bar Emilio",
+      "id": "elpimpi",
+      "name": "Bodega Bar El Pimpi",
       "address": "",
-      "tapa": "Esparrago / atún",
-      "lat": 36.74812582483786, 
-      "lng": -3.020430132809778,
-      "photo": "assets/adraEmilio.jpg",
+      "tapa": "",
+      "lat": 36.722085120520696,  
+      "lng": -4.41739330101712,
+      "photo": "assets/MalagaPimpi.jpg",
       "notes": "",
-      "web": "https://adraEmilio.es/",
+      "web": "https://www.elpimpi.com/",
       "order": 3
     },
     {
-      "id": "pajar",
-      "name": "Bar El Pajar",
+      "id": "lacepa",
+      "name": "La cepa",
       "address": "",
-      "tapa": "Pulpada",
-      "lat": 36.74597793892159, 
-      "lng": -3.016855546918681,
-      "photo": "assets/adraPajar.jpg",
+      "tapa": "",
+      "lat": 36.7197078293947,  
+      "lng": -4.4200352902879105,
+      "photo": "assets/MalagaLaCepa.jpg",
       "notes": "",
       "web": "",
       "order": 4
     },
     {
-      "id": "la_granja",
-      "name": "Taberna La Granja Rock",
+      "id": "logueno",
+      "name": "Meson Lo Güeno",
       "address": "",
-      "tapa": "Atún / Gallo Pedro frito",
-      "lat": 36.74625908569938, 
-      "lng": -3.01604536078941,
-      "photo": "assets/adraGranja.jpg",
+      "tapa": "",
+      "lat": 36.71944904347154,  
+      "lng": -4.4219855362513325,
+      "photo": "assets/MalagaLoGueno.jpg",
       "notes": "",
       "web": "",
       "order": 5
-    },
-    {
-      "id": "finos",
-      "name": "Bodega los Finos",
-      "address": "",
-      "tapa": "Pescao frito",
-      "lat": 36.74704373840772, 
-      "lng": -3.014731203335516,
-      "photo": "assets/adraLosFinos.png",
-      "notes": "",
-      "web": "https://www.restaurantelosfinos.com/",
-      "order": 6
-    },
-    {
-      "id": "coines",
-      "name": "Bar Coines",
-      "address": "",
-      "tapa": "Atún /Pescao variado",
-      "lat": 36.748227093033606, 
-      "lng": -3.0151713819019608,
-      "photo": "assets/adraCoines.jpg",
-      "notes": "",
-      "web": "",
-      "order": 7
-    },
-    {
-      "id": "tapeo",
-      "name": "Bodega Del Tapeo",
-      "address": "",
-      "tapa": "Patatas con queso derretido",
-      "lat": 36.74865646901185, 
-      "lng": -3.0140230877872893,
-      "photo": "assets/adraTapeo.jpg",
-      "notes": "",
-      "web": "",
-      "order": 8
-    },
-    {
-      "id": "campana",
-      "name": "Bar La Campana",
-      "address": "",
-      "tapa": "Franfurt",
-      "lat": 36.74871809686054, 
-      "lng": -3.015982138845134,
-      "photo": "assets/adraCampana.jpg",
-      "notes": "",
-      "web": "",
-      "order": 9
     }
   ]
 }
