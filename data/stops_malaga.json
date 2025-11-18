@@ -3,29 +3,17 @@
     "city": "Malaga",
     "title": "Malaga - Mamen",
     "start": {
-      "name": "Los Mellizos",
-      "lat": 36.718952362730064, 
-      "lng": -4.420636641154554
+      "name": "Antigua Casa Guardia",
+      "lat": 36.71792045651173, 
+      "lng": -4.422342151683617
     },
     "end": {
-      "name": "Meson Lo Güeno",
-      "lat": 36.71944904347154, 
-      "lng": -4.4219855362513325
+      "name": "Bodega Bar El Pimpi",
+      "lat": 36.722085120520696, 
+      "lng": -4.41739330101712
     }
   },
   "stops": [
-    {
-      "id": "mellizos",
-      "name": "Los Mellizos",
-      "address": "",
-      "tapa": "Pescao, gambas y frituras",
-      "lat": 36.718952362730064,
-      "lng": -4.420636641154554,
-      "photo": "assets/MalagaMellizos.jpg",
-      "notes": "Punto de encuentro inicial",
-      "web": "https://losmellizos.net/",
-      "order": 1
-    },
     {
       "id": "casaguardia",
       "name": "Antigua Casa Guardia",
@@ -33,21 +21,33 @@
       "tapa": "",
       "lat": 36.71792045651173,  
       "lng": -4.422342151683617,
-      "photo": "assets/MalagaCasaGuardia.png",
+      "photo": "assets/MalagaAntigua.png",
       "notes": "",
       "web": "https://antiguacasadeguardia.com/",
+      "order": 1
+    },
+    {
+      "id": "mellizos",
+      "name": "Los Mellizos",
+      "address": "",
+      "tapa": "Pescao, gambas y frituras",
+      "lat": 36.718952362730064,
+      "lng": -4.420636641154554,
+      "photo": "assets/MalagaLosMellizos.jpg",
+      "notes": "Punto de encuentro inicial",
+      "web": "https://losmellizos.net/",
       "order": 2
     },
     {
-      "id": "elpimpi",
-      "name": "Bodega Bar El Pimpi",
+      "id": "logueno",
+      "name": "Meson Lo Güeno",
       "address": "",
       "tapa": "",
-      "lat": 36.722085120520696,  
-      "lng": -4.41739330101712,
-      "photo": "assets/MalagaPimpi.jpg",
+      "lat": 36.71944904347154,  
+      "lng": -4.4219855362513325,
+      "photo": "assets/MalagaLoGueno.jpg",
       "notes": "",
-      "web": "https://www.elpimpi.com/",
+      "web": "",
       "order": 3
     },
     {
@@ -63,15 +63,15 @@
       "order": 4
     },
     {
-      "id": "logueno",
-      "name": "Meson Lo Güeno",
+      "id": "elpimpi",
+      "name": "Bodega Bar El Pimpi",
       "address": "",
       "tapa": "",
-      "lat": 36.71944904347154,  
-      "lng": -4.4219855362513325,
-      "photo": "assets/MalagaLoGueno.jpg",
+      "lat": 36.722085120520696,  
+      "lng": -4.41739330101712,
+      "photo": "assets/MalagaPimpi.jpg",
       "notes": "",
-      "web": "",
+      "web": "https://www.elpimpi.com/",
       "order": 5
     }
   ]
