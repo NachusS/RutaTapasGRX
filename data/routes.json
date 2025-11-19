@@ -2,7 +2,7 @@
   "routes": [
     {
       "id": "ruta_01",
-      "title": "Granada NachusS v.1",
+      "title": "Granada",
       "file": "data/stops.json"
     },
     {
@@ -22,18 +22,23 @@
     },
     {
       "id": "ruta_05",
-      "title": "Huescar - Nacho",
+      "title": "Huescar",
       "file": "data/stops_huescar.json"
     },
     {
       "id": "ruta_06",
-      "title": "Almeria Centro - Nacho",
+      "title": "Almeria Centro",
       "file": "data/stops_almeria.json"
     },
     {
       "id": "ruta_07",
       "title": "Malaga - Mamen",
       "file": "data/stops_malaga.json"
+    },
+    {
+      "id": "ruta_08",
+      "title": "Alhama - GRX",
+      "file": "data/stops_alhamagrx.json"
     }
   ]
 }

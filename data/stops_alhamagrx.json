@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "city": "Alhama",
+    "title": "Alhama - GRX",
+    "start": {
+      "name": "Restaurante La Placeta",
+      "lat": 37.00257837754479, 
+      "lng": -3.989028947210413
+    },
+    "end": {
+      "name": "Café Bar La Esquinilla",
+      "lat": 37.00527675276115, 
+      "lng": -3.9897515680945634
+    }
+  },
+  "stops": [
+    {
+      "id": "laplaceta",
+      "name": "Restaurante La Placeta",
+      "address": "",
+      "tapa": "Huevos de Codorniz",
+      "lat": 37.00257837754479,    
+      "lng": -3.989028947210413,
+      "photo": "assets/AlhamaLaPlaceta.jpg",
+      "notes": "",
+      "web": "",
+      "order": 1
+    },
+    {
+      "id": "eltigre",
+      "name": "Café Bar El Tigre",
+      "address": "",
+      "tapa": "Croquetas",
+      "lat": 37.00243636188832,   
+      "lng": -3.9896304760148324,
+      "photo": "assets/AlhamaElTigre.jpg",
+      "notes": "",
+      "web": "",
+      "order": 2
+    },
+    {
+      "id": "ochoa",
+      "name": "Bar Ochoa",
+      "address": "",
+      "tapa": "variadas",
+      "lat": 37.00215257408883,    
+      "lng": -3.9898106257816655,
+      "photo": "assets/AlhamaBarOchoa.jpg",
+      "notes": "Cerrado Temporalmente",
+      "web": "https://www.lamaromarooms.com/casa-ochoa-tertulia/",
+      "order": 3
+    },
+    {
+      "id": "pacocabezas",
+      "name": "Cafetería bar Paco Cabezas",
+      "address": "",
+      "tapa": "Patatas a lo Pobre",
+      "lat": 37.004285511089854, 
+      "lng": -3.9906678639861637,
+      "photo": "assets/AlhamaPacoCabezas.jpg",
+      "notes": "",
+      "web": "https://www.facebook.com/people/Cafeter%C3%ADa-bar-Paco-Cabezas/100063466389561/#",
+      "order": 4
+    },
+    {
+      "id": "brasero",
+      "name": "Café El Brasero",
+      "address": "",
+      "tapa": "Jamon y Queso",
+      "lat": 37.00508027373644,   
+      "lng": -3.9908699788802298,
+      "photo": "assets/AlhamaElBrasero.jpg",
+      "notes": "",
+      "web": "",
+      "order": 5
+    },
+    {
+      "id": "barcabezas",
+      "name": "Bar Cabezas",
+      "address": "",
+      "tapa": "Mini Hamburguesas",
+      "lat": 37.006166087705935,   
+      "lng": -3.9908521108530266,
+      "photo": "assets/AlhamaBarCabezas.jpg",
+      "notes": "",
+      "web": "",
+      "order": 6
+    },
+    {
+      "id": "laesquinilla",
+      "name": "Café Bar La Esquinilla",
+      "address": "",
+      "tapa": "Montaditos de Lomo",
+      "lat": 37.00527675276115,   
+      "lng": -3.9897515680945634,
+      "photo": "assets/AlhamaEsquinilla.jpg",
+      "notes": "",
+      "web": "",
+      "order": 7
+    }
+  ]
+}
+
