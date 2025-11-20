@@ -33,11 +33,85 @@ select, .btn{border:1px solid var(--border);background:var(--card);color:var(--f
 .app-main{display:grid;grid-template-columns:1fr;gap:0}
 #map{height:55vh}
 #panel{max-height:45vh;overflow:auto;border-top:1px solid var(--border);background:var(--bg)}
-.card{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:12px;border-bottom:1px solid var(--border)}
-.card img{width:100%;height:100px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+.card{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:8px 10px;border-bottom:1px solid var(--border)}
+.card img{width:100%;height:80px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
 .card h3{margin:0 0 4px 0;font-size:1rem}
 .card p{margin:2px 0;color:var(--muted);font-size:.9rem}
 .card .actions{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.card .actions.actions-compact{
+  display:flex;
+  gap:6px;
+  margin-top:6px;
+  flex-wrap:nowrap;
+  justify-content:flex-end;
+}
+
+/* Botones de icono compactos */
+.icon-btn{
+  width:30px;
+  height:30px;
+  min-width:30px;
+  min-height:30px;
+  padding:0;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--card);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:transform .1s ease, background .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.icon-btn:hover{
+  transform:translateY(-1px) scale(1.03);
+  box-shadow:0 4px 10px rgba(0,0,0,.12);
+}
+
+.icon-btn:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+/* Botón de marcar como hecha */
+.icon-btn-done{
+  background:var(--ok);
+  color:#fff;
+  border-color:transparent;
+}
+
+.icon-btn-done.is-done{
+  background:transparent;
+  color:var(--ok);
+  border-color:var(--ok);
+}
+
+/* Botón de ir a la parada */
+.icon-btn-goto{
+  background:var(--card);
+  color:var(--brand);
+  border-color:var(--brand);
+}
+
+/* Iconos internos */
+.icon-check::before{
+  content:"✓";
+  font-size:1rem;
+  line-height:1;
+}
+
+.icon-pin::before{
+  content:"📍";
+  font-size:1rem;
+  line-height:1;
+}
+
+/* Card marcada como hecha */
+.card.card-done{
+  opacity:.75;
+}
+
+
 .badge{display:inline-block;font-size:.75rem;padding:2px 6px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
 .order-badge{margin-left:6px;background:transparent;border:1px dashed var(--border);color:var(--muted)}
 .app-footer{padding:12px;border-top:1px solid var(--border);color:var(--muted)}

@@ -231,9 +231,29 @@ card.innerHTML = `
           `).join("")}
         </div>
 
-        <div class="actions">
-          <button type="button" class="btn" data-act="toggle" data-id="${s.id}" aria-pressed="${!!progress[s.id]}">${progress[s.id]?'Desmarcar':'Marcar como hecha'}</button>
-          <button type="button" class="btn" data-act="goto" data-id="${s.id}">Ir a esta parada</button>
+                <div class="actions actions-compact">
+          <button
+            type="button"
+            class="icon-btn icon-btn-done ${progress[s.id] ? 'is-done' : ''}"
+            data-act="toggle"
+            data-id="${s.id}"
+            title="${progress[s.id] ? 'Desmarcar parada' : 'Marcar como hecha'}"
+            aria-label="${progress[s.id] ? 'Desmarcar parada' : 'Marcar como hecha'}"
+            aria-pressed="${!!progress[s.id]}"
+          >
+            <span class="icon-check"></span>
+          </button>
+
+          <button
+            type="button"
+            class="icon-btn icon-btn-goto"
+            data-act="goto"
+            data-id="${s.id}"
+            title="Ir a esta parada"
+            aria-label="Ir a esta parada"
+          >
+            <span class="icon-pin"></span>
+          </button>
         </div>
       </div>
     `;
@@ -319,18 +339,30 @@ function updateRatingGroupUI(group, value){
 
 function restoreProgressUI(){
   const progress = getProgress();
-  $$("#panel button[data-act='toggle']").forEach(btn=>{
+
+  $$("#panel button[data-act='toggle']").forEach(btn => {
     const id = btn.getAttribute("data-id");
     const done = !!progress[id];
-    btn.textContent = done? "Desmarcar":"Marcar como hecha";
+
+    // aspecto del botón
+    btn.classList.toggle("is-done", done);
     btn.setAttribute("aria-pressed", String(done));
-    const card = btn.closest(".card"); if(card){ card.style.opacity = done ? .6 : 1; }
+    btn.setAttribute("title", done ? "Desmarcar parada" : "Marcar como hecha");
+    btn.setAttribute("aria-label", done ? "Desmarcar parada" : "Marcar como hecha");
+
+    // aspecto de la tarjeta
+    const card = btn.closest(".card");
+    if (card) {
+      card.classList.toggle("card-done", done);
+    }
   });
+
   const total = state.stops.length;
   const doneCount = state.stops.filter(s => progress[s.id]).length;
+
   $("#progressText").textContent = `${doneCount} / ${total}`;
-  const pct = total ? Math.round(doneCount/total*100) : 0;
-  $("#progressFill").style.width = `${pct}%`;
+  const pct = total ? Math.round((doneCount / total) * 100) : 0;
+  $("#progressFill").style.width = pct + "%";
   $(".progress-bar").setAttribute("aria-valuenow", String(pct));
   updateETA();
 }
