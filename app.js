@@ -155,9 +155,9 @@ function buildMap(stops, meta){
   if(center) state.map.setCenter(center);
 
   for(const s of stops){
-    const baseIcon = (s.order===1 || s.order===stops.length)
+    const baseIcon = (s.order===1)
       ? "https://maps.gstatic.com/mapfiles/ms2/micons/flag.png"
-      : null;
+      : (s.order===stops.length ? "https://maps.gstatic.com/mapfiles/ms2/micons/finish.png" : null);
 
     const marker = new google.maps.Marker({
       position: {lat:s.lat,lng:s.lng},
