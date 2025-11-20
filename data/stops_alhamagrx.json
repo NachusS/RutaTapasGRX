@@ -45,7 +45,7 @@
       "tapa": "variadas",
       "lat": 37.00215257408883,    
       "lng": -3.9898106257816655,
-      "photo": "assets/AlhamaBarOchoa.jpg",
+      "photo": "assets/AlhamaOchoa.jpg",
       "notes": "Cerrado Temporalmente",
       "web": "https://www.lamaromarooms.com/casa-ochoa-tertulia/",
       "order": 3
@@ -100,4 +100,5 @@
     }
   ]
 }
+
 
