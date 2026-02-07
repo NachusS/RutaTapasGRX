@@ -1,4 +1,4 @@
-# RutaTapas MultiRuta · v6.7.17
+# RutaTapas MultiRuta · v6.18 Nueva API Google Maps
 
 - Etiqueta **“Selecciona ruta:”** visible en escritorio, **y también en móvil** (debajo del progreso, junto al switch y los botones).
 - Carga robusta de `data/routes.json` (anticaché + multipath) con diagnóstico visual si falla.
